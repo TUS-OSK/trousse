@@ -6,7 +6,11 @@
       <main>
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
-          <li v-for="item in list" :key="item.id"> {{ item.name }} </li>
+          <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
+            <div class="brand">{{ item.brand }}</div>
+            <div class="color">{{ item.color }}</div>
+            <div class="border"></div>
+          </li>
         </ul>
       </main>
     </div>
@@ -35,11 +39,28 @@ export default {
     }
   }
 };
+
+
+
+
 </script>
 
 <style scoped>
 .row {
   display: flex;
   flex-direction: row;
+}
+.item{
+  font-size: 20px;
+}
+.border{
+  border-style: dashed;
+  border-width: 1px;
+}
+.brand{
+  font-size: 10px;
+}
+.color{
+  font-size: 10px;
 }
 </style>
