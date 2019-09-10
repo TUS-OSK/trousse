@@ -10,10 +10,25 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    edit,
-    login,
-    main,
-    result,
-    user
+    edit: {
+      namespaced: true,
+      ...edit
+    },
+    login: {
+      namespaced: true,
+      ...login
+    },
+    main: {
+      namespaced: true,
+      ...main
+    },
+    result: {
+      namespaced: true,
+      ...result
+    },
+    user: {
+      namespaced: true,
+      ...user
+    }
   }
 })

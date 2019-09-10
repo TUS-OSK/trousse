@@ -30,17 +30,17 @@ export default {
   },
   computed: {
     name() {
-      return this.$store.getters.user.name
+      return this.$store.getters["user/user"].name
     },
     all() {
-      return this.$store.getters.cosmeTypes.map(type => ({ 
+      return this.$store.getters["user/cosmeTypes"].map(type => ({ 
         label: type,
-        list: this.$store.getters.cosmes(type)
+        list: this.$store.getters["user/cosmes"](type)
       }))
     }
   },
   created() {
-    this.$store.dispatch('loadMain')
+    this.$store.dispatch('user/loadMain')
   }
 }
 </script>
