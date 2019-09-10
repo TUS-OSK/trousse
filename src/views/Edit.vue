@@ -9,9 +9,9 @@
           <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
             <div class="brand">{{ item.brand }}</div>
             <div class="color">{{ item.color }}</div>
-            <div class="border"></div>
           </li>
         </ul>
+        <div><input type="button" value="コスメを追加" onclick='EditButtonClicked()'></div>
       </main>
     </div>
   </div>
@@ -33,15 +33,17 @@ export default {
       required: true
     }
   },
+  methods:{
+    EditButtonClicked(){
+      this.$store.dispatch('DisplayAddForm')
+    }
+  },
   computed: {
     list() {
       return this.$store.getters.cosmes(this.type)
     }
   }
 };
-
-
-
 
 </script>
 
@@ -52,10 +54,7 @@ export default {
 }
 .item{
   font-size: 20px;
-}
-.border{
-  border-style: dashed;
-  border-width: 1px;
+  border-bottom: solid 1px dashed;
 }
 .brand{
   font-size: 10px;
