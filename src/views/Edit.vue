@@ -30,8 +30,8 @@ export default {
     }
   },
   computed: {
-    list () {
-      return this.$store.getters.cosmes(this.type)
+    list() {
+      return this.$store.getters['user/cosmes'](this.type)
     }
   }
 }
