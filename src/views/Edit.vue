@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue"
-import Sidebar from "@/components/Sidebar.vue"
+import Header from '@/components/Header.vue'
+import Sidebar from '@/components/Sidebar.vue'
 
 export default {
   name: 'edit',
@@ -30,11 +30,11 @@ export default {
     }
   },
   computed: {
-    list() {
+    list () {
       return this.$store.getters.cosmes(this.type)
     }
   }
-};
+}
 </script>
 
 <style scoped>
