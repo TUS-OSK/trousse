@@ -45,11 +45,11 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --ext .js src --fix",
+      "eslint --ext .js src --fix --ignore-pattern '.eslintrc.js'",
       "git add"
     ],
     "*.vue": [
-      "eslint --ext .vue src --fix",
+      "eslint --ext .vue src --fix --ignore-pattern '.eslintrc.js'",
       "git add"
     ]
   }
