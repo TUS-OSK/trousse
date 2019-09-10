@@ -54,7 +54,7 @@ export default {
 }
 .item{
   font-size: 20px;
-  border-bottom: solid 1px dashed;
+  border-bottom: 1px dashed #000000;
 }
 .brand{
   font-size: 10px;
