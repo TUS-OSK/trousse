@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue"
-import Sidebar from "@/components/Sidebar.vue"
+import Header from '@/components/Header.vue'
+import Sidebar from '@/components/Sidebar.vue'
 
 export default {
   name: 'user',
@@ -29,17 +29,17 @@ export default {
     Sidebar
   },
   computed: {
-    name() {
+    name () {
       return this.$store.getters.user.name
     },
-    all() {
-      return this.$store.getters.cosmeTypes.map(type => ({ 
+    all () {
+      return this.$store.getters.cosmeTypes.map(type => ({
         label: type,
         list: this.$store.getters.cosmes(type)
       }))
     }
   },
-  created() {
+  created () {
     this.$store.dispatch('loadMain')
   }
 }

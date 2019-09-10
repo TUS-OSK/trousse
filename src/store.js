@@ -10,7 +10,7 @@ export default new Vuex.Store({
     cosmes: {
       base: [],
       cheek: [],
-      lip: [],
+      lip: []
     }
   },
   getters: {
@@ -19,13 +19,13 @@ export default new Vuex.Store({
     cosmes: state => type => state.cosmes[type]
   },
   mutations: {
-    updateMainData(state, payload) {
+    updateMainData (state, payload) {
       state.user = payload.user
       state.cosmes = payload.cosmes
     }
   },
   actions: {
-    async loadMain({ commit }) {
+    async loadMain ({ commit }) {
       const mainData = await fetchMain()
       commit('updateMainData', mainData)
     }
