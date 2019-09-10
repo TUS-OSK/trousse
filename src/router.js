@@ -6,7 +6,6 @@ import UserPage from './views/User.vue'
 import ResultPage from './views/Result.vue'
 import EditPage from './views/Edit.vue'
 
-
 Vue.use(Router)
 
 export default new Router({
@@ -38,6 +37,6 @@ export default new Router({
       name: 'edit',
       component: EditPage,
       props: true
-    },
+    }
   ]
 })

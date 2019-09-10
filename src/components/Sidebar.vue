@@ -12,14 +12,14 @@
 
 <script>
 export default {
-  name: "sidebar",
+  name: 'sidebar',
   props: {
     PageName: {
       type: String,
       required: true
     }
   }
-};
+}
 </script>
 
 <style scoped>
