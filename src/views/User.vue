@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     name() {
-      return this.$store.getters.user.name
+      return this.$store.getters['user/user'].name
     },
     all() {
       return this.$store.getters['user/cosmeTypes'].map(type => ({
@@ -40,7 +40,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('loadMain')
+    this.$store.dispatch('user/loadMain')
   }
 }
 </script>
