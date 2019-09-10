@@ -1,4 +1,4 @@
-function mockApi (payload) {
+function mockApi(payload) {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(payload)
@@ -47,7 +47,7 @@ const MOCK_FETCH_MAIN = {
   }
 }
 
-export function fetchMain () {
+export function fetchMain() {
   // テスト用
   return mockApi(MOCK_FETCH_MAIN)
 }
