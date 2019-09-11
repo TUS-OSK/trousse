@@ -11,7 +11,7 @@
             <div class="color">{{ item.color }}</div>
           </li>
         </ul>
-        <div><input type="button" value="コスメを追加" onclick='EditButtonClicked()'></div>
+        <button value="コスメを追加" onclick='editButtonClicked()'>
       </main>
     </div>
   </div>
@@ -34,7 +34,7 @@ export default {
     }
   },
   methods:{
-    EditButtonClicked(){
+    editButtonClicked(){
       this.$store.dispatch('DisplayAddForm')
     }
   },
