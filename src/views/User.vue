@@ -10,7 +10,7 @@
         <div v-for="category in all" :key="category.label" class="category">
           <h3 class="category-label">{{ category.label }}</h3>
           <ul class="list">
-            <li v-for="item　in category.list" :key="item.id" class="item">{{ item.name }}</li>
+            <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}</li>
           </ul>
         </div>
       </main>
@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue"
-import Sidebar from "@/components/Sidebar.vue"
+import Header from '@/components/Header.vue'
+import Sidebar from '@/components/Sidebar.vue'
 
 export default {
   name: 'user',
@@ -30,17 +30,17 @@ export default {
   },
   computed: {
     name() {
-      return this.$store.getters.user.name
+      return this.$store.getters['user/user'].name
     },
     all() {
-      return this.$store.getters.cosmeTypes.map(type => ({ 
+      return this.$store.getters['user/cosmeTypes'].map(type => ({
         label: type,
-        list: this.$store.getters.cosmes(type)
+        list: this.$store.getters['user/cosmes'](type)
       }))
     }
   },
   created() {
-    this.$store.dispatch('loadMain')
+    this.$store.dispatch('user/loadMain')
   }
 }
 </script>

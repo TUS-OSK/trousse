@@ -1,16 +1,12 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { fetchMain } from './api'
+import { fetchMain } from '../api'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default {
   state: {
     user: {},
     cosmes: {
       base: [],
       cheek: [],
-      lip: [],
+      lip: []
     }
   },
   getters: {
@@ -30,4 +26,4 @@ export default new Vuex.Store({
       commit('updateMainData', mainData)
     }
   }
-})
+}

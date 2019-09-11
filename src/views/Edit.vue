@@ -11,15 +11,26 @@
             <div class="color">{{ item.color }}</div>
           </li>
         </ul>
-        <button value="コスメを追加" onclick='editButtonClicked()'>
+        <button v-on:click="editButtonClicked()">コスメを追加</button>
+        <Form v-if="isShow">
+        コスメの分野
+          <select><option disabled value="">Please select one</option>
+          <option>base</option>
+          <option>cheek</option>
+          <option>lip</option>
+          </select><br>
+        コスメのブランド<input type="text" name="brand" ><br>
+        コスメの名前<input type="text" name="name" ><br>
+        コスメの色味<input type="text" name="color" >
+        </Form>
       </main>
     </div>
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header.vue"
-import Sidebar from "@/components/Sidebar.vue"
+import Header from '@/components/Header.vue'
+import Sidebar from '@/components/Sidebar.vue'
 
 export default {
   name: 'edit',
@@ -31,18 +42,24 @@ export default {
     type: {
       type: String,
       required: true
-    }
+    },
   },
   methods:{
     editButtonClicked(){
-      this.$store.dispatch('DisplayAddForm')
-    }
+      this.$store.dispatch('edit/loadForm')
+    },
   },
   computed: {
     list() {
-      return this.$store.getters.cosmes(this.type)
+      return this.$store.getters['user/cosmes'](this.type)
+    },
+
+    isShow(){
+      return this.$store.getters['edit/formShow']
     }
-  }
+
+    
+  },
 };
 
 </script>
