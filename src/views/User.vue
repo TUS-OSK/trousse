@@ -10,7 +10,7 @@
         <div v-for="category in all" :key="category.label" class="category">
           <h3 class="category-label">{{ category.label }}</h3>
           <ul class="list">
-           <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}</li>
+            <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}</li>
           </ul>
         </div>
       </main>
@@ -50,4 +50,5 @@ export default {
   display: flex;
   flex-direction: row;
 }
+
 </style>
