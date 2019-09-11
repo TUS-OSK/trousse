@@ -20,6 +20,9 @@ export default {
   components: {
     Header,
     Sidebar
+  },
+  created() {
+    this.$store.dispatch('userData/loadMain')
   }
 }
 </script>
