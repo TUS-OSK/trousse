@@ -14,9 +14,7 @@ export default {
     displayAddForm(state) {
       state.formShow = !state.formShow
       state.isShow = state.formShow
-    },
-    
-
+    }
   },
   actions: {
     loadForm({ commit }) {

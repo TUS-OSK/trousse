@@ -14,9 +14,9 @@
         <button v-on:click="editAddButtonClicked()">コスメを追加</button>
         <div v-if="isShow">
         <div>コスメの分野:{{type}}</div>
-        コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"><br>
-        コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ><br>
-        コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ><br>
+        <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
+        <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
+        <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
         <button v-on:click="saveForm(type)">コスメを登録</button>
         </div>
       </main>
