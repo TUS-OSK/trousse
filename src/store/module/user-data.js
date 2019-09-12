@@ -18,6 +18,9 @@ export default {
     updateMainData(state, payload) {
       state.user = payload.user
       state.cosmes = payload.cosmes
+    },
+    registerCosmeInformation(state,payload){
+      state.cosmes[payload.type].push(payload.info)
     }
   },
   actions: {

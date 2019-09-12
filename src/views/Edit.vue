@@ -11,18 +11,14 @@
             <div class="color">{{ item.color }}</div>
           </li>
         </ul>
-        <button v-on:click="editButtonClicked()">コスメを追加</button>
-        <Form v-if="isShow">
-        コスメの分野
-          <select><option disabled value="">Please select one</option>
-          <option>base</option>
-          <option>cheek</option>
-          <option>lip</option>
-          </select><br>
-        コスメのブランド<input type="text" name="brand" ><br>
-        コスメの名前<input type="text" name="name" ><br>
-        コスメの色味<input type="text" name="color" >
-        </Form>
+        <button v-on:click="editAddButtonClicked()">コスメを追加</button>
+        <div v-if="isShow">
+        <div>コスメの分野:{{type}}</div>
+        コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"><br>
+        コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ><br>
+        コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ><br>
+        <button v-on:click="saveForm(type)">コスメを登録</button>
+        </div>
       </main>
     </div>
   </div>
@@ -44,10 +40,31 @@ export default {
       required: true
     },
   },
+  data(){
+    return {
+      cosmeBrandText:'',
+      cosmeNameText:'',
+      cosmeColorText:''
+    }
+  },
   methods:{
-    editButtonClicked(){
+    editAddButtonClicked(){
       this.$store.dispatch('pages/edit/loadForm')
     },
+    saveForm(type){
+      const item = {
+          type,
+          info: {
+            id :"test",
+            brand : this.cosmeBrandText,
+            name : this.cosmeNameText,
+            color : this.cosmeColorText
+          }
+        }
+      this.$store.commit('userData/registerCosmeInformation',item)
+      this.$store.dispatch('userData/loadMain')
+    }
+
   },
   computed: {
     list() {
@@ -56,7 +73,7 @@ export default {
 
     isShow(){
       return this.$store.getters['pages/edit/formShow']
-    }
+    },
 
     
   },
