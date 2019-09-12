@@ -9,11 +9,11 @@
           <h3 class="category-label">{{ category.label }}</h3>
           <button class="displayDetail" @click="changeState(category.label)">詳細</button>
           <ul class="list">
-           <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}
+           <li v-for="(item, index) in category.list" :key="item.id" class="item">{{ item.name }}
               <ul class="cosme-info">
                 <li> {{ item.brand }} </li>
                 <li> {{ item.color }} </li>
-                <li> {{ item.state }} </li>
+                <li> {{ category.cosmeFlags[index] }} </li>
               </ul>
            </li>
           </ul>
@@ -36,26 +36,32 @@ export default {
   },
   computed: {
     limitedItems() {
-      return this.$store.getters['main/cosmeTypes'].map(type => ({
+      return this.$store.getters['userData/cosmeTypes'].map(type => ({
         label: type,
-        list: this.$store.getters['main/limitedCosmes'](type)
+        list: this.$store.getters['userData/cosmes'][type].slice(0,1),
+        cosmeFlags: this.$store.getters['pages/main/cosmeStates'][type].cosmeFlags.slice(0,1)
       })) 
     },
     allItems() {
-      return this.$store.getters['main/cosmeTypes'].map(type => ({
+      return this.$store.getters['userData/cosmeTypes'].map(type => ({
         label: type,
-        list: this.$store.getters['main/cosmes'](type)
+        list: this.$store.getters['userData/cosmes'][type],
+        cosmeStates: this.$store.getters['pages/main/cosmeStates'][type].cosmeFlags
       }))
-    }
+    },
   },
   methods: {
     changeState(type) {
-      this.$store.state.main.cosmesState[type] = !this.$store.state.main.cosmesState[type]
-      alert(this.$store.state.main.cosmesState[type])
+      this.$store.commit('pages/main/changeDisplayState', type)
     }
   },
-  created() {
-    this.$store.dispatch('main/loadMain')
+  async created() {
+    await this.$store.dispatch('userData/loadAll')
+    const data = await {
+      cosmeTypes: this.$store.getters['userData/cosmeTypes'],
+      cosmeNumber: this.$store.getters['userData/cosmeNumber']
+    }
+    this.$store.commit('pages/main/updateCosmeFlags', data)
   }
 }
 </script>

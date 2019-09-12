@@ -10,7 +10,7 @@
         <div v-for="category in all" :key="category.label" class="category">
           <h3 class="category-label">{{ category.label }}</h3>
           <ul class="list">
-           <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}</li>
+            <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}</li>
           </ul>
         </div>
       </main>
@@ -30,18 +30,15 @@ export default {
   },
   computed: {
     name() {
-      return this.$store.getters['user/user'].name
+      return this.$store.getters['userData/user'].name
     },
     all() {
-      return this.$store.getters['user/cosmeTypes'].map(type => ({
+      return this.$store.getters['userData/cosmeTypes'].map(type => ({
         label: type,
-        list: this.$store.getters['user/cosmes'](type)
+        list: this.$store.getters['userData/cosmes'][type]
       }))
     }
-  },
-  created() {
-    this.$store.dispatch('user/loadMain')
-  }
+  } 
 }
 </script>
 
@@ -50,4 +47,5 @@ export default {
   display: flex;
   flex-direction: row;
 }
+
 </style>
