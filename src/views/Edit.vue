@@ -38,16 +38,16 @@ export default {
     type: {
       type: String,
       required: true
-    },
+    }
   },
   data(){
     return {
-      cosmeBrandText:'',
-      cosmeNameText:'',
-      cosmeColorText:''
+      cosmeBrandText: '',
+      cosmeNameText: '',
+      cosmeColorText: ''
     }
   },
-  methods:{
+  methods: {
     editAddButtonClicked(){
       this.$store.dispatch('pages/edit/loadForm')
     },
@@ -55,13 +55,13 @@ export default {
       const item = {
           type,
           info: {
-            id :"test",
-            brand : this.cosmeBrandText,
-            name : this.cosmeNameText,
-            color : this.cosmeColorText
+            id: 'test',
+            brand: this.cosmeBrandText,
+            name: this.cosmeNameText,
+            color: this.cosmeColorText
           }
         }
-      this.$store.commit('userData/registerCosmeInformation',item)
+      this.$store.commit('userData/registerCosmeInformation', item)
       this.$store.dispatch('userData/loadMain')
     }
 
@@ -73,10 +73,10 @@ export default {
 
     isShow(){
       return this.$store.getters['pages/edit/formShow']
-    },
+    }
 
     
-  },
+  }
 };
 
 </script>
