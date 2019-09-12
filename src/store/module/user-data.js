@@ -1,4 +1,4 @@
-import { fetchMain } from '../api'
+import { fetchMain } from '../../api'
 
 export default {
   state: {

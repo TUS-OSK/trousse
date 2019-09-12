@@ -30,18 +30,15 @@ export default {
   },
   computed: {
     name() {
-      return this.$store.getters['user/user'].name
+      return this.$store.getters['userData/user'].name
     },
     all() {
-      return this.$store.getters['user/cosmeTypes'].map(type => ({
+      return this.$store.getters['userData/cosmeTypes'].map(type => ({
         label: type,
-        list: this.$store.getters['user/cosmes'](type)
+        list: this.$store.getters['userData/cosmes'](type)
       }))
     }
-  },
-  created() {
-    this.$store.dispatch('user/loadMain')
-  }
+  } 
 }
 </script>
 

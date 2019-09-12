@@ -46,16 +46,16 @@ export default {
   },
   methods:{
     editButtonClicked(){
-      this.$store.dispatch('edit/loadForm')
+      this.$store.dispatch('pages/edit/loadForm')
     },
   },
   computed: {
     list() {
-      return this.$store.getters['user/cosmes'](this.type)
+      return this.$store.getters['userData/cosmes'](this.type)
     },
 
     isShow(){
-      return this.$store.getters['edit/formShow']
+      return this.$store.getters['pages/edit/formShow']
     }
 
     

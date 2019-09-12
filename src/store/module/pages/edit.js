@@ -1,25 +1,25 @@
 
 export default {
   state: {
-    formShow : false,
+    formShow: false,
   },
 
   getters: {
-    formShow : state =>{
+    formShow: state => {
       return state.formShow;
     }
 
-    },
+  },
   mutations: {
-    DisplayAddForm( state ){
+    displayAddForm(state) {
       state.formShow = !state.formShow
       state.isShow = state.formShow
     }
 
-},
+  },
   actions: {
-    loadForm({ commit }){
-      commit ('DisplayAddForm')
+    loadForm({ commit }) {
+      commit('displayAddForm')
     }
   }
 }
