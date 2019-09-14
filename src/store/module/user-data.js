@@ -7,12 +7,16 @@ export default {
       base: [],
       cheek: [],
       lip: []
-    }
+    },
+    cosmeIdCount: 6
   },
   getters: {
     user: state => state.user,
     cosmeTypes: state => Object.keys(state.cosmes),
-    cosmes: state => type => state.cosmes[type]
+    cosmes: state => type => state.cosmes[type],
+    cosmeIdCount: state => {
+      return state.cosmeIdCount
+    }
   },
   mutations: {
     updateMainData(state, payload) {
@@ -21,6 +25,9 @@ export default {
     },
     registerCosmeInformation(state, payload){
       state.cosmes[payload.type].push(payload.info)
+    },
+    idIncrement(state) {
+      state.cosmeIdCount++
     }
   },
   actions: {

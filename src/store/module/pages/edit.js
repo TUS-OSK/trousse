@@ -1,26 +1,17 @@
 
 export default {
   state: {
-    formShow: false,
-    cosmeIdCount: 6,
+    formShow: false
   },
-
   getters: {
     formShow: state => {
-      return state.formShow;
-    },
-    cosmeIdCount: state => {
-      return state.cosmeIdCount;
+      return state.formShow
     }
-
   },
   mutations: {
     displayAddForm(state) {
       state.formShow = !state.formShow
       state.isShow = state.formShow
-    },
-    idIncrement(state) {
-      state.cosmeIdCount++
     }
   },
   actions: {
