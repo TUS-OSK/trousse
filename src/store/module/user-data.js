@@ -34,6 +34,9 @@ export default {
     async loadMain({ commit }) {
       const mainData = await fetchMain()
       commit('updateMainData', mainData)
+    },
+    idIncrement({ commit }){
+      commit('idIncrement')
     }
   }
 }

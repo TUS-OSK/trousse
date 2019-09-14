@@ -75,7 +75,7 @@ export default {
             theme: this.cosmeThemeCheckbox
           }
         }
-      this.$store.commit('userData/idIncrement')
+      this.$store.dispatch('userData/idIncrement')
       this.$store.commit('userData/registerCosmeInformation', item)
       this.$store.dispatch('userData/loadMain')
     }
