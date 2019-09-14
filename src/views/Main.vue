@@ -9,11 +9,10 @@
           <h3 class="category-label">{{ category.label }}</h3>
           <button class="displayDetail" @click="changeState(category.label)">詳細</button>
           <ul class="list">
-           <li v-for="(item, index) in category.list" :key="item.id" class="item">{{ item.name }}
+           <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}
               <ul class="cosme-info">
                 <li> {{ item.brand }} </li>
                 <li> {{ item.color }} </li>
-                <li> {{ category.cosmeFlags[index] }} </li>
               </ul>
            </li>
           </ul>
@@ -36,34 +35,31 @@ export default {
   },
   computed: {
     limitedItems() {
-      return this.$store.getters['userData/cosmeTypes'].map(type => ({
-        label: type,
-        list: this.$store.getters['userData/cosmes'][type].slice(0,1),
-        cosmeFlags: this.$store.getters['pages/main/cosmeStates'][type].cosmeFlags.slice(0,1)
-      })) 
+      return this.$store.getters['userData/cosmeTypes'].map(type => {
+        const list = this.$store.getters['userData/cosmes'][type].slice(0, 1)
+        return {
+          label: type,
+          list
+        }
+      })
     },
     allItems() {
       return this.$store.getters['userData/cosmeTypes'].map(type => ({
         label: type,
-        list: this.$store.getters['userData/cosmes'][type],
-        cosmeStates: this.$store.getters['pages/main/cosmeStates'][type].cosmeFlags
+        list: this.$store.getters['userData/cosmes'][type]
       }))
-    },
+    }
   },
   methods: {
     changeState(type) {
-      this.$store.commit('pages/main/changeDisplayState', type)
+      this.$store.dispatch('pages/main/loadDisplayState', type)
     }
   },
-  async created() {
-    await this.$store.dispatch('userData/loadAll')
-    const data = await {
-      cosmeTypes: this.$store.getters['userData/cosmeTypes'],
-      cosmeNumber: this.$store.getters['userData/cosmeNumber']
-    }
-    this.$store.commit('pages/main/updateCosmeFlags', data)
+  created() {
+    this.$store.dispatch('userData/loadMain')
   }
 }
+
 </script>
 
 <style scoped>

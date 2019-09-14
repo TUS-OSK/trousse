@@ -1,12 +1,12 @@
 
 export default {
   state: {
-    formShow: false,
+    formShow: false
   },
 
   getters: {
     formShow: state => {
-      return state.formShow;
+      return state.formShow
     }
 
   },
@@ -15,7 +15,6 @@ export default {
       state.formShow = !state.formShow
       state.isShow = state.formShow
     }
-
   },
   actions: {
     loadForm({ commit }) {

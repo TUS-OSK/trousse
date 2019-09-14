@@ -16,7 +16,24 @@ module.exports = {
   ],
   rules: {
     'space-before-function-paren': ['error', 'never'],
+    'key-spacing': ['error', {
+      'beforeColon': false,
+      'afterColon': true
+    }],
+    'comma-dangle': ['error', 'never'],
+    'comma-spacing': ['error', {
+      'before': false,
+      'after': true
+    }],
+    'quotes': ['error', 'single'],
+    'semi': ['error', 'never'],
+    'no-multiple-empty-lines': ['error', {
+      'max': 1,
+      'maxEOF': 0
+    }],
+    'eol-last': 2,
     'generator-star-spacing': 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
 }

@@ -3,20 +3,17 @@ export default {
     cosmeStates: {
       base: {
         isChecked: true,
-        isOpend: false,
-        cosmeFlags: []
+        isOpend: false
       },
       cheek: {
         isChecked: true,
-        isOpend: false,
-        cosmeFlags: []
+        isOpend: false
       },
       lip: {
         isChecked: true,
-        isOpend: false,
-        cosmeFlags: []
+        isOpend: false
       }
-    },
+    }
   },
   getters: {
     cosmeStates: state => state.cosmeStates
@@ -25,13 +22,11 @@ export default {
     changeDisplayState(state, payload) {
       state.cosmeStates[payload].isOpend = !state.cosmeStates[payload].isOpend
       alert(state.cosmeStates[payload].isOpend)
-    },
-    updateCosmeFlags(state, payload) {
-      payload.cosmeTypes.forEach(type => {
-        state.cosmeStates[type].cosmeFlags = Array(payload.cosmeNumber[type]).fill(true)
-      });
     }
   },
   actions: {
+    loadDisplayState({ commit }, payload) {
+      commit('changeDisplayState', payload)
+    }
   }
 }
