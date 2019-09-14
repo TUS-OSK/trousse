@@ -9,6 +9,7 @@
           <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
             <div class="brand">{{ item.brand }}</div>
             <div class="color">{{ item.color }}</div>
+            <div class="image">{{ item.theme }}</div>
           </li>
         </ul>
         <button v-on:click="editAddButtonClicked()">コスメを追加</button>
@@ -17,6 +18,16 @@
         <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
         <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
         <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
+        <div>コスメのテーマ:
+          <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
+          <label>春</label>
+          <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
+          <label>夏</label>
+          <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
+          <label>秋</label>
+          <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
+          <label>冬</label>
+        </div>
         <button v-on:click="saveForm(type)">コスメを登録</button>
         </div>
       </main>
@@ -42,9 +53,10 @@ export default {
   },
   data(){
     return {
-      cosmeBrandText: '',
-      cosmeNameText: '',
-      cosmeColorText: ''
+      cosmeBrandText:'',
+      cosmeNameText:'',
+      cosmeColorText:'',
+      cosmeThemeCheckbox:[],
     }
   },
   methods: {
@@ -55,10 +67,11 @@ export default {
       const item = {
           type,
           info: {
-            id: 'test',
-            brand: this.cosmeBrandText,
-            name: this.cosmeNameText,
-            color: this.cosmeColorText
+            id :"test",
+            brand : this.cosmeBrandText,
+            name : this.cosmeNameText,
+            color : this.cosmeColorText,
+            theme : this.cosmeThemeCheckbox
           }
         }
       this.$store.commit('userData/registerCosmeInformation', item)
@@ -94,6 +107,9 @@ export default {
   font-size: 10px;
 }
 .color{
+  font-size: 10px;
+}
+.image{
   font-size: 10px;
 }
 </style>
