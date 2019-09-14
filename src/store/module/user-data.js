@@ -19,7 +19,7 @@ export default {
       state.user = payload.user
       state.cosmes = payload.cosmes
     },
-    registerCosmeInformation(state,payload){
+    registerCosmeInformation(state, payload){
       state.cosmes[payload.type].push(payload.info)
     }
   },

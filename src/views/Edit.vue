@@ -50,18 +50,17 @@ export default {
     type: {
       type: String,
       required: true
-    },
+    }
   },
   data(){
     return {
-      
       cosmeBrandText:'',
       cosmeNameText:'',
       cosmeColorText:'',
       cosmeThemeCheckbox:[],
     }
   },
-  methods:{
+  methods: {
     editAddButtonClicked(){
       this.$store.dispatch('pages/edit/loadForm')
     },
@@ -90,7 +89,6 @@ export default {
     isShow(){
       return this.$store.getters['pages/edit/formShow']
     },
-
     cosmeIdcount(){
       return this.$store.getters['pages/edit/cosmeIdCount']
     }
