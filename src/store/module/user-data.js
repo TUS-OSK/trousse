@@ -8,7 +8,7 @@ export default {
       cheek: [],
       lip: []
     },
-    cosmeIdCount: 6
+    cosmeIdCount: 0
   },
   getters: {
     user: state => state.user,
@@ -22,12 +22,17 @@ export default {
     updateMainData(state, payload) {
       state.user = payload.user
       state.cosmes = payload.cosmes
+      let flattenCosmes = []
+      for(const key in payload.cosmes) {
+        flattenCosmes = flattenCosmes.concat(payload.cosmes[key])
+      }
+      state.cosmeIdCount = Math.max(...flattenCosmes.map(cosme => +cosme.id))
     },
     registerCosmeInformation(state, payload){
-      state.cosmes[payload.type].push(payload.info)
-    },
-    idIncrement(state) {
-      state.cosmeIdCount++
+      state.cosmes[payload.type].push({
+        id: '' + ++state.cosmeIdCount,
+        ...payload.info
+      })
     }
   },
   actions: {
@@ -35,8 +40,8 @@ export default {
       const mainData = await fetchMain()
       commit('updateMainData', mainData)
     },
-    idIncrement({ commit }){
-      commit('idIncrement')
+    registerCosmeInformation({ commit }, item) {
+      commit('registerCosmeInformation', item)
     }
   }
 }

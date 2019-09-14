@@ -66,26 +66,22 @@ export default {
     },
     saveForm(type){
       const item = {
-          type,
-          info: {
-            id: this.cosmeIdcount,
-            brand: this.cosmeBrandText,
-            name: this.cosmeNameText,
-            color: this.cosmeColorText,
-            theme: this.cosmeThemeCheckbox
-          }
+        type,
+        info: {
+          brand: this.cosmeBrandText,
+          name: this.cosmeNameText,
+          color: this.cosmeColorText,
+          theme: this.cosmeThemeCheckbox
         }
-      this.$store.dispatch('userData/idIncrement')
-      this.$store.commit('userData/registerCosmeInformation', item)
+      }
+      this.$store.dispatch('userData/registerCosmeInformation', item)
       this.$store.dispatch('userData/loadMain')
     }
-
   },
   computed: {
     list() {
       return this.$store.getters['userData/cosmes'](this.type)
     },
-
     isShow(){
       return this.$store.getters['pages/edit/formShow']
     },
