@@ -7,10 +7,12 @@
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
           <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
+            <button v-on:click="editCosmeChengeInformationButtonClicked()">コスメ編集</button>
            <div class="brand">{{ item.id }}</div>
             <div class="brand">{{ item.brand }}</div>
             <div class="color">{{ item.color }}</div>
             <div class="image">{{ item.theme }}</div>
+             <Inputform v-if="showChengeForm" :type="type" />
           </li>
         </ul>
         <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
@@ -55,6 +57,9 @@ export default {
       }else{
         this.cosmeAddFormButtonValue = 'コスメを追加'
       }
+    },
+    editCosmeChengeInformationButtonClicked(){
+      this.$store.dispatch('pages/edit/loadChengeForm')
     }
   },
   computed: {
@@ -63,6 +68,9 @@ export default {
     },
     isShow(){
       return this.$store.getters['pages/edit/formShow']
+    },
+    showChengeForm(){
+      return this.$store.getters['pages/edit/chengeForm']
     },
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
