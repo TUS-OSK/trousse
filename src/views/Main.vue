@@ -5,18 +5,20 @@
       <Sidebar PageName="メイン"/>
       <main>
         <h2>今日のコスメを決めよう！</h2>
-        <div v-for="category in limitedItems" :key="category.label" class="category">
-          <h3 class="category-label">{{ category.label }}</h3>
-          <button class="displayDetail" @click="changeState(category.label)">詳細</button>
-          <ul class="list">
-           <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}
-              <ul class="cosme-info">
-                <li> {{ item.brand }} </li>
-                <li> {{ item.color }} </li>
-              </ul>
-           </li>
-          </ul>
-        </div>
+        <section>
+          <div v-for="category in cosmeList" :key="category.label" class="category">
+            <h3 class="category-label">{{ category.label }}</h3>
+            <button v-if="category.isOpened" @click="changeState(category.label)">▲</button>
+            <button v-else @click="changeState(category.label)">▼</button>
+            <ul class="list">
+              <li v-for="item in category.list" :key="item.id" class="item">- cosme list -
+                <ul>
+                  <li v-for="( info, key ) in item" :key="key" class="key"> {{ key }}: {{ info }} </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </section>
         <router-link class="link" to="/main/result">結果を画像で保存</router-link>
       </main>
     </div>
@@ -34,20 +36,25 @@ export default {
     Sidebar
   },
   computed: {
-    limitedItems() {
+    cosmeList() {
       return this.$store.getters['userData/cosmeTypes'].map(type => {
-        const list = this.$store.getters['userData/cosmes'][type].slice(0, 1)
-        return {
-          label: type,
-          list
+        const isOpened = this.$store.getters['pages/main/cosmeStates'][type].isOpened
+        const list = this.$store.getters['userData/cosmes'][type]
+
+        if(isOpened) {
+          return {
+            isOpened,
+            label: type,
+            list
+          }
+        } else {
+          return {
+            isOpened,
+            label: type,
+            list: list.slice(0, 1)
+          }
         }
       })
-    },
-    allItems() {
-      return this.$store.getters['userData/cosmeTypes'].map(type => ({
-        label: type,
-        list: this.$store.getters['userData/cosmes'][type]
-      }))
     }
   },
   methods: {
