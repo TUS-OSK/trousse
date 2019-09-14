@@ -1,7 +1,7 @@
 
 export default {
   state: {
-    formShow: false,
+    formShow: false
   },
 
   getters: {

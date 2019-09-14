@@ -49,7 +49,7 @@ export default {
     type: {
       type: String,
       required: true
-    },
+    }
   },
   data(){
     return {
@@ -59,7 +59,7 @@ export default {
       cosmeThemeCheckbox:[],
     }
   },
-  methods:{
+  methods: {
     editAddButtonClicked(){
       this.$store.dispatch('pages/edit/loadForm')
     },
@@ -74,7 +74,7 @@ export default {
             theme : this.cosmeThemeCheckbox
           }
         }
-      this.$store.commit('userData/registerCosmeInformation',item)
+      this.$store.commit('userData/registerCosmeInformation', item)
       this.$store.dispatch('userData/loadMain')
     }
 
@@ -86,10 +86,10 @@ export default {
 
     isShow(){
       return this.$store.getters['pages/edit/formShow']
-    },
+    }
 
     
-  },
+  }
 };
 
 </script>
