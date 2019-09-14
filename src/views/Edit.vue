@@ -13,7 +13,7 @@
             <div class="image">{{ item.theme }}</div>
           </li>
         </ul>
-        <button v-on:click="editAddButtonClicked()">コスメを追加</button>
+        <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
         <div v-if="isShow">
         <div>コスメの分野:{{type}}</div>
         <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
@@ -57,12 +57,18 @@ export default {
       cosmeBrandText: '',
       cosmeNameText: '',
       cosmeColorText: '',
-      cosmeThemeCheckbox: []
+      cosmeThemeCheckbox: [],
+      cosmeAddFormButtonValue: 'コスメを追加'
     }
   },
   methods: {
     editAddButtonClicked(){
       this.$store.dispatch('pages/edit/loadForm')
+      if(this.isShow){
+        this.cosmeAddFormButtonValue = '閉じる'
+      }else{
+        this.cosmeAddFormButtonValue = 'コスメを追加'
+      }
     },
     saveForm(type){
       const item = {
