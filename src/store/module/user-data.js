@@ -13,7 +13,7 @@ export default {
   getters: {
     user: state => state.user,
     cosmeTypes: state => Object.keys(state.cosmes),
-    cosmes: state => type => state.cosmes[type],
+    cosmes: state => state.cosmes,
     cosmeIdCount: state => {
       return state.cosmeIdCount
     }
@@ -23,12 +23,12 @@ export default {
       state.user = payload.user
       state.cosmes = payload.cosmes
       let flattenCosmes = []
-      for(const key in payload.cosmes) {
+      for (const key in payload.cosmes) {
         flattenCosmes = flattenCosmes.concat(payload.cosmes[key])
       }
       state.cosmeIdCount = Math.max(...flattenCosmes.map(cosme => +cosme.id))
     },
-    registerCosmeInformation(state, payload){
+    registerCosmeInformation(state, payload) {
       state.cosmes[payload.type].push({
         id: '' + ++state.cosmeIdCount,
         ...payload.info

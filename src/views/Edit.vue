@@ -15,21 +15,21 @@
         </ul>
         <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
         <div v-if="isShow">
-        <div>コスメの分野:{{type}}</div>
-        <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
-        <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
-        <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
-        <div>コスメのテーマ:
-          <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
-          <label>春</label>
-          <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
-          <label>夏</label>
-          <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
-          <label>秋</label>
-          <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
-          <label>冬</label>
-        </div>
-        <button v-on:click="saveForm(type)">コスメを登録</button>
+          <div>コスメの分野:{{type}}</div>
+          <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
+          <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
+          <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
+          <div>コスメのテーマ:
+            <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
+            <label>春</label>
+            <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
+            <label>夏</label>
+            <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
+            <label>秋</label>
+            <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
+            <label>冬</label>
+          </div>
+          <button v-on:click="saveForm(type)">コスメを登録</button>
         </div>
       </main>
     </div>
@@ -52,7 +52,7 @@ export default {
       required: true
     }
   },
-  data(){
+  data() {
     return {
       cosmeBrandText: '',
       cosmeNameText: '',
@@ -62,15 +62,15 @@ export default {
     }
   },
   methods: {
-    editAddButtonClicked(){
+    editAddButtonClicked() {
       this.$store.dispatch('pages/edit/loadForm')
-      if(this.isShow){
+      if(this.isShow) {
         this.cosmeAddFormButtonValue = '閉じる'
-      }else{
+      } else {
         this.cosmeAddFormButtonValue = 'コスメを追加'
       }
     },
-    saveForm(type){
+    saveForm(type) {
       const item = {
         type,
         info: {
@@ -90,12 +90,12 @@ export default {
   },
   computed: {
     list() {
-      return this.$store.getters['userData/cosmes'](this.type)
+      return this.$store.getters['userData/cosmes'][this.type]
     },
-    isShow(){
+    isShow() {
       return this.$store.getters['pages/edit/formShow']
     },
-    cosmeIdcount(){
+    cosmeIdcount() {
       return this.$store.getters['userData/cosmeIdCount']
     }
   }
