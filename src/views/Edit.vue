@@ -7,16 +7,28 @@
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
           <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
+            <div class="brand">{{ item.id }}</div>
             <div class="brand">{{ item.brand }}</div>
             <div class="color">{{ item.color }}</div>
+            <div class="image">{{ item.theme }}</div>
           </li>
         </ul>
-        <button v-on:click="editAddButtonClicked()">コスメを追加</button>
+        <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
         <div v-if="isShow">
         <div>コスメの分野:{{type}}</div>
         <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
         <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
         <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
+        <div>コスメのテーマ:
+          <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
+          <label>春</label>
+          <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
+          <label>夏</label>
+          <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
+          <label>秋</label>
+          <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
+          <label>冬</label>
+        </div>
         <button v-on:click="saveForm(type)">コスメを登録</button>
         </div>
       </main>
@@ -44,37 +56,48 @@ export default {
     return {
       cosmeBrandText: '',
       cosmeNameText: '',
-      cosmeColorText: ''
+      cosmeColorText: '',
+      cosmeThemeCheckbox: [],
+      cosmeAddFormButtonValue: 'コスメを追加'
     }
   },
   methods: {
     editAddButtonClicked(){
       this.$store.dispatch('pages/edit/loadForm')
+      if(this.isShow){
+        this.cosmeAddFormButtonValue = '閉じる'
+      }else{
+        this.cosmeAddFormButtonValue = 'コスメを追加'
+      }
     },
     saveForm(type){
       const item = {
-          type,
-          info: {
-            id: 'test',
-            brand: this.cosmeBrandText,
-            name: this.cosmeNameText,
-            color: this.cosmeColorText
-          }
+        type,
+        info: {
+          brand: this.cosmeBrandText,
+          name: this.cosmeNameText,
+          color: this.cosmeColorText,
+          theme: this.cosmeThemeCheckbox
         }
-      this.$store.commit('userData/registerCosmeInformation', item)
+      }
+      this.$store.dispatch('userData/registerCosmeInformation', item)
       this.$store.dispatch('userData/loadMain')
+      this.cosmeBrandText = ''
+      this.cosmeNameText = ''
+      this.cosmeColorText = ''
+      this.cosmeThemeCheckbox = []
     }
-
   },
   computed: {
     list() {
       return this.$store.getters['userData/cosmes'][this.type]
     },
-
     isShow(){
       return this.$store.getters['pages/edit/formShow']
+    },
+    cosmeIdcount(){
+      return this.$store.getters['userData/cosmeIdCount']
     }
-    
   }
 }
 
@@ -93,6 +116,9 @@ export default {
   font-size: 10px;
 }
 .color{
+  font-size: 10px;
+}
+.image{
   font-size: 10px;
 }
 </style>
