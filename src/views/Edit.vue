@@ -7,6 +7,7 @@
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
           <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
+            <div class="brand">{{ item.id }}</div>
             <div class="brand">{{ item.brand }}</div>
             <div class="color">{{ item.color }}</div>
             <div class="image">{{ item.theme }}</div>
@@ -53,6 +54,7 @@ export default {
   },
   data(){
     return {
+      
       cosmeBrandText:'',
       cosmeNameText:'',
       cosmeColorText:'',
@@ -67,13 +69,14 @@ export default {
       const item = {
           type,
           info: {
-            id :"test",
+            id : this.cosmeIdcount,
             brand : this.cosmeBrandText,
             name : this.cosmeNameText,
             color : this.cosmeColorText,
             theme : this.cosmeThemeCheckbox
           }
         }
+        this.$store.commit('pages/edit/idIncrement')
       this.$store.commit('userData/registerCosmeInformation',item)
       this.$store.dispatch('userData/loadMain')
     }
@@ -88,7 +91,9 @@ export default {
       return this.$store.getters['pages/edit/formShow']
     },
 
-    
+    cosmeIdcount(){
+      return this.$store.getters['pages/edit/cosmeIdCount']
+    }
   },
 };
 
