@@ -76,6 +76,10 @@ export default {
       }
       this.$store.dispatch('userData/registerCosmeInformation', item)
       this.$store.dispatch('userData/loadMain')
+      this.cosmeBrandText = ''
+      this.cosmeNameText = ''
+      this.cosmeColorText = ''
+      this.cosmeThemeCheckbox = []
     }
   },
   computed: {
