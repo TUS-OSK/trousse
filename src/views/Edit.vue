@@ -19,12 +19,14 @@
         <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
         <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
         <div>コスメのテーマ:
-          <input v-model="cosmeThemeCheckbox" value="春" type="checkbox">
+          <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
           <label>春</label>
-          <input v-model="cosmeThemeCheckbox" value="夏" type="checkbox">
+          <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
           <label>夏</label>
-          <input v-model="cosmeThemeCheckbox" value="秋" type="checkbox">
+          <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
           <label>秋</label>
+          <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
+          <label>冬</label>
         </div>
         <button v-on:click="saveForm(type)">コスメを登録</button>
         </div>
