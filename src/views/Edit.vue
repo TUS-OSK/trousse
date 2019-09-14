@@ -7,6 +7,7 @@
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
           <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
+            <div class="brand">{{ item.id }}</div>
             <div class="brand">{{ item.brand }}</div>
             <div class="color">{{ item.color }}</div>
             <div class="image">{{ item.theme }}</div>
@@ -53,10 +54,10 @@ export default {
   },
   data(){
     return {
-      cosmeBrandText:'',
-      cosmeNameText:'',
-      cosmeColorText:'',
-      cosmeThemeCheckbox:[],
+      cosmeBrandText: '',
+      cosmeNameText: '',
+      cosmeColorText: '',
+      cosmeThemeCheckbox: []
     }
   },
   methods: {
@@ -65,32 +66,30 @@ export default {
     },
     saveForm(type){
       const item = {
-          type,
-          info: {
-            id :"test",
-            brand : this.cosmeBrandText,
-            name : this.cosmeNameText,
-            color : this.cosmeColorText,
-            theme : this.cosmeThemeCheckbox
-          }
+        type,
+        info: {
+          brand: this.cosmeBrandText,
+          name: this.cosmeNameText,
+          color: this.cosmeColorText,
+          theme: this.cosmeThemeCheckbox
         }
-      this.$store.commit('userData/registerCosmeInformation', item)
+      }
+      this.$store.dispatch('userData/registerCosmeInformation', item)
       this.$store.dispatch('userData/loadMain')
     }
-
   },
   computed: {
     list() {
       return this.$store.getters['userData/cosmes'](this.type)
     },
-
     isShow(){
       return this.$store.getters['pages/edit/formShow']
+    },
+    cosmeIdcount(){
+      return this.$store.getters['userData/cosmeIdCount']
     }
-
-    
   }
-};
+}
 
 </script>
 

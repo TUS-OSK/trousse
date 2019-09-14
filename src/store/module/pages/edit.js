@@ -3,12 +3,10 @@ export default {
   state: {
     formShow: false
   },
-
   getters: {
     formShow: state => {
-      return state.formShow;
+      return state.formShow
     }
-
   },
   mutations: {
     displayAddForm(state) {
