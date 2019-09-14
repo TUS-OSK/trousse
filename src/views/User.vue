@@ -38,7 +38,7 @@ export default {
         list: this.$store.getters['userData/cosmes'][type]
       }))
     }
-  } 
+  }
 }
 </script>
 
