@@ -1,31 +1,38 @@
 export default {
   state: {
     cosmeStates: {
-      base: {
-        isChecked: true,
-        isOpened: false
+      isOpened: {
+        base: false,
+        cheek: false,
+        lip: false
       },
-      cheek: {
-        isChecked: true,
-        isOpened: false
-      },
-      lip: {
-        isChecked: true,
-        isOpened: false
+      checkedTypes: [],
+      checkedItems: {
+        base: [],
+        cheek: [],
+        lip: []
       }
     }
   },
   getters: {
-    cosmeStates: state => state.cosmeStates
+    cosmeStates: state => state.cosmeStates,
+    isOpened: state => state.cosmeStates.isOpened
   },
   mutations: {
     changeDisplayState(state, payload) {
-      state.cosmeStates[payload].isOpened = !state.cosmeStates[payload].isOpened
+      state.cosmeStates.isOpened[payload] = !state.cosmeStates.isOpened[payload]
     }
+    // updateCheckedModules(state, payload) {
+    //   state.checkedTypes = payload.checkedTypes
+    //   state.checkedItems = payload.checkedItems
+    // }
   },
   actions: {
     loadDisplayState({ commit }, payload) {
       commit('changeDisplayState', payload)
     }
+    // loadCheckedModules({ commit }, payload) {
+    //   commit('updateCheckedModules', payload)
+    // }
   }
 }
