@@ -14,9 +14,7 @@ export default {
     user: state => state.user,
     cosmeTypes: state => Object.keys(state.cosmes),
     cosmes: state => state.cosmes,
-    cosmeIdCount: state => {
-      return state.cosmeIdCount
-    }
+    cosmeIdCount: state => state.cosmeIdCount
   },
   mutations: {
     updateMainData(state, payload) {

@@ -3,15 +3,15 @@ export default {
     cosmeStates: {
       base: {
         isChecked: true,
-        isOpend: false
+        isOpened: false
       },
       cheek: {
         isChecked: true,
-        isOpend: false
+        isOpened: false
       },
       lip: {
         isChecked: true,
-        isOpend: false
+        isOpened: false
       }
     }
   },
@@ -20,8 +20,7 @@ export default {
   },
   mutations: {
     changeDisplayState(state, payload) {
-      state.cosmeStates[payload].isOpend = !state.cosmeStates[payload].isOpend
-      alert(state.cosmeStates[payload].isOpend)
+      state.cosmeStates[payload].isOpened = !state.cosmeStates[payload].isOpened
     }
   },
   actions: {
