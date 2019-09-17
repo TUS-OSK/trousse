@@ -6,36 +6,10 @@
       <main>
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
-          <!-- <Cosmelist  :type="type" :item="item">
-          </Cosmelist> -->
-          <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
-            <button v-on:click="editCosmeChengeInformationButtonClicked()">コスメ情報を編集</button>
-           <div class="brand">{{ item.id }}</div>
-            <div class="brand">{{ item.brand }}</div>
-            <div class="color">{{ item.color }}</div>
-            <div class="image">{{ item.theme }}</div>
-
-           <div v-if="showChengeForm">
-             <div>コスメのブランド:<input v-model="cosmeBrandText"></div>
-             <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
-             <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
-             <div>コスメのテーマ:
-              <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
-            <label>春</label>
-            <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
-            <label>夏</label>
-            <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
-            <label>秋</label>
-            <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
-            <label>冬</label>
-            </div>
-          </div>
-            </li>
-
+          <Cosmelist v-for="item in list" :key="item.id" :type="type" :item="item"></Cosmelist>
         </ul>
         <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
         <Inputform v-if="isShow" :type="type" />
-
       </main>
     </div>
   </div>
@@ -45,13 +19,15 @@
 import Header from '@/components/Header.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Inputform from '@/components/Inputform.vue'
+import Cosmelist from '@/components/Cosmelist.vue'
 
 export default {
   name: 'edit',
   components: {
     Header,
     Sidebar,
-    Inputform
+    Inputform,
+    Cosmelist
   },
   props: {
     type: {
@@ -65,8 +41,7 @@ export default {
       cosmeNameText: '',
       cosmeColorText: '',
       cosmeThemeCheckbox: [],
-      cosmeAddFormButtonValue: 'コスメを追加',
-      showChengeForm: false
+      cosmeAddFormButtonValue: 'コスメを追加'
     }
   },
   methods: {
@@ -94,9 +69,6 @@ export default {
     isShow() {
       return this.$store.getters['pages/edit/formShow']
     },
-    // showChengeForm(){
-    //   return this.$store.getters['pages/edit/chengeForm']
-    // },
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
     }
