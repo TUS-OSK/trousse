@@ -35,10 +35,10 @@ export default {
     all() {
       return this.$store.getters['userData/cosmeTypes'].map(type => ({
         label: type,
-        list: this.$store.getters['userData/cosmes'](type)
+        list: this.$store.getters['userData/cosmes'][type]
       }))
     }
-  } 
+  }
 }
 </script>
 
