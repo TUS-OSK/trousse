@@ -10,7 +10,7 @@
           <div v-for="category in cosmeList" :key="category.label" class="category">
             <div class="category-fuction">
               <span class="category-label">{{ category.label }}</span>
-              <input type="checkbox" v-model="checkedTypes" :value="category.label">
+              <input type="checkbox" v-model="isChecked" :value="category.label" >
               <button v-if="category.isOpened" @click="changeState(category.label)">▲</button>
               <button v-else @click="changeState(category.label)">▼</button>
             </div>
@@ -43,8 +43,8 @@ export default {
       'cosmes'
     ]),
     ...mapGetters('pages/main', [
-      'isOpened'
-
+      'isOpened',
+      'checkedTypes'
     ]),
     cosmeList() {
       return this.cosmeTypes.map(type => {
@@ -66,9 +66,12 @@ export default {
         }
       })
     },
-    checkedTypes: {
+    isChecked: {
       get() {
-        return this.cosmeTypes
+        return this.checkedTypes
+      },
+      set(value) {
+        this.$store.dispatch('pages/main/loadCheckedTypes', value)
       }
     }
   },

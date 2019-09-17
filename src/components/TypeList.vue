@@ -1,10 +1,9 @@
 <template>
   <ul class="list">
-    {{ checkedItem }}
     <li v-for="item in category.list" :key="item.id" class="item">
       <div class="item-function">
         <span>- cosme list -</span>
-        <input type="checkbox" v-model="checkedItems" :value="item.id">
+        <input type="checkbox" v-model="isChecked" :value="item.id">
       </div>
       <ul>
         <li v-for="( info, key ) in item" :key="key" class="key"> {{ key }}: {{ info }} </li>
@@ -25,12 +24,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('userData', [
-      'allCosmeIds'
+    ...mapGetters('pages/main', [
+      'checkedItems'
     ]),
-    checkedItems: {
+    isChecked: {
       get() {
-        return this.allCosmeIds[this.category.label]
+        return this.checkedItems[this.category.label]
+      },
+      set(value) {
+        const data = {
+          type: this.category.label,
+          cosmes: value
+        }
+        this.$store.dispatch('pages/main/loadCheckedItems', data)
       }
     }
   }

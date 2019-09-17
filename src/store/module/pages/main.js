@@ -16,6 +16,8 @@ export default {
   },
   getters: {
     cosmeStates: state => state.cosmeStates,
+    checkedTypes: state => state.cosmeStates.checkedTypes,
+    checkedItems: state => state.cosmeStates.checkedItems,
     isOpened: state => state.cosmeStates.isOpened
   },
   mutations: {
@@ -23,11 +25,10 @@ export default {
       state.cosmeStates.isOpened[payload] = !state.cosmeStates.isOpened[payload]
     },
     updateCheckedTypes(state, payload) {
-      if (state.checkedTypes)
-        state.checkedTypes = payload
+      state.cosmeStates.checkedTypes = payload
     },
-    updateCheckedCosmes(state, payload) {
-      state.checkedCosmes = payload
+    updateCheckedItems(state, payload) {
+      state.cosmeStates.checkedItems[payload.type] = payload.cosmes
     }
   },
   actions: {
@@ -37,8 +38,8 @@ export default {
     loadCheckedTypes({ commit }, payload) {
       commit('updateCheckedTypes', payload)
     },
-    loadCheckedCosmes({ commit }, payload) {
-      commit('updateCheckedCosmes', payload)
+    loadCheckedItems({ commit }, payload) {
+      commit('updateCheckedItems', payload)
     }
   }
 }
