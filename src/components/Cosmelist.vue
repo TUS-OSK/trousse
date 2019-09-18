@@ -6,6 +6,7 @@
       <div class="brand">{{ item.brand }}</div>
       <div class="color">{{ item.color }}</div>
       <div class="image">{{ item.theme }}</div>
+      <div class="image">{{ showChengeForm }}</div>
 
       <div v-if="showChengeForm">
         <div>コスメのブランド:<input v-model="cosmeBrandText"></div>
