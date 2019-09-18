@@ -1,14 +1,16 @@
 <template>
 <div>
     <li class="item"> {{ item.name }}
-      <button v-on:click="editCosmeChengeInformationButtonClicked()">コスメ情報を編集</button>
+      <button v-on:click="editCosmeChengeInformationButtonClicked()">{{
+        openChangeForm ? '閉じる' : 'コスメ情報を編集'
+      }}</button>
       <div class="brand">{{ item.id }}</div>
       <div class="brand">{{ item.brand }}</div>
       <div class="color">{{ item.color }}</div>
       <div class="image">{{ item.theme }}</div>
       <div class="image">{{ id }}</div>
 
-      <div v-if="id === openChangeFormId">
+      <div v-if="openChangeForm">
         <div>コスメのブランド:<input v-model="cosmeBrandText"></div>
         <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
         <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
@@ -53,12 +55,19 @@ export default {
   },
   methods: {
     editCosmeChengeInformationButtonClicked(){
-      this.$store.dispatch('pages/cosmelist/openChangeForm', this.id)
+      if(this.openChangeForm) {
+        this.$store.dispatch('pages/cosmelist/closeChangeForm')
+      } else {
+        this.$store.dispatch('pages/cosmelist/openChangeForm', this.id)
+      }
     }
   },
    computed: {
     list() {
       return this.$store.getters['userData/cosmes'][this.type]
+    },
+    openChangeForm() {
+      return this.id === this.openChangeFormId
     },
     openChangeFormId() {
       return this.$store.getters['pages/cosmelist/openChangeFormId']
