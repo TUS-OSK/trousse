@@ -6,9 +6,9 @@
       <div class="brand">{{ item.brand }}</div>
       <div class="color">{{ item.color }}</div>
       <div class="image">{{ item.theme }}</div>
-      <div class="image">{{ showChengeForm }}</div>
+      <div class="image">{{ id }}</div>
 
-      <div v-if="showChengeForm">
+      <div v-if="id === openChangeFormId">
         <div>コスメのブランド:<input v-model="cosmeBrandText"></div>
         <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
         <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
@@ -38,6 +38,9 @@ export default {
     },
     item: {
       type: Object
+    },
+    id: {
+      type: String
     }
   },
   data(){
@@ -45,18 +48,20 @@ export default {
       cosmeBrandText: '',
       cosmeNameText: '',
       cosmeColorText: '',
-      cosmeThemeCheckbox: [],
-      showChengeForm: false
+      cosmeThemeCheckbox: []
     }
   },
   methods: {
     editCosmeChengeInformationButtonClicked(){
-      return this.showChengeForm = !this.showChengeForm
+      this.$store.dispatch('pages/cosmelist/openChangeForm', this.id)
     }
   },
    computed: {
     list() {
       return this.$store.getters['userData/cosmes'][this.type]
+    },
+    openChangeFormId() {
+      return this.$store.getters['pages/cosmelist/openChangeFormId']
     }
   }
 

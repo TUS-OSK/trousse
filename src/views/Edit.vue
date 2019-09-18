@@ -6,7 +6,7 @@
       <main>
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
-          <Cosmelist v-for="item in list" :key="item.id" :type="type" :item="item"></Cosmelist>
+          <Cosmelist v-for="item in list" :key="item.id" :id="item.id" :type="type" :item="item"></Cosmelist>
         </ul>
         <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
         <Inputform v-if="isShow" :type="type" />
