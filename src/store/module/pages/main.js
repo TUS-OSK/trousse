@@ -6,8 +6,8 @@ export default {
         cheek: false,
         lip: false
       },
-      checkedTypes: [],
-      checkedItems: {
+      unCheckedTypes: [],
+      unCheckedItems: {
         base: [],
         cheek: [],
         lip: []
@@ -16,8 +16,8 @@ export default {
   },
   getters: {
     cosmeStates: state => state.cosmeStates,
-    checkedTypes: state => state.cosmeStates.checkedTypes,
-    checkedItems: state => state.cosmeStates.checkedItems,
+    unCheckedTypes: state => state.cosmeStates.unCheckedTypes,
+    unCheckedItems: state => state.cosmeStates.unCheckedItems,
     isOpened: state => state.cosmeStates.isOpened
   },
   mutations: {
@@ -25,10 +25,10 @@ export default {
       state.cosmeStates.isOpened[payload] = !state.cosmeStates.isOpened[payload]
     },
     updateCheckedTypes(state, payload) {
-      state.cosmeStates.checkedTypes = payload
+      state.cosmeStates.unCheckedTypes = payload
     },
     updateCheckedItems(state, payload) {
-      state.cosmeStates.checkedItems[payload.type] = payload.cosmes
+      state.cosmeStates.unCheckedItems[payload.type] = payload.cosmes
     }
   },
   actions: {

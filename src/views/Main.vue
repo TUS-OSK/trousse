@@ -9,8 +9,9 @@
           <h2>コスメを選択しよう！</h2>
           <div v-for="category in cosmeList" :key="category.label" class="category">
             <div class="category-fuction">
-              <span class="category-label">{{ category.label }}</span>
-              <input type="checkbox" v-model="isChecked" :value="category.label" >
+              <label class="category-label">
+                <input class="category-checkbox" type="checkbox" v-model="isChecked" :value="category.label">{{ category.label }}
+              </label>
               <button v-if="category.isOpened" @click="changeState(category.label)">▲</button>
               <button v-else @click="changeState(category.label)">▼</button>
             </div>
@@ -44,7 +45,7 @@ export default {
     ]),
     ...mapGetters('pages/main', [
       'isOpened',
-      'checkedTypes'
+      'unCheckedTypes'
     ]),
     cosmeList() {
       return this.cosmeTypes.map(type => {
@@ -68,10 +69,14 @@ export default {
     },
     isChecked: {
       get() {
-        return this.checkedTypes
+        return this.cosmeTypes.filter(type => !this.unCheckedTypes.includes(type))
       },
-      set(value) {
-        this.$store.dispatch('pages/main/loadCheckedTypes', value)
+      set(newList) {
+        const data = {
+          typeList: this.cosmeTypes.filter(type => !newList.includes(type))
+        }
+        //後の都合を考えてオブジェクトにしてます
+        this.$store.dispatch('pages/main/loadCheckedTypes', data.typeList)
       }
     }
   },

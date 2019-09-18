@@ -13,12 +13,13 @@ export default {
   getters: {
     user: state => state.user,
     cosmeTypes: state => Object.keys(state.cosmes),
-    allCosmeIds: state => ({
-      base: state.cosmes.base.map(item => item.id),
-      cheek: state.cosmes.cheek.map(item => item.id),
-      lip: state.cosmes.lip.map(item => item.id)
-      //もっといい書き方ありませんか
-    }),
+    allCosmeIds: (state, getters) => {
+      const allCosmeIds = {}
+      getters.cosmeTypes.forEach(type => {
+        allCosmeIds[type] = getters.cosmes[type].map(item => item.id)
+      })
+      return allCosmeIds
+    },
     cosmes: state => state.cosmes,
     cosmeIdCount: state => state.cosmeIdCount
   },
