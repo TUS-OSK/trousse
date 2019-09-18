@@ -4,19 +4,17 @@
     <div class="row">
       <Sidebar PageName="メイン"/>
       <main>
-        <h2>今日のコスメを決めよう！</h2>
+        <h1>今日のコスメを決めよう！</h1>
         <section>
+          <h2>コスメを選択しよう！</h2>
           <div v-for="category in cosmeList" :key="category.label" class="category">
-            <h3 class="category-label">{{ category.label }}</h3>
-            <button v-if="category.isOpened" @click="changeState(category.label)">▲</button>
-            <button v-else @click="changeState(category.label)">▼</button>
-            <ul class="list">
-              <li v-for="item in category.list" :key="item.id" class="item">- cosme list -
-                <ul>
-                  <li v-for="( info, key ) in item" :key="key" class="key"> {{ key }}: {{ info }} </li>
-                </ul>
-              </li>
-            </ul>
+            <div class="category-fuction">
+              <span class="category-label">{{ category.label }}</span>
+              <input type="checkbox" v-model="isChecked" :value="category.label" >
+              <button v-if="category.isOpened" @click="changeState(category.label)">▲</button>
+              <button v-else @click="changeState(category.label)">▼</button>
+            </div>
+            <type-list :category="category"></type-list>
           </div>
         </section>
         <router-link class="link" to="/main/result">結果を画像で保存</router-link>
@@ -28,18 +26,30 @@
 <script>
 import Header from '@/components/Header.vue'
 import Sidebar from '@/components/Sidebar.vue'
+import TypeList from '@/components/TypeList.vue'
+
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'main-page',
   components: {
     Header,
-    Sidebar
+    Sidebar,
+    TypeList
   },
   computed: {
+    ...mapGetters('userData', [
+      'cosmeTypes',
+      'cosmes'
+    ]),
+    ...mapGetters('pages/main', [
+      'isOpened',
+      'checkedTypes'
+    ]),
     cosmeList() {
-      return this.$store.getters['userData/cosmeTypes'].map(type => {
-        const isOpened = this.$store.getters['pages/main/cosmeStates'][type].isOpened
-        const list = this.$store.getters['userData/cosmes'][type]
+      return this.cosmeTypes.map(type => {
+        const isOpened = this.isOpened[type]
+        const list = this.cosmes[type]
 
         if(isOpened) {
           return {
@@ -55,6 +65,14 @@ export default {
           }
         }
       })
+    },
+    isChecked: {
+      get() {
+        return this.checkedTypes
+      },
+      set(value) {
+        this.$store.dispatch('pages/main/loadCheckedTypes', value)
+      }
     }
   },
   methods: {
