@@ -6,31 +6,10 @@
       <main>
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
-          <li v-for="item in list" :key="item.id" class="item"> {{ item.name }}
-            <div class="brand">{{ item.id }}</div>
-            <div class="brand">{{ item.brand }}</div>
-            <div class="color">{{ item.color }}</div>
-            <div class="image">{{ item.theme }}</div>
-          </li>
+          <Cosmelist v-for="item in list" :key="item.id" :id="item.id" :type="type" :item="item"></Cosmelist>
         </ul>
         <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
-        <div v-if="isShow">
-          <div>コスメの分野:{{type}}</div>
-          <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
-          <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
-          <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
-          <div>コスメのテーマ:
-            <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
-            <label>春</label>
-            <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
-            <label>夏</label>
-            <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
-            <label>秋</label>
-            <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
-            <label>冬</label>
-          </div>
-          <button v-on:click="saveForm(type)">コスメを登録</button>
-        </div>
+        <Inputform v-if="isShow" :type="type" />
       </main>
     </div>
   </div>
@@ -39,12 +18,16 @@
 <script>
 import Header from '@/components/Header.vue'
 import Sidebar from '@/components/Sidebar.vue'
+import Inputform from '@/components/Inputform.vue'
+import Cosmelist from '@/components/Cosmelist.vue'
 
 export default {
   name: 'edit',
   components: {
     Header,
-    Sidebar
+    Sidebar,
+    Inputform,
+    Cosmelist
   },
   props: {
     type: {
@@ -70,22 +53,13 @@ export default {
         this.cosmeAddFormButtonValue = 'コスメを追加'
       }
     },
-    saveForm(type) {
-      const item = {
-        type,
-        info: {
-          brand: this.cosmeBrandText,
-          name: this.cosmeNameText,
-          color: this.cosmeColorText,
-          theme: this.cosmeThemeCheckbox
-        }
-      }
-      this.$store.dispatch('userData/registerCosmeInformation', item)
-      this.$store.dispatch('userData/loadMain')
-      this.cosmeBrandText = ''
-      this.cosmeNameText = ''
-      this.cosmeColorText = ''
-      this.cosmeThemeCheckbox = []
+    editCosmeChengeInformationButtonClicked(){
+      // this.$store.dispatch('pages/edit/loadChengeForm')
+      if(this.showChengeForm){
+        this.showChengeForm = false
+      } else {
+      this.showChengeForm = true
+    }
     }
   },
   computed: {
@@ -95,7 +69,7 @@ export default {
     isShow() {
       return this.$store.getters['pages/edit/formShow']
     },
-    cosmeIdcount() {
+    cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
     }
   }
