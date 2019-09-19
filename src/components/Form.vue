@@ -5,13 +5,13 @@
           <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
           <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
           <div>コスメのテーマ:
-              <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
+              <input v-model="cosmeThemeCheckbox.spring" value="spring" type="checkbox">
             <label>春</label>
-            <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
+            <input v-model="cosmeThemeCheckbox.summer" value="summer" type="checkbox">
             <label>夏</label>
-            <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
+            <input v-model="cosmeThemeCheckbox.autumn" value="autumn" type="checkbox">
             <label>秋</label>
-            <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
+            <input v-model="cosmeThemeCheckbox.winter" value="winter" type="checkbox">
             <label>冬</label>
           </div>
           <button v-on:click="saveForm(type)">コスメを登録</button>
@@ -32,7 +32,12 @@ export default {
       cosmeBrandText: '',
       cosmeNameText: '',
       cosmeColorText: '',
-      cosmeThemeCheckbox: []
+      cosmeThemeCheckbox: {
+        spring:false,
+        summer:false,
+        autumn:false,
+        winter:false
+    }
     }
   },
   methods: {
@@ -51,7 +56,7 @@ export default {
       this.cosmeBrandText = ''
       this.cosmeNameText = ''
       this.cosmeColorText = ''
-      this.cosmeThemeCheckbox = []
+      this.cosmeThemeCheckbox= []
     }
   }
 }
