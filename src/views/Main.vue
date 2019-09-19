@@ -19,11 +19,18 @@
           </div>
         </section>
         <section class="suggest-cosme">
+          <h2>今日のコスメはこれだ！</h2>
           <div v-if="isSuggested">
-            <button @click="suggestCosmes(isSuggested)">もう一回やる！</button>
+            <div v-for="(item, type) in currentHistory" :key="type">
+              <ul>
+                <h3>{{ type }}</h3>
+                <li v-for="(value, key) in item" :key="value.id"> {{ key }}: {{ value }} </li>
+              </ul>
+            </div>
+            <button @click="suggestCosmes()">もう一回やる！</button>
           </div>
           <div v-else>
-            <button @click="suggestCosmes(isSuggested)">結果を表示する！</button>
+            <button @click="suggestCosmes()">結果を表示する！</button>
           </div>
         </section>
         <router-link class="link" to="/main/result">結果を画像で保存</router-link>
@@ -78,6 +85,9 @@ export default {
         }
       })
     },
+    currentHistory() {
+      return this.history.slice(-1)[0]
+    },
     isChecked: {
       get() {
         return this.cosmeTypes.filter(type => !this.unCheckedTypes.includes(type))
@@ -95,18 +105,18 @@ export default {
     changeDisplayState(type) {
       this.$store.dispatch('pages/main/loadDisplayState', type)
     },
-    suggestCosmes(isSuggested) {
+    suggestCosmes() {
       const suggestedCosmes = {}
       const checkedTypes = this.cosmeTypes.filter(type => !this.unCheckedTypes.includes(type))
-      const checkedCosmes = {}
 
       checkedTypes.forEach(type => {
-        checkedCosmes[type] = this.allCosmeIds[type].filter(id => !this.unCheckedItems[type].includes(id))
+        const checkedCosmes = {}
+        checkedCosmes[type] = this.cosmes[type].filter(item => !this.unCheckedItems[type].includes(item.id))
         suggestedCosmes[type] = checkedCosmes[type][Math.floor(Math.random() * checkedCosmes[type].length)]
       })
       this.$store.dispatch('pages/main/loadHistory', suggestedCosmes)
 
-      if(!isSuggested) {
+      if(!this.isSuggested) {
         this.isSuggested = !this.isSuggested
       }
     }
