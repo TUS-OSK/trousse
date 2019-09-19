@@ -52,14 +52,6 @@ export default {
       } else {
         this.cosmeAddFormButtonValue = 'コスメを追加'
       }
-    },
-    editCosmeChengeInformationButtonClicked(){
-      // this.$store.dispatch('pages/edit/loadChengeForm')
-      if(this.showChengeForm){
-        this.showChengeForm = false
-      } else {
-      this.showChengeForm = true
-    }
     }
   },
   computed: {

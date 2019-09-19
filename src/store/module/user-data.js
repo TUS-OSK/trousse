@@ -8,13 +8,15 @@ export default {
       cheek: [],
       lip: []
     },
-    cosmeIdCount: 0
+    cosmeIdCount: 0,
+    cosmeId: null
   },
   getters: {
     user: state => state.user,
     cosmeTypes: state => Object.keys(state.cosmes),
     cosmes: state => state.cosmes,
-    cosmeIdCount: state => state.cosmeIdCount
+    cosmeIdCount: state => state.cosmeIdCount,
+    cosmeId: state => state.cosmeId
   },
   mutations: {
     updateMainData(state, payload) {
@@ -31,8 +33,21 @@ export default {
         id: '' + ++state.cosmeIdCount,
         ...payload.info
       })
+    },
+    updateInformation(state, payload){
+      let cosmeTypeArray = []
+      cosmeTypeArray.push(state.cosmes.type)
+      cosmeTypeArray.map(id =>{
+     if(id == state.cosmeId){
+        state.cosmes[payload.type] = payload.info
+      }
+    })
+    },
+    memoryCosmeId(state, payload){
+      state.cosmeId = payload || null
     }
   },
+
   actions: {
     async loadMain({ commit }) {
       const mainData = await fetchMain()
@@ -40,6 +55,12 @@ export default {
     },
     registerCosmeInformation({ commit }, item) {
       commit('registerCosmeInformation', item)
+    },
+    updateInformation({ commit }, item){
+      commit('updateInformation', item)
+    },
+    memoryCosmeId({ commit }, id){
+      commit('memoryCosmeId', id)
     }
   }
 }

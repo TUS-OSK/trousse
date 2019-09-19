@@ -16,33 +16,38 @@ const MOCK_FETCH_MAIN = {
       id: '1',
       brand: 'CANMAKE',
       name: 'colorbase-pink',
-      color: 'pink'
+      color: 'pink',
+      theme: []
     },
     {
       id: '2',
       brand: 'CHIFURE',
       name: '保湿ベース',
-      color: 'beige'
+      color: 'beige',
+      theme: []
     }],
 
     cheek: [{
       id: '3',
       brand: 'CHIFURE',
       name: 'ツヤツヤベール',
-      color: 'orange'
+      color: 'orange',
+      theme: []
     }],
 
     lip: [{
       id: '4',
       brand: 'Dior',
       name: 'マキシマイザー',
-      color: 'pink'
+      color: 'pink',
+      theme: []
     },
     {
       id: '5',
       brand: 'MAC',
       name: 'おとなのりっぷ',
-      color: 'red'
+      color: 'red',
+      theme: []
     }]
   }
 }
