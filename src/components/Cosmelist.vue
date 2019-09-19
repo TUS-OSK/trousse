@@ -1,14 +1,13 @@
 <template>
 <div>
     <li class="item"> {{ item.name }}
-      <button v-on:click="editCosmeChengeInformationButtonClicked()">{{
+      <button v-on:click="editCosmeChangeInformationButtonClicked()">{{
         openChangeForm ? '閉じる' : 'コスメ情報を編集'
       }}</button>
       <div class="brand">{{ item.id }}</div>
       <div class="brand">{{ item.brand }}</div>
       <div class="color">{{ item.color }}</div>
       <div class="image">{{ item.theme }}</div>
-      <div class="image">{{ id }}</div>
 
       <div v-if="openChangeForm">
         <div>コスメのブランド:<input v-model="cosmeBrandText"></div>
@@ -24,6 +23,7 @@
           <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
           <label>冬</label>
         </div>
+        <button>コスメ情報を更新</button>
       </div>
     </li>
 </div>
@@ -54,7 +54,7 @@ export default {
     }
   },
   methods: {
-    editCosmeChengeInformationButtonClicked(){
+    editCosmeChangeInformationButtonClicked(){
       if(this.openChangeForm) {
         this.$store.dispatch('pages/cosmelist/closeChangeForm')
       } else {
