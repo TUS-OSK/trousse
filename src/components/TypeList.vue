@@ -36,11 +36,11 @@ export default {
         return this.allCosmeIds[this.category.label].filter(id => !this.unCheckedItems[this.category.label].includes(id))
       },
       set(value) {
-        const data = {
+        const listData = {
           type: this.category.label,
           cosmes: this.allCosmeIds[this.category.label].filter(id => !value.includes(id))
         }
-        this.$store.dispatch('pages/main/loadCheckedItems', data)
+        this.$store.dispatch('pages/main/loadCheckedItems', listData)
       }
     }
   }

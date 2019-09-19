@@ -12,13 +12,15 @@ export default {
         cheek: [],
         lip: []
       }
-    }
+    },
+    history: []
   },
   getters: {
     cosmeStates: state => state.cosmeStates,
     unCheckedTypes: state => state.cosmeStates.unCheckedTypes,
     unCheckedItems: state => state.cosmeStates.unCheckedItems,
-    isOpened: state => state.cosmeStates.isOpened
+    isOpened: state => state.cosmeStates.isOpened,
+    history: state => state.history
   },
   mutations: {
     changeDisplayState(state, payload) {
@@ -29,6 +31,9 @@ export default {
     },
     updateCheckedItems(state, payload) {
       state.cosmeStates.unCheckedItems[payload.type] = payload.cosmes
+    },
+    updateHistory(state, payload) {
+      state.history.push(payload)
     }
   },
   actions: {
@@ -40,6 +45,9 @@ export default {
     },
     loadCheckedItems({ commit }, payload) {
       commit('updateCheckedItems', payload)
+    },
+    loadHistory({ commit }, payload) {
+      commit('updateHistory', payload)
     }
   }
 }
