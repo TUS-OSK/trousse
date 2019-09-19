@@ -10,18 +10,18 @@
       <div class="image">{{ item.theme }}</div>
 
       <div v-if="openChangeForm">
-        <div>コスメのブランド:<input v-model="cosmeBrandText"></div>
         <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
+        <div>コスメのブランド:<input v-model="cosmeBrandText"></div>
         <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
         <div>コスメのテーマ:
           <input v-model="cosmeThemeCheckbox.spring" value="spring" type="checkbox">
-          <label>春</label>
+            <label>春</label>
           <input v-model="cosmeThemeCheckbox.summer" value="summer" type="checkbox">
           <label>夏</label>
           <input v-model="cosmeThemeCheckbox.autumn" value="autumn" type="checkbox">
-          <label>秋</label>
+            <label>秋</label>
           <input v-model="cosmeThemeCheckbox.winter" value="winter" type="checkbox">
-          <label>冬</label>
+            <label>冬</label>
         </div>
         <button>コスメ情報を更新</button>
       </div>
@@ -47,8 +47,8 @@ export default {
   },
   data(){
     return {
-      cosmeBrandText: this.item.brand,
       cosmeNameText: this.item.name,
+      cosmeBrandText: this.item.brand,
       cosmeColorText: this.item.color,
       cosmeThemeCheckbox: {
         spring: this.item.theme,

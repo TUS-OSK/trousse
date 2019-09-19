@@ -1,8 +1,8 @@
 <template>
     <div>
       <div>コスメの分野:{{type}}</div>
-          <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
           <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
+          <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
           <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
           <div>コスメのテーマ:
               <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
