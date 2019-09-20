@@ -34,18 +34,18 @@ export default {
         ...payload.info
       })
     },
-    updateInformation(state, payload){
-      let cosmeTypeArray = []
-      cosmeTypeArray.push(state.cosmes.type)
-      cosmeTypeArray.map(id =>{
-     if(id == state.cosmeId){
-        state.cosmes[payload.type] = payload.info
-      }
-    })
-    },
     memoryCosmeId(state, payload){
       state.cosmeId = payload || null
-    }
+    },
+    deleteCosmeInformation(state){
+      const cosmeArray = []
+      cosmeArray.push(state.cosmes)
+      var index = cosmeArray.findIndex(({id}) => id == state.cosmeId)
+      alert(state.cosmeId)
+      alert(index)
+
+  }
+
   },
 
   actions: {
@@ -56,11 +56,14 @@ export default {
     registerCosmeInformation({ commit }, item) {
       commit('registerCosmeInformation', item)
     },
-    updateInformation({ commit }, item){
-      commit('updateInformation', item)
-    },
+    // updateInformation({ commit }, item){
+    //   commit('updateInformation', item)
+    // },
     memoryCosmeId({ commit }, id){
       commit('memoryCosmeId', id)
+    },
+    deleteCosmeInformation({ commit }){
+      commit('deleteCosmeInformation')
     }
   }
 }

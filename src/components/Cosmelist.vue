@@ -24,7 +24,8 @@
           <label>冬</label>
         </div>
 
-        <button v-on:click="updateInformation(type)">コスメ情報を更新</button>
+        <button v-on:click="updateInformation()">コスメ情報を更新</button>
+        <button v-on:click="deleteCosme()">コスメを削除</button>
       </div>
     </li>
 </div>
@@ -63,23 +64,17 @@ export default {
         this.$store.dispatch('pages/cosmelist/openChangeForm', this.id)
       }
     },
-    updateInformation(type){
-      const item = {
-        type,
-        info: {
-          id: this.cosmeId,
-          brand: this.cosmeBrandText,
-          name: this.cosmeNameText,
-          color: this.cosmeColorText,
-          theme: this.cosmeThemeCheckbox
-        }
-      }
-      this.$store.dispatch('userData/updateInformation', item)
+    updateInformation(){
       this.$store.dispatch('userData/loadMain')
       this.item.name = this.cosmeNameText,
       this.item.brand = this.cosmeBrandText,
       this.item.color = this.cosmeColorText,
       this.item.theme = this.cosmeThemeCheckbox
+    },
+    deleteCosme(){
+      this.$store.dispatch('userData/deleteCosmeInformation')
+      this.$store.dispatch('userData/loadMain')
+
     }
   },
    computed: {
