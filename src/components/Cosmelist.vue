@@ -30,7 +30,7 @@
           <label>冬</label>
         </div>
         <button v-on:click="updateInformation()">コスメ情報を更新</button>
-        <button v-on:click="deleteCosme(id)">コスメを削除</button>
+        <button v-on:click="deleteCosme()">コスメを削除</button>
       </div>
     </li>
 </div>
@@ -61,8 +61,8 @@ export default {
       }
   },
   methods: {
-    editShowCosmeChangeFormButtonClicked(id){
-      this.$store.dispatch('userData/memoryCosmeId', id)
+    editShowCosmeChangeFormButtonClicked(){
+      this.$store.dispatch('userData/memoryCosmeId', this.id)
       if(this.openChangeForm) {
         this.$store.dispatch('pages/cosmelist/closeChangeForm')
       } else {
@@ -76,8 +76,8 @@ export default {
       this.item.color = this.cosmeColorText,
       this.item.theme = this.cosmeThemeCheckbox
     },
-    deleteCosme(id){
-      this.$store.dispatch('userData/deleteCosmeInformation', id)
+    deleteCosme(){
+      this.$store.dispatch('userData/deleteCosmeInformation', this.id)
       this.$store.dispatch('userData/loadMain')
     }
   },
