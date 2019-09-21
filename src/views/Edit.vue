@@ -10,7 +10,7 @@
           </draggable>
         </ul>
         <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
-        <Inputform v-if="isShow" :type="type" />
+        <Inputform :type="type" />
       </main>
     </div>
   </div>
@@ -48,11 +48,7 @@ export default {
   methods: {
     editAddButtonClicked() {
       this.$store.dispatch('pages/edit/loadForm')
-      if(this.isShow) {
-        this.cosmeAddFormButtonValue = '閉じる'
-      } else {
-        this.cosmeAddFormButtonValue = 'コスメを追加'
-      }
+      this.$modal.show('inputform')
     }
   },
   computed: {
@@ -64,6 +60,7 @@ export default {
     },
     list: {
       get(){
+        console.log(this.$store.getters['userData/cosmes'][this.type])
         return this.$store.getters['userData/cosmes'][this.type]
       },
       set(array){
