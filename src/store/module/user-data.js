@@ -9,14 +9,12 @@ export default {
       lip: []
     },
     cosmeIdCount: 0,
-    cosmeId: null
   },
   getters: {
     user: state => state.user,
     cosmeTypes: state => Object.keys(state.cosmes),
     cosmes: state => state.cosmes,
-    cosmeIdCount: state => state.cosmeIdCount,
-    cosmeId: state => state.cosmeId
+    cosmeIdCount: state => state.cosmeIdCount
   },
   mutations: {
     updateMainData(state, payload) {
@@ -34,12 +32,9 @@ export default {
         ...payload.info
       })
     },
-    memoryCosmeId(state, payload){
-      state.cosmeId = payload || null
-    },
-    deleteCosmeInformation(state, cosmeId){
+    deleteCosmeInformation(state, payload){
       for(const type of Object.keys(state.cosmes)){
-        state.cosmes[type] = state.cosmes[type].filter(v => v.id !== cosmeId)
+        state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
       }
     }
   },
@@ -51,9 +46,6 @@ export default {
     },
     registerCosmeInformation({ commit }, item) {
       commit('registerCosmeInformation', item)
-    },
-    memoryCosmeId({ commit }, id){
-      commit('memoryCosmeId', id)
     },
     deleteCosmeInformation({ commit }, id){
       commit('deleteCosmeInformation', id)
