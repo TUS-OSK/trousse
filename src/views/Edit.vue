@@ -57,7 +57,6 @@ export default {
     },
     list: {
       get(){
-        console.log(this.$store.getters['userData/cosmes'][this.type])
         return this.$store.getters['userData/cosmes'][this.type]
       },
       set(array){
