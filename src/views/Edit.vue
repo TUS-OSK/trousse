@@ -52,9 +52,6 @@ export default {
     }
   },
   computed: {
-    isShow() {
-      return this.$store.getters['pages/edit/formShow']
-    },
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
     },

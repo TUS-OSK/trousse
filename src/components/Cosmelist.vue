@@ -79,12 +79,6 @@ export default {
    computed: {
     list() {
       return this.$store.getters['userData/cosmes'][this.type]
-    },
-    openChangeForm() {
-      return this.id === this.openChangeFormId
-    },
-    openChangeFormId() {
-      return this.$store.getters['pages/cosmelist/openChangeFormId']
     }
   }
 
