@@ -62,7 +62,6 @@ export default {
   },
   methods: {
     editShowCosmeChangeFormButtonClicked(){
-      this.$store.dispatch('userData/memoryCosmeId', this.id)
       if(this.openChangeForm) {
         this.$store.dispatch('pages/cosmelist/closeChangeForm')
       } else {
