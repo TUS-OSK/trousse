@@ -4,7 +4,7 @@
       <button v-on:click="editShowCosmeChangeFormButtonClicked()">{{
         openChangeForm ? '閉じる' : 'コスメ情報を編集'
       }}</button>
-      <div class="brand">{{ item.id }}</div>
+      <div class="id">{{ item.id }}</div>
       <div class="brand">{{ item.brand }}</div>
       <div class="color">{{ item.color }}</div>
       <div class="image">{{ item.theme }}</div>
@@ -96,9 +96,17 @@ export default {
 </script>
 
 <style scoped>
+li {
+  cursor:pointer;
+  padding: 10px;
+  border: solid #ddd 1px;
+  list-style-type: none;
+}
 .item{
   font-size: 20px;
-  border-bottom: 1px dashed #000000;
+}
+.id{
+  font-size: 10px;
 }
 .brand{
   font-size: 10px;

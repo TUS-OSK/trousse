@@ -6,7 +6,9 @@
       <main>
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
-          <Cosmelist v-for="item in list" :key="item.id" :id="item.id" :type="type" :item="item"></Cosmelist>
+          <draggable v-model="list">
+            <Cosmelist v-for="item in list" :key="item.id" :id="item.id" :type="type" :item="item"></Cosmelist>
+          </draggable>
         </ul>
         <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
         <Inputform v-if="isShow" :type="type" />
@@ -20,6 +22,7 @@ import Header from '@/components/Header.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Inputform from '@/components/Inputform.vue'
 import Cosmelist from '@/components/Cosmelist.vue'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'edit',
@@ -27,7 +30,8 @@ export default {
     Header,
     Sidebar,
     Inputform,
-    Cosmelist
+    Cosmelist,
+    draggable
   },
   props: {
     type: {
@@ -55,15 +59,19 @@ export default {
     }
   },
   computed: {
-
-    list() {
-      return this.$store.getters['userData/cosmes'][this.type]
-    },
     isShow() {
       return this.$store.getters['pages/edit/formShow']
     },
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
+    },
+    list: {
+      get(){
+        return this.$store.getters['userData/cosmes'][this.type]
+      },
+      set(array){
+        this.$store.dispatch('userData/dragCosmeInformation', {array, type: this.type})
+      }
     }
   }
 }
@@ -79,13 +87,7 @@ export default {
   font-size: 20px;
   border-bottom: 1px dashed #000000;
 }
-.brand{
-  font-size: 10px;
-}
-.color{
-  font-size: 10px;
-}
-.image{
-  font-size: 10px;
+ul{
+  padding: 0px;
 }
 </style>
