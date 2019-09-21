@@ -1,6 +1,6 @@
 export default {
   state: {
-    cosmeStates: {
+    cosmesListStates: {
       isOpened: {
         base: false,
         cheek: false,
@@ -16,29 +16,29 @@ export default {
     history: []
   },
   getters: {
-    cosmeStates: state => state.cosmeStates,
-    unCheckedTypes: state => state.cosmeStates.unCheckedTypes,
-    unCheckedItems: state => state.cosmeStates.unCheckedItems,
-    isOpened: state => state.cosmeStates.isOpened,
+    cosmesListStates: state => state.cosmesListStates,
+    unCheckedTypes: state => state.cosmesListStates.unCheckedTypes,
+    unCheckedItems: state => state.cosmesListStates.unCheckedItems,
+    isOpened: state => state.cosmesListStates.isOpened,
     history: state => state.history
   },
   mutations: {
-    changeDisplayState(state, payload) {
-      state.cosmeStates.isOpened[payload] = !state.cosmeStates.isOpened[payload]
+    changeCosmesListState(state, payload) {
+      state.cosmesListStates.isOpened[payload] = !state.cosmesListStates.isOpened[payload]
     },
     updateCheckedTypes(state, payload) {
-      state.cosmeStates.unCheckedTypes = payload
+      state.cosmesListStates.unCheckedTypes = payload
     },
     updateCheckedItems(state, payload) {
-      state.cosmeStates.unCheckedItems[payload.type] = payload.cosmes
+      state.cosmesListStates.unCheckedItems[payload.type] = payload.cosmes
     },
     updateHistory(state, payload) {
       state.history.push(payload)
     }
   },
   actions: {
-    loadDisplayState({ commit }, payload) {
-      commit('changeDisplayState', payload)
+    loadCosmesListState({ commit }, payload) {
+      commit('changeCosmesListState', payload)
     },
     loadCheckedTypes({ commit }, payload) {
       commit('updateCheckedTypes', payload)

@@ -1,37 +1,20 @@
 <template>
+<!-- Mainページはコスメサジェスト機能が利用できるページ -->
   <div>
     <Header/>
     <div class="row">
       <Sidebar PageName="メイン"/>
       <main>
         <h1>今日のコスメを決めよう！</h1>
+        <!-- ここからコスメ選択 -->
         <section class="select-cosme">
           <h2>コスメを選択しよう！</h2>
-          <div v-for="category in cosmeList" :key="category.label" class="category">
-            <div class="category-fuction">
-              <label class="category-label">
-                <input class="category-checkbox" type="checkbox" v-model="isChecked" :value="category.label">{{ category.label }}
-              </label>
-              <button v-if="category.isOpened" @click="changeDisplayState(category.label)">▲</button>
-              <button v-else @click="changeDisplayState(category.label)">▼</button>
-            </div>
-            <type-list :category="category"></type-list>
-          </div>
+          <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData"></accordion-cosmes-list>
         </section>
+        <!-- ここからコスメ結果 -->
         <section class="suggest-cosme">
           <h2>今日のコスメはこれだ！</h2>
-          <div v-if="isSuggested">
-            <div v-for="(item, type) in currentHistory" :key="type">
-              <ul>
-                <h3>{{ type }}</h3>
-                <li v-for="(value, key) in item" :key="value.id"> {{ key }}: {{ value }} </li>
-              </ul>
-            </div>
-            <button @click="suggestCosmes()">もう一回やる！</button>
-          </div>
-          <div v-else>
-            <button @click="suggestCosmes()">結果を表示する！</button>
-          </div>
+          <suggested-cosmes-list></suggested-cosmes-list>
         </section>
         <router-link class="link" to="/main/result">結果を画像で保存</router-link>
       </main>
@@ -42,7 +25,8 @@
 <script>
 import Header from '@/components/Header.vue'
 import Sidebar from '@/components/Sidebar.vue'
-import TypeList from '@/components/TypeList.vue'
+import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
+import SuggestedCosmesList from '@/components/SuggestedCosmesList.vue'
 
 import { mapGetters } from 'vuex'
 
@@ -51,79 +35,40 @@ export default {
   components: {
     Header,
     Sidebar,
-    TypeList
+    AccordionCosmesList,
+    SuggestedCosmesList
   },
   computed: {
     ...mapGetters('userData', [
       'cosmeTypes',
-      'cosmes',
-      'allCosmeIds'
+      'cosmes'
     ]),
     ...mapGetters('pages/main', [
-      'isOpened',
-      'unCheckedTypes',
-      'unCheckedItems',
-      'history'
+      'isOpened'
     ]),
-    cosmeList() {
+    allCosmesAry() {
       return this.cosmeTypes.map(type => {
         const isOpened = this.isOpened[type]
-        const list = this.cosmes[type]
+        const cosmeAry = this.cosmes[type]
 
         if(isOpened) {
           return {
-            isOpened,
-            label: type,
-            list
+            type,
+            cosmeAry,
+            accordionCosmesList: {
+              isOpened
+            }
           }
         } else {
           return {
-            isOpened,
-            label: type,
-            list: list.slice(0, 1)
+            type,
+            cosmeAry: cosmeAry.slice(0, 1),
+            accordionCosmesList: {
+              isOpened
+            }
           }
         }
       })
-    },
-    currentHistory() {
-      return this.history.slice(-1)[0]
-    },
-    isChecked: {
-      get() {
-        return this.cosmeTypes.filter(type => !this.unCheckedTypes.includes(type))
-      },
-      set(newList) {
-        const listData = {
-          TypeList: this.cosmeTypes.filter(type => !newList.includes(type))
-        }
-        //後の都合を考えてオブジェクトにしてます
-        this.$store.dispatch('pages/main/loadCheckedTypes', listData.TypeList)
-      }
-    }
-  },
-  methods: {
-    changeDisplayState(type) {
-      this.$store.dispatch('pages/main/loadDisplayState', type)
-    },
-    suggestCosmes() {
-      const suggestedCosmes = {}
-      const checkedTypes = this.cosmeTypes.filter(type => !this.unCheckedTypes.includes(type))
-
-      checkedTypes.forEach(type => {
-        const checkedCosmes = {}
-        checkedCosmes[type] = this.cosmes[type].filter(item => !this.unCheckedItems[type].includes(item.id))
-        suggestedCosmes[type] = checkedCosmes[type][Math.floor(Math.random() * checkedCosmes[type].length)]
-      })
-      this.$store.dispatch('pages/main/loadHistory', suggestedCosmes)
-
-      if(!this.isSuggested) {
-        this.isSuggested = !this.isSuggested
-      }
-    }
-  },
-  data() {
-    return {
-      isSuggested: false
     }
   },
   created() {
