@@ -25,7 +25,7 @@
         </div>
 
         <button v-on:click="updateInformation()">コスメ情報を更新</button>
-        <button v-on:click="deleteCosme()">コスメを削除</button>
+        <button v-on:click="deleteCosme(id)">コスメを削除</button>
       </div>
     </li>
 </div>
@@ -71,10 +71,9 @@ export default {
       this.item.color = this.cosmeColorText,
       this.item.theme = this.cosmeThemeCheckbox
     },
-    deleteCosme(){
-      this.$store.dispatch('userData/deleteCosmeInformation')
+    deleteCosme(id){
+      this.$store.dispatch('userData/deleteCosmeInformation', id)
       this.$store.dispatch('userData/loadMain')
-
     }
   },
    computed: {
