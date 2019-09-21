@@ -28,7 +28,12 @@
           <label>冬</label>
         </div>
         <button v-on:click="updateInformation()">コスメ情報を更新</button>
-        <button v-on:click="deleteCosme()">コスメを削除</button>
+        <button v-on:click="showDeleteCosmeModal()">コスメを削除</button>
+        <modal :name="`deletecosme-${id}`">
+          <div>本当に削除しますか？</div>
+          <button v-on:click="deleteCosme()">はい</button>
+          <button v-on:click="hideModal()">いいえ</button>
+          </modal>
       </modal>
     </li>
   </div>
@@ -69,9 +74,15 @@ export default {
       this.item.color = this.cosmeColorText,
       this.item.theme = this.cosmeThemeCheckbox
     },
+    showDeleteCosmeModal(){
+      this.$modal.show(`deletecosme-${this.id}`)
+    },
     deleteCosme(){
       this.$store.dispatch('userData/deleteCosmeInformation', this.id)
       this.$store.dispatch('userData/loadMain')
+    },
+    hideModal(){
+      this.$modal.hide(`deletecosme-${this.id}`)
     }
   },
    computed: {
