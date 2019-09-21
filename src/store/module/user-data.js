@@ -8,7 +8,7 @@ export default {
       cheek: [],
       lip: []
     },
-    cosmeIdCount: 0,
+    cosmeIdCount: 0
   },
   getters: {
     user: state => state.user,
