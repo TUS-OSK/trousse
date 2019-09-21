@@ -43,6 +43,9 @@ export default {
       for(const type of Object.keys(state.cosmes)){
         state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
       }
+    },
+    dragCosmeInformation(state, payload){
+      state.cosmes[payload.type] = payload.array
     }
   },
 
@@ -56,6 +59,9 @@ export default {
     },
     deleteCosmeInformation({ commit }, id){
       commit('deleteCosmeInformation', id)
+    },
+    dragCosmeInformation({ commit }, payload){
+      commit('dragCosmeInformation', payload)
     }
   }
 }
