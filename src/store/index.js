@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import cosmelist from './module/pages/cosmelist'
 import edit from './module/pages/edit'
 import login from './module/pages/login'
 import main from './module/pages/main'
@@ -15,10 +14,6 @@ export default new Vuex.Store({
     pages: {
       namespaced: true,
       modules: {
-        cosmelist: {
-          namespaced: true,
-          ...cosmelist
-        },
         edit: {
           namespaced: true,
           ...edit

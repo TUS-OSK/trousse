@@ -1,15 +1,13 @@
 <template>
-<div>
+  <div>
     <li class="item"> {{ item.name }}
-      <button v-on:click="editShowCosmeChangeFormButtonClicked()">{{
-        openChangeForm ? '閉じる' : 'コスメ情報を編集'
-      }}</button>
+      <button v-on:click="editShowCosmeChangeFormButtonClicked()">コスメ情報を編集</button>
       <div class="id">{{ item.id }}</div>
       <div class="brand">{{ item.brand }}</div>
       <div class="color">{{ item.color }}</div>
       <div class="image">{{ item.theme }}</div>
 
-      <div v-if="openChangeForm">
+      <modal :name="`cosmelistform-${id}`">
         <div>コスメの名前:
           <input v-model="cosmeNameText" type="text" name="name" >
         </div>
@@ -31,10 +29,9 @@
         </div>
         <button v-on:click="updateInformation()">コスメ情報を更新</button>
         <button v-on:click="deleteCosme()">コスメを削除</button>
-      </div>
+      </modal>
     </li>
-</div>
-
+  </div>
 </template>
 
 <script>
@@ -62,13 +59,10 @@ export default {
   },
   methods: {
     editShowCosmeChangeFormButtonClicked(){
-      if(this.openChangeForm) {
-        this.$store.dispatch('pages/cosmelist/closeChangeForm')
-      } else {
-        this.$store.dispatch('pages/cosmelist/openChangeForm', this.id)
-      }
+      this.$modal.show(`cosmelistform-${this.id}`)
     },
     updateInformation(){
+      this.$modal.hide(`cosmelistform-${this.id}`)
       this.$store.dispatch('userData/loadMain')
       this.item.name = this.cosmeNameText,
       this.item.brand = this.cosmeBrandText,
@@ -83,12 +77,6 @@ export default {
    computed: {
     list() {
       return this.$store.getters['userData/cosmes'][this.type]
-    },
-    openChangeForm() {
-      return this.id === this.openChangeFormId
-    },
-    openChangeFormId() {
-      return this.$store.getters['pages/cosmelist/openChangeFormId']
     }
   }
 
