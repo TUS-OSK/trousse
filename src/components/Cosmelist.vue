@@ -1,7 +1,7 @@
 <template>
 <div>
     <li class="item"> {{ item.name }}
-      <button v-on:click="editCosmeChangeInformationButtonClicked()">{{
+      <button v-on:click="editShowCosmeChangeFormButtonClicked()">{{
         openChangeForm ? '閉じる' : 'コスメ情報を編集'
       }}</button>
       <div class="brand">{{ item.id }}</div>
@@ -10,20 +10,27 @@
       <div class="image">{{ item.theme }}</div>
 
       <div v-if="openChangeForm">
-        <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
-        <div>コスメのブランド:<input v-model="cosmeBrandText"></div>
-        <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
-        <div>コスメのテーマ:
-          <input v-model="cosmeThemeCheckbox.spring" value="spring" type="checkbox">
-            <label>春</label>
-          <input v-model="cosmeThemeCheckbox.summer" value="summer" type="checkbox">
-          <label>夏</label>
-          <input v-model="cosmeThemeCheckbox.autumn" value="autumn" type="checkbox">
-            <label>秋</label>
-          <input v-model="cosmeThemeCheckbox.winter" value="winter" type="checkbox">
-            <label>冬</label>
+        <div>コスメの名前:
+          <input v-model="cosmeNameText" type="text" name="name" >
         </div>
-        <button>コスメ情報を更新</button>
+        <div>コスメのブランド:
+          <input v-model="cosmeBrandText">
+        </div>
+        <div>コスメの色味:
+          <input v-model="cosmeColorText" type="text" name="color" >
+        </div>
+        <div>コスメのテーマ:
+          <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
+          <label>春</label>
+          <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
+          <label>夏</label>
+          <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
+          <label>秋</label>
+          <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
+          <label>冬</label>
+        </div>
+        <button v-on:click="updateInformation()">コスメ情報を更新</button>
+        <button v-on:click="deleteCosme()">コスメを削除</button>
       </div>
     </li>
 </div>
@@ -50,21 +57,27 @@ export default {
       cosmeNameText: this.item.name,
       cosmeBrandText: this.item.brand,
       cosmeColorText: this.item.color,
-      cosmeThemeCheckbox: {
-        spring: this.item.theme,
-        summer: this.item.theme,
-        autumn: this.item.theme,
-        winter: this.item.theme
+      cosmeThemeCheckbox: this.item.theme
       }
-    }
   },
   methods: {
-    editCosmeChangeInformationButtonClicked(){
+    editShowCosmeChangeFormButtonClicked(){
       if(this.openChangeForm) {
         this.$store.dispatch('pages/cosmelist/closeChangeForm')
       } else {
         this.$store.dispatch('pages/cosmelist/openChangeForm', this.id)
       }
+    },
+    updateInformation(){
+      this.$store.dispatch('userData/loadMain')
+      this.item.name = this.cosmeNameText,
+      this.item.brand = this.cosmeBrandText,
+      this.item.color = this.cosmeColorText,
+      this.item.theme = this.cosmeThemeCheckbox
+    },
+    deleteCosme(){
+      this.$store.dispatch('userData/deleteCosmeInformation', this.id)
+      this.$store.dispatch('userData/loadMain')
     }
   },
    computed: {

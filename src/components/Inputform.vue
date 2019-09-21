@@ -5,7 +5,7 @@
           <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
           <div>コスメの色味:<input v-model="cosmeColorText" type="text" name="color" ></div>
           <div>コスメのテーマ:
-              <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
+            <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
             <label>春</label>
             <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
             <label>夏</label>

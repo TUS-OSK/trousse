@@ -38,8 +38,14 @@ export default {
         id: '' + ++state.cosmeIdCount,
         ...payload.info
       })
+    },
+    deleteCosmeInformation(state, payload){
+      for(const type of Object.keys(state.cosmes)){
+        state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
+      }
     }
   },
+
   actions: {
     async loadMain({ commit }) {
       const mainData = await fetchMain()
@@ -47,6 +53,9 @@ export default {
     },
     registerCosmeInformation({ commit }, item) {
       commit('registerCosmeInformation', item)
+    },
+    deleteCosmeInformation({ commit }, id){
+      commit('deleteCosmeInformation', id)
     }
   }
 }
