@@ -1,7 +1,7 @@
 <template>
 <div>
     <li class="item"> {{ item.name }}
-      <button v-on:click="editShowCosmeChangeFormButtonClicked(id)">{{
+      <button v-on:click="editShowCosmeChangeFormButtonClicked()">{{
         openChangeForm ? '閉じる' : 'コスメ情報を編集'
       }}</button>
       <div class="brand">{{ item.id }}</div>
