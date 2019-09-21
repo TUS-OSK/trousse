@@ -2,7 +2,6 @@
   <div>
     <Header/>
     <div class="row">
-      <Sidebar PageName="編集"/>
       <main>
         <h2>{{ type }}の編集画面</h2>
         <ul class="list">
@@ -19,7 +18,6 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import Sidebar from '@/components/Sidebar.vue'
 import Inputform from '@/components/Inputform.vue'
 import Cosmelist from '@/components/Cosmelist.vue'
 import draggable from 'vuedraggable'
@@ -28,7 +26,6 @@ export default {
   name: 'edit',
   components: {
     Header,
-    Sidebar,
     Inputform,
     Cosmelist,
     draggable

@@ -24,8 +24,7 @@ export default {
 
 <style scoped>
 aside {
-  border-right: 2px dotted black;
-  margin-right: 50px;
+  border: 2px dotted black;
 }
 
 nav {

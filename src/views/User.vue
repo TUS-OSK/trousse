@@ -2,7 +2,6 @@
   <div>
     <Header/>
     <div class="row">
-      <Sidebar PageName="ユーザー"/>
       <main>
         <h2>Hello World!</h2>
         <h3>ユーザー名</h3>
@@ -20,13 +19,11 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import Sidebar from '@/components/Sidebar.vue'
 
 export default {
   name: 'user',
   components: {
-    Header,
-    Sidebar
+    Header
   },
   computed: {
     name() {

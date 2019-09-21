@@ -3,7 +3,6 @@
   <div>
     <Header/>
     <div class="row">
-      <Sidebar PageName="メイン"/>
       <main>
         <h1>今日のコスメを決めよう！</h1>
         <!-- ここからコスメ選択 -->
@@ -24,7 +23,6 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import Sidebar from '@/components/Sidebar.vue'
 import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
 import SuggestedCosmesList from '@/components/SuggestedCosmesList.vue'
 
@@ -34,7 +32,6 @@ export default {
   name: 'main-page',
   components: {
     Header,
-    Sidebar,
     AccordionCosmesList,
     SuggestedCosmesList
   },
