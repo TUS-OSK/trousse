@@ -1,11 +1,11 @@
 <template>
   <div>
     <li class="item"> {{ item.name }}
-      <button v-on:click="editShowCosmeChangeFormButtonClicked()">コスメ情報を編集</button>
-      <div class="id">{{ item.id }}</div>
-      <div class="brand">{{ item.brand }}</div>
-      <div class="color">{{ item.color }}</div>
-      <div class="image">{{ item.theme }}</div>
+      <button class="cosmechangeformbutton" v-on:click="editShowCosmeChangeFormButtonClicked()">コスメ情報を編集</button>
+      <div class="info">{{ item.id }}</div>
+      <div class="info">{{ item.brand }}</div>
+      <div class="info">{{ item.color }}</div>
+      <div class="info">{{ item.theme }}</div>
 
       <modal :name="`cosmelistform-${id}`">
         <div>コスメの名前:
@@ -32,7 +32,7 @@
         <modal :name="`deletecosme-${id}`">
           <div>本当に削除しますか？</div>
           <button v-on:click="deleteCosme()">はい</button>
-          <button v-on:click="hideModal()">いいえ</button>
+          <button v-on:click="hideConfirmModal()">いいえ</button>
           </modal>
       </modal>
     </li>
@@ -81,7 +81,7 @@ export default {
       this.$store.dispatch('userData/deleteCosmeInformation', this.id)
       this.$store.dispatch('userData/loadMain')
     },
-    hideModal(){
+    hideConfirmModal(){
       this.$modal.hide(`deletecosme-${this.id}`)
     }
   },
@@ -98,22 +98,19 @@ export default {
 li {
   cursor:pointer;
   padding: 10px;
-  border: solid #ddd 1px;
   list-style-type: none;
+  font-family: "serif";
+  background-color: #f3e2f0;
+  border-radius: 3px;
+  max-height: 100%;
+  white-space: normal;
+  box-shadow: 0 2px 0 rgba(9,30,66,.25);
+  margin-bottom: 8px;
 }
 .item{
   font-size: 20px;
 }
-.id{
-  font-size: 10px;
-}
-.brand{
-  font-size: 10px;
-}
-.color{
-  font-size: 10px;
-}
-.image{
+.info{
   font-size: 10px;
 }
 </style>
