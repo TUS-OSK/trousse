@@ -9,7 +9,7 @@
             <Cosmelist v-for="item in list" :key="item.id" :id="item.id" :type="type" :item="item"></Cosmelist>
           </draggable>
         </ul>
-        <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
+        <button class="addcosmebutton" v-on:click="editAddCosmeButton()" >{{ cosmeAddCosmeValue }}</button>
         <Inputform :type="type" />
       </main>
     </div>
@@ -42,11 +42,11 @@ export default {
       cosmeNameText: '',
       cosmeColorText: '',
       cosmeThemeCheckbox: [],
-      cosmeAddFormButtonValue: 'コスメを追加'
+      cosmeAddCosmeValue: 'コスメを追加'
     }
   },
   methods: {
-    editAddButtonClicked() {
+    editAddCosmeButton() {
       this.$modal.show('inputform')
     }
   },
@@ -59,7 +59,7 @@ export default {
         return this.$store.getters['userData/cosmes'][this.type]
       },
       set(array){
-        this.$store.dispatch('userData/dragCosmeInformation', {array, type: this.type})
+        this.$store.dispatch('userData/dragCosmeInfo', {array, type: this.type})
       }
     }
   }
@@ -71,11 +71,17 @@ export default {
 .row {
   display: flex;
   flex-direction: row;
-
 }
-.item{
-  font-size: 20px;
-  border-bottom: 1px dashed #000000;
+.addcosmebutton{
+  cursor:pointer;
+  padding: 10px;
+  list-style-type: none;
+  font-family: "serif";
+  border-radius: 10px;
+  max-height: 100%;
+  white-space: normal;
+  box-shadow: 0 2px 0 rgba(9,30,66,.25);
+  margin-bottom: 8px;
 }
 ul{
   padding: 0px;

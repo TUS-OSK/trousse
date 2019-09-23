@@ -46,7 +46,7 @@ export default {
           theme: this.cosmeThemeCheckbox
         }
       }
-      this.$store.dispatch('userData/registerCosmeInformation', item)
+      this.$store.dispatch('userData/registerCosmeInfo', item)
       this.$store.dispatch('userData/loadMain')
       this.cosmeBrandText = ''
       this.cosmeNameText = ''
