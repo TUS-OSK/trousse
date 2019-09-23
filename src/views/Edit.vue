@@ -47,7 +47,6 @@ export default {
   },
   methods: {
     editAddButtonClicked() {
-      this.$store.dispatch('pages/edit/loadForm')
       this.$modal.show('inputform')
     }
   },
@@ -72,6 +71,7 @@ export default {
 .row {
   display: flex;
   flex-direction: row;
+
 }
 .item{
   font-size: 20px;
