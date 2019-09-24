@@ -39,28 +39,32 @@ export default {
         ...payload.info
       })
     },
-    deleteCosmeInformation(state, payload){
-      for(const type of Object.keys(state.cosmes)){
+    deleteCosmeInformation(state, payload) {
+      for (const type of Object.keys(state.cosmes)) {
         state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
       }
     },
-    dragCosmeInformation(state, payload){
+    dragCosmeInformation(state, payload) {
       state.cosmes[payload.type] = payload.array
     }
   },
 
   actions: {
-    async loadMain({ commit }) {
-      const mainData = await fetchMain()
-      commit('updateMainData', mainData)
+    init: {
+      root: true,
+      async handler({ commit }) {
+        const mainData = await fetchMain()
+        commit('updateMainData', mainData)
+        console.log('ユーザーデータをロードしました')
+      }
     },
     registerCosmeInformation({ commit }, item) {
       commit('registerCosmeInformation', item)
     },
-    deleteCosmeInformation({ commit }, id){
+    deleteCosmeInformation({ commit }, id) {
       commit('deleteCosmeInformation', id)
     },
-    dragCosmeInformation({ commit }, payload){
+    dragCosmeInformation({ commit }, payload) {
       commit('dragCosmeInformation', payload)
     }
   }

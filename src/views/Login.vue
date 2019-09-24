@@ -1,7 +1,8 @@
 <template>
   <div>
     <Header/>
-    ログインページになるはず！
+    <button @click="login"></button>
+    <button @click="logout"></button>
   </div>
 </template>
 
@@ -12,6 +13,14 @@ export default {
   name: 'login',
   components: {
     Header
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('pages/login/loginUser')
+    },
+    logout() {
+      this.$store.dispatch('pages/login/logoutUser')
+    }
   }
 }
 </script>
