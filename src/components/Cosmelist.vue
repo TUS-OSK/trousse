@@ -18,14 +18,9 @@
           <input v-model="cosmeColorText" type="text" name="color" >
         </div>
         <div>コスメのテーマ:
-          <input v-model="cosmeThemeCheckbox" value="spring" type="checkbox">
-          <label>春</label>
-          <input v-model="cosmeThemeCheckbox" value="summer" type="checkbox">
-          <label>夏</label>
-          <input v-model="cosmeThemeCheckbox" value="autumn" type="checkbox">
-          <label>秋</label>
-          <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
-          <label>冬</label>
+          <label v-for="theme in themes" :key="theme">
+            <input v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ translateJ(theme) }}
+          </label>
         </div>
         <button v-on:click="updateInformation()">コスメ情報を更新</button>
         <button v-on:click="showDeleteCosmeModal()">コスメを削除</button>
@@ -83,11 +78,27 @@ export default {
     },
     hideConfirmModal(){
       this.$modal.hide(`deletecosme-${this.id}`)
+    },
+    translateJ(word) {
+      switch(word) {
+        case 'spring':
+          return '春'
+        case 'summer':
+          return '夏'
+        case 'autumn':
+          return '秋'
+        case 'winter':
+          return '冬'
+      }
+      return word
     }
   },
    computed: {
     list() {
       return this.$store.getters['userData/cosmes'][this.type]
+    },
+    themes() {
+      return this.$store.getters['userData/themes']
     }
   }
 
