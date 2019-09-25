@@ -1,8 +1,8 @@
 <template>
   <div>
     <Header/>
-    <button @click="login"></button>
-    <button @click="logout"></button>
+    <button @click="login">Sign In!</button>
+    <button @click="logout">Sign Out!</button>
   </div>
 </template>
 
@@ -16,10 +16,10 @@ export default {
   },
   methods: {
     login() {
-      this.$store.dispatch('pages/login/loginUser')
+      this.$store.dispatch('userData/logIn')
     },
     logout() {
-      this.$store.dispatch('pages/login/logoutUser')
+      this.$store.dispatch('userData/logOut')
     }
   }
 }

@@ -4,7 +4,7 @@
       <router-link class="link" to="/main">
         <h1>Trousse</h1>
       </router-link>
-      <button @click="changeSidebarState"></button>
+      <button @click="changeSidebarState">三</button>
     </header>
     <aside v-if="isGuided" :class="{ 'is-guided': isGuided }">
       <nav>

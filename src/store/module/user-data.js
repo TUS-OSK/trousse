@@ -1,4 +1,5 @@
 import { fetchMain } from '../../api'
+import * as firebase from 'firebase/app'
 
 export default {
   state: {
@@ -33,6 +34,9 @@ export default {
       }
       state.cosmeIdCount = Math.max(...flattenCosmes.map(cosme => +cosme.id))
     },
+    updateUserData(state, payload) {
+      state.user.isLogged = payload.isLogged
+    },
     registerCosmeInformation(state, payload) {
       state.cosmes[payload.type].push({
         id: '' + ++state.cosmeIdCount,
@@ -56,6 +60,39 @@ export default {
         const mainData = await fetchMain()
         commit('updateMainData', mainData)
         console.log('ユーザーデータをロードしました')
+
+        await firebase.auth().onAuthStateChanged(user => {
+          const userData = {
+            user
+          }
+
+          if (user) {
+            userData.isLogged = true
+            console.log('ログイン状態です')
+          } else {
+            userData.isLogged = false
+            console.log('未ログイン状態です')
+          }
+          commit('updateUserData', userData)
+        })
+
+        console.log('オブザーバーをセットしました')
+      }
+    },
+    async logIn({ state }) {
+      if (!state.user.isLogged) {
+        const provider = await new firebase.auth.GoogleAuthProvider()
+        firebase.auth().signInWithRedirect(provider)
+      } else {
+        console.log('ログアウトしてください')
+      }
+    },
+    async logOut({ state }) {
+      if (state.user.isLogged) {
+        await firebase.auth().signOut()
+        console.log('ログアウトしました')
+      } else {
+        console.log('ログインしてください')
       }
     },
     registerCosmeInformation({ commit }, item) {
