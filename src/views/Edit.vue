@@ -3,7 +3,8 @@
     <Header/>
     <div class="row">
       <main>
-        <h2>{{ type }}の編集画面</h2>
+        <h2 class="subtitle">{{ type }}の編集画面</h2>
+        <div class="cosmearea">
         <ul class="list">
           <draggable v-model="list">
             <Cosmelist v-for="item in list" :key="item.id" :id="item.id" :type="type" :item="item"></Cosmelist>
@@ -11,6 +12,7 @@
         </ul>
         <button class="addcosmebutton" v-on:click="editAddCosmeButton()" >{{ cosmeAddCosmeValue }}</button>
         <Inputform :type="type" />
+        </div>
       </main>
     </div>
   </div>
@@ -69,8 +71,13 @@ export default {
 
 <style scoped>
 .row {
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
+}
+.subtitle{
+  text-align: center;
+  color: rgb(99, 96, 92);
+  text-decoration: underline solid #ffb3f9;
 }
 .addcosmebutton{
   cursor:pointer;
@@ -82,6 +89,13 @@ export default {
   white-space: normal;
   box-shadow: 0 2px 0 rgba(9,30,66,.25);
   margin-bottom: 8px;
+  width: 100%;
+  font-size: 20px;
+
+}
+.cosmearea{
+  background-color: antiquewhite;
+  padding-top: 3px;
 }
 ul{
   padding: 0px;

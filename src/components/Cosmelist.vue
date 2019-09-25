@@ -3,6 +3,8 @@
     <li class="item">
       <div>{{ item.name }}</div>
       <div class="brand">{{ item.brand }}</div>
+      <div class="brand">{{ item.id }}</div>
+
       <button class="cosmechangeformbutton" v-on:click="editShowCosmeChangeFormButton()">編集</button>
 
       <modal :name="`cosmelistform-${id}`">
@@ -128,5 +130,8 @@ li {
   font-size: 8px;
   color: rgb(99, 96, 92);
   text-align: center;
+}
+modal {
+  width: 480px;
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
-    <modal name="inputform">
+    <modal name="inputform"  top="10%" width="40%" height="40%">
+      <div class="modalelement">
       <div>コスメの分野:{{type}}</div>
           <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
           <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
@@ -15,6 +16,7 @@
             <label>冬</label>
           </div>
           <button v-on:click="saveForm(type)">コスメを登録</button>
+          </div>
     </modal>
 </template>
 
@@ -59,4 +61,15 @@ export default {
 </script>
 
 <style scoped>
+.v--modal {
+    background-color: white;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 0 20px 60px -2px rgba(27, 33, 58, 0.4);
+    padding: 0;
+}
+.modalelement{
+  vertical-align: middle;
+  position: fixed;
+}
 </style>
