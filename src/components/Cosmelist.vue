@@ -1,15 +1,13 @@
 <template>
-<div>
+  <div>
     <li class="item"> {{ item.name }}
-      <button v-on:click="editShowCosmeChangeFormButtonClicked()">{{
-        openChangeForm ? '閉じる' : 'コスメ情報を編集'
-      }}</button>
-      <div class="id">{{ item.id }}</div>
-      <div class="brand">{{ item.brand }}</div>
-      <div class="color">{{ item.color }}</div>
-      <div class="image">{{ item.theme }}</div>
+      <button class="cosmechangeformbutton" v-on:click="editShowCosmeChangeFormButtonClicked()">コスメ情報を編集</button>
+      <div class="info">{{ item.id }}</div>
+      <div class="info">{{ item.brand }}</div>
+      <div class="info">{{ item.color }}</div>
+      <div class="info">{{ item.theme }}</div>
 
-      <div v-if="openChangeForm">
+      <modal :name="`cosmelistform-${id}`">
         <div>コスメの名前:
           <input v-model="cosmeNameText" type="text" name="name" >
         </div>
@@ -30,11 +28,15 @@
           <label>冬</label>
         </div>
         <button v-on:click="updateInformation()">コスメ情報を更新</button>
-        <button v-on:click="deleteCosme()">コスメを削除</button>
-      </div>
+        <button v-on:click="showDeleteCosmeModal()">コスメを削除</button>
+        <modal :name="`deletecosme-${id}`">
+          <div>本当に削除しますか？</div>
+          <button v-on:click="deleteCosme()">はい</button>
+          <button v-on:click="hideConfirmModal()">いいえ</button>
+          </modal>
+      </modal>
     </li>
-</div>
-
+  </div>
 </template>
 
 <script>
@@ -62,33 +64,30 @@ export default {
   },
   methods: {
     editShowCosmeChangeFormButtonClicked(){
-      if(this.openChangeForm) {
-        this.$store.dispatch('pages/cosmelist/closeChangeForm')
-      } else {
-        this.$store.dispatch('pages/cosmelist/openChangeForm', this.id)
-      }
+      this.$modal.show(`cosmelistform-${this.id}`)
     },
     updateInformation(){
+      this.$modal.hide(`cosmelistform-${this.id}`)
       this.$store.dispatch('userData/loadMain')
       this.item.name = this.cosmeNameText,
       this.item.brand = this.cosmeBrandText,
       this.item.color = this.cosmeColorText,
       this.item.theme = this.cosmeThemeCheckbox
     },
+    showDeleteCosmeModal(){
+      this.$modal.show(`deletecosme-${this.id}`)
+    },
     deleteCosme(){
       this.$store.dispatch('userData/deleteCosmeInformation', this.id)
       this.$store.dispatch('userData/loadMain')
+    },
+    hideConfirmModal(){
+      this.$modal.hide(`deletecosme-${this.id}`)
     }
   },
    computed: {
     list() {
       return this.$store.getters['userData/cosmes'][this.type]
-    },
-    openChangeForm() {
-      return this.id === this.openChangeFormId
-    },
-    openChangeFormId() {
-      return this.$store.getters['pages/cosmelist/openChangeFormId']
     }
   }
 
@@ -99,22 +98,19 @@ export default {
 li {
   cursor:pointer;
   padding: 10px;
-  border: solid #ddd 1px;
   list-style-type: none;
+  font-family: "serif";
+  background-color: #f3e2f0;
+  border-radius: 3px;
+  max-height: 100%;
+  white-space: normal;
+  box-shadow: 0 2px 0 rgba(9,30,66,.25);
+  margin-bottom: 8px;
 }
 .item{
   font-size: 20px;
 }
-.id{
-  font-size: 10px;
-}
-.brand{
-  font-size: 10px;
-}
-.color{
-  font-size: 10px;
-}
-.image{
+.info{
   font-size: 10px;
 }
 </style>

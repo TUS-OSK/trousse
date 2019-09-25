@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <modal name="inputform">
       <div>コスメの分野:{{type}}</div>
           <div>コスメの名前:<input v-model="cosmeNameText" type="text" name="name" ></div>
           <div>コスメのブランド:<input v-model="cosmeBrandText" type="text" name="brand"></div>
@@ -15,7 +15,7 @@
             <label>冬</label>
           </div>
           <button v-on:click="saveForm(type)">コスメを登録</button>
-    </div>
+    </modal>
 </template>
 
 <script>
@@ -52,6 +52,7 @@ export default {
       this.cosmeNameText = ''
       this.cosmeColorText = ''
       this.cosmeThemeCheckbox = []
+      this.$modal.hide('inputform')
     }
   }
 }

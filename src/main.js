@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import VModal from 'vue-js-modal'
 
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
@@ -16,6 +17,8 @@ var firebaseConfig = {
   appId: '1:180108532162:web:efd452b8adebccd4659e5b'
 }
 firebase.initializeApp(firebaseConfig)
+
+Vue.use(VModal)
 
 new Vue({
   router,
