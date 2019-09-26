@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <li class="item"> {{ item.name }}
-      <button class="cosmechangeformbutton" v-on:click="editShowCosmeChangeFormButtonClicked()">コスメ情報を編集</button>
-      <div class="info">{{ item.id }}</div>
-      <div class="info">{{ item.brand }}</div>
-      <div class="info">{{ item.color }}</div>
-      <div class="info">{{ item.theme }}</div>
+  <div class="itemlist">
+    <li class="item">
+      <div>{{ item.name }}</div>
+      <div class="brand">{{ item.brand }}</div>
+      <div class="brand">{{ item.id }}</div>
+
+      <button class="cosmechangeformbutton" v-on:click="editShowCosmeChangeFormButton()">編集</button>
 
       <modal :name="`cosmelistform-${id}`">
         <div>コスメの名前:
@@ -27,7 +27,7 @@
           <input v-model="cosmeThemeCheckbox" value="winter" type="checkbox">
           <label>冬</label>
         </div>
-        <button v-on:click="updateInformation()">コスメ情報を更新</button>
+        <button v-on:click="updateCosmeInfo()">コスメ情報を更新</button>
         <button v-on:click="showDeleteCosmeModal()">コスメを削除</button>
         <modal :name="`deletecosme-${id}`">
           <div>本当に削除しますか？</div>
@@ -63,10 +63,10 @@ export default {
       }
   },
   methods: {
-    editShowCosmeChangeFormButtonClicked(){
+    editShowCosmeChangeFormButton(){
       this.$modal.show(`cosmelistform-${this.id}`)
     },
-    updateInformation(){
+    updateCosmeInfo(){
       this.$modal.hide(`cosmelistform-${this.id}`)
       this.$store.dispatch('userData/loadMain')
       this.item.name = this.cosmeNameText,
@@ -78,7 +78,7 @@ export default {
       this.$modal.show(`deletecosme-${this.id}`)
     },
     deleteCosme(){
-      this.$store.dispatch('userData/deleteCosmeInformation', this.id)
+      this.$store.dispatch('userData/deleteCosmeInfo', this.id)
       this.$store.dispatch('userData/loadMain')
     },
     hideConfirmModal(){
@@ -95,22 +95,43 @@ export default {
 </script>
 
 <style scoped>
+.itemlist{
+  display: inline-block;
+  margin-right: 8px;
+}
 li {
   cursor:pointer;
   padding: 10px;
   list-style-type: none;
   font-family: "serif";
-  background-color: #f3e2f0;
-  border-radius: 3px;
+  border-radius: 10px;
   max-height: 100%;
   white-space: normal;
   box-shadow: 0 2px 0 rgba(9,30,66,.25);
   margin-bottom: 8px;
+  width: 90px;
+  height: 120px;
+  word-break: break-all;
+  overflow: scroll;
 }
 .item{
-  font-size: 20px;
+  font-size: 15px;
+  background-color: lightpink;
+  text-align: center;
 }
-.info{
-  font-size: 10px;
+.cosmechangeformbutton{
+  font-family: "serif";
+  border-radius: 10px;
+  max-height: 100%;
+  white-space: normal;
+  margin-bottom: 8px;
+}
+.brand{
+  font-size: 8px;
+  color: rgb(99, 96, 92);
+  text-align: center;
+}
+modal {
+  width: 480px;
 }
 </style>
