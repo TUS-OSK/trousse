@@ -26,7 +26,6 @@ export default {
       this.isGuided = !this.isGuided
     },
     resetGuideState() {
-      console.log(this.isGuided)
       this.isGuided = false
     }
   },
