@@ -8,6 +8,7 @@ export default {
       cheek: [],
       lip: []
     },
+    themes: ['spring', 'summer', 'autumn', 'winter', 'cute'],
     cosmeIdCount: 0
   },
   getters: {
@@ -21,7 +22,8 @@ export default {
       return allCosmeIds
     },
     cosmes: state => state.cosmes,
-    cosmeIdCount: state => state.cosmeIdCount
+    cosmeIdCount: state => state.cosmeIdCount,
+    themes: state => state.themes
   },
   mutations: {
     updateMainData(state, payload) {
@@ -39,12 +41,12 @@ export default {
         ...payload.info
       })
     },
-    deleteCosmeInfo(state, payload){
-      for(const type of Object.keys(state.cosmes)){
+    deleteCosmeInfo(state, payload) {
+      for (const type of Object.keys(state.cosmes)) {
         state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
       }
     },
-    dragCosmeInfo(state, payload){
+    dragCosmeInfo(state, payload) {
       state.cosmes[payload.type] = payload.array
     }
   },
@@ -57,10 +59,10 @@ export default {
     registerCosmeInfo({ commit }, item) {
       commit('registerCosmeInfo', item)
     },
-    deleteCosmeInfo({ commit }, id){
+    deleteCosmeInfo({ commit }, id) {
       commit('deleteCosmeInfo', id)
     },
-    dragCosmeInfo({ commit }, payload){
+    dragCosmeInfo({ commit }, payload) {
       commit('dragCosmeInfo', payload)
     }
   }

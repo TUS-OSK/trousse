@@ -3,15 +3,15 @@
     <Header/>
     <div class="row">
       <main>
-        <h2 class="subtitle">{{ type }}の編集画面</h2>
-        <div class="cosmearea">
-        <ul class="list">
-          <draggable v-model="list">
-            <Cosmelist v-for="item in list" :key="item.id" :id="item.id" :type="type" :item="item"></Cosmelist>
-          </draggable>
-        </ul>
-        <button class="addcosmebutton" v-on:click="editAddCosmeButton()" >{{ cosmeAddCosmeValue }}</button>
-        <Inputform :type="type" />
+        <h2 class="sub-title">{{ type }}の編集画面</h2>
+        <div class="cosme-area">
+          <div class="cosme-list">
+            <draggable v-model="cosmeAry">
+              <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme"></cosme-icon>
+            </draggable>
+          </div>
+          <button class="show-modal-button" v-on:click="showAddCosmeModal()" >{{ addCosmeValue }}</button>
+          <cosme-form-modal formId="new" formType="register" :focusingType="type"/>
         </div>
       </main>
     </div>
@@ -20,16 +20,16 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import Inputform from '@/components/Inputform.vue'
-import Cosmelist from '@/components/Cosmelist.vue'
+import CosmeIcon from '@/components/modules/CosmeIcon.vue'
+import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
 import draggable from 'vuedraggable'
 
 export default {
   name: 'edit',
   components: {
     Header,
-    Inputform,
-    Cosmelist,
+    CosmeIcon,
+    CosmeFormModal,
     draggable
   },
   props: {
@@ -40,28 +40,24 @@ export default {
   },
   data() {
     return {
-      cosmeBrandText: '',
-      cosmeNameText: '',
-      cosmeColorText: '',
-      cosmeThemeCheckbox: [],
-      cosmeAddCosmeValue: 'コスメを追加'
+      addCosmeValue: 'コスメを追加'
     }
   },
   methods: {
-    editAddCosmeButton() {
-      this.$modal.show('inputform')
+    showAddCosmeModal() {
+      this.$modal.show('form-modal-new')
     }
   },
   computed: {
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
     },
-    list: {
+    cosmeAry: {
       get(){
         return this.$store.getters['userData/cosmes'][this.type]
       },
       set(array){
-        this.$store.dispatch('userData/dragCosmeInfo', {array, type: this.type})
+        this.$store.dispatch('userData/dragCosmeInfo', { array, type: this.type })
       }
     }
   }
@@ -74,30 +70,27 @@ export default {
   /* display: flex; */
   flex-direction: row;
 }
-.subtitle{
+.sub-title {
   text-align: center;
   color: rgb(99, 96, 92);
   text-decoration: underline solid #ffb3f9;
 }
-.addcosmebutton{
+.show-modal-button {
   cursor:pointer;
+  width: 100%;
   padding: 10px;
-  list-style-type: none;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 0 rgba(9,30,66,.25);
   font-family: "serif";
   border-radius: 10px;
-  max-height: 100%;
   white-space: normal;
-  box-shadow: 0 2px 0 rgba(9,30,66,.25);
-  margin-bottom: 8px;
-  width: 100%;
   font-size: 20px;
-
 }
-.cosmearea{
+.cosme-area {
   background-color: antiquewhite;
-  padding-top: 3px;
+  padding: 4px;
 }
-ul{
+ul {
   padding: 0px;
 }
 </style>
