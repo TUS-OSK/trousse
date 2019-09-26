@@ -1,10 +1,12 @@
 <template>
   <div>
     <header>
+      <button class="menubutton" @click="changeSidebarState">
+        <img src="../assets/menu_img.png" width="48px" height="48px"/>
+        </button>
       <router-link class="link" to="/main">
         <h1>Trousse</h1>
       </router-link>
-      <button @click="changeSidebarState">メニューボタン</button>
     </header>
     <aside v-if="isGuided" :class="{ 'is-guided': isGuided }">
       <nav>
@@ -13,7 +15,7 @@
         <router-link class="link" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
         <router-link class="link" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
       </nav>
-      <button @click="changeSidebarState"></button>
+      <button class="closebutton" @click="changeSidebarState">閉じる</button>
     </aside>
   </div>
 </template>
@@ -47,13 +49,21 @@ header {
   border-bottom: 2px dotted black;
   flex-direction: row;
 }
-
 nav {
   width: 200px;
   display: flex;
   flex-direction: column;
+  float: right;
 }
-
+.closebutton {
+  float: right;
+}
+.menubutton {
+  margin: 0em;
+  padding: 0px 0px 0px;
+  border-width: 0px;
+  float: right;
+}
 .is-guided  {
   z-index: 1;
   visibility: visible;
