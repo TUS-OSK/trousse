@@ -9,7 +9,7 @@ export default {
       lip: []
     },
     themes: ['spring', 'summer', 'autumn', 'winter', 'cute'],
-    cosmeIdCount: 0
+    cosmeIdCount: 6
   },
   getters: {
     user: state => state.user,
@@ -29,24 +29,28 @@ export default {
     updateMainData(state, payload) {
       state.user = payload.user
       state.cosmes = payload.cosmes
-      let flattenCosmes = []
-      for (const key in payload.cosmes) {
-        flattenCosmes = flattenCosmes.concat(payload.cosmes[key])
-      }
-      state.cosmeIdCount = Math.max(...flattenCosmes.map(cosme => +cosme.id))
     },
-    registerCosmeInfo(state, payload) {
+    registerCosmeInformation(state, payload) {
       state.cosmes[payload.type].push({
-        id: '' + ++state.cosmeIdCount,
+        id: '' + state.cosmeIdCount++,
         ...payload.info
       })
     },
-    deleteCosmeInfo(state, payload) {
+    changeCosmeInformation(state, payload) {
+      state.cosmes[payload.type] = state.cosmes[payload.type].map(cosmeInfo => {
+        if (cosmeInfo.id === payload.id) {
+          return payload.info
+        } else {
+          return cosmeInfo
+        }
+      })
+    },
+    deleteCosmeInformation(state, payload) {
       for (const type of Object.keys(state.cosmes)) {
         state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
       }
     },
-    dragCosmeInfo(state, payload) {
+    dragCosmeIcon(state, payload) {
       state.cosmes[payload.type] = payload.array
     }
   },
@@ -57,13 +61,16 @@ export default {
       commit('updateMainData', mainData)
     },
     registerCosmeInfo({ commit }, item) {
-      commit('registerCosmeInfo', item)
+      commit('registerCosmeInformation', item)
+    },
+    changeCosmeInfo({ commit }, item) {
+      commit('changeCosmeInformation', item)
     },
     deleteCosmeInfo({ commit }, id) {
-      commit('deleteCosmeInfo', id)
+      commit('deleteCosmeInformation', id)
     },
-    dragCosmeInfo({ commit }, payload) {
-      commit('dragCosmeInfo', payload)
+    dragCosme({ commit }, payload) {
+      commit('dragCosmeIcon', payload)
     }
   }
 }

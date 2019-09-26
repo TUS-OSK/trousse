@@ -57,7 +57,7 @@ export default {
         return this.$store.getters['userData/cosmes'][this.type]
       },
       set(array){
-        this.$store.dispatch('userData/dragCosmeInfo', { array, type: this.type })
+        this.$store.dispatch('userData/dragCosme', { array, type: this.type })
       }
     }
   }

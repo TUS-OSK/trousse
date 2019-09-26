@@ -13,7 +13,7 @@
         </div>
         <div>コスメのテーマ:
           <label v-for="theme in themes" :key="theme">
-            <input v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ translateJ(theme) }}
+            <input v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
           </label>
         </div>
       </div>
@@ -23,12 +23,12 @@
           <button v-on:click="showConfirmModal()">コスメを削除</button>
         </div>
         <div v-else>
-          <button v-on:click="saveForm(focusingType)">コスメを登録</button>
+          <button v-on:click="updateCosmeInfo()">コスメを登録</button>
         </div>
       </div>
       <modal :name="`delete-modal-${formId}`">
         <div>本当に削除しますか？</div>
-        <button v-on:click="deleteCosme()">はい</button>
+        <button v-on:click="deleteCosmeInfo()">はい</button>
         <button v-on:click="hideConfirmModal()">いいえ</button>
       </modal>
     </modal>
@@ -64,7 +64,7 @@ export default {
         cosmeColorText: this.focusingCosme.color,
         cosmeThemeCheckbox: this.focusingCosme.theme
       }
-    } else {
+    } else if(this.formType === 'register') {
       return {
         cosmeBrandText: '',
         cosmeNameText: '',
@@ -72,12 +72,12 @@ export default {
         cosmeThemeCheckbox: []
       }
     }
-
   },
   methods: {
-    saveForm(type){
+    updateCosmeInfo(){
       const newCosme = {
-        type,
+        type: this.focusingType,
+        id: this.formId,
         info: {
           brand: this.cosmeBrandText,
           name: this.cosmeNameText,
@@ -85,14 +85,23 @@ export default {
           theme: this.cosmeThemeCheckbox
         }
       }
-      console.log(newCosme)
-      this.$store.dispatch('userData/registerCosmeInfo', newCosme)
-      this.$store.dispatch('userData/loadMain')
-      this.cosmeBrandText = ''
-      this.cosmeNameText = ''
-      this.cosmeColorText = ''
-      this.cosmeThemeCheckbox = []
+      if(this.formType === 'edit') {
+        this.$store.dispatch('userData/changeCosmeInfo', newCosme)
+        this.$store.dispatch('userData/loadMain')
+      } else if(this.formType === 'register') {
+        this.$store.dispatch('userData/registerCosmeInfo', newCosme)
+        this.$store.dispatch('userData/loadMain')
+
+        this.cosmeBrandText = ''
+        this.cosmeNameText = ''
+        this.cosmeColorText = ''
+        this.cosmeThemeCheckbox = []
+      }
       this.$modal.hide(`form-modal-${this.formId}`)
+    },
+    deleteCosmeInfo(){
+      this.$store.dispatch('userData/deleteCosmeInfo', this.formId)
+      this.$store.dispatch('userData/loadMain')
     },
     showConfirmModal(){
       this.$modal.show(`delete-modal-${this.formId}`)
@@ -100,17 +109,7 @@ export default {
     hideConfirmModal(){
       this.$modal.hide(`delete-modal-${this.formId}`)
     },
-    updateCosmeInfo(){
-      this.focusingCosme.name = this.cosmeNameText,
-      this.focusingCosme.brand = this.cosmeBrandText,
-      this.focusingCosme.color = this.cosmeColorText,
-      this.focusingCosme.theme = this.cosmeThemeCheckbox
-      this.$modal.hide(`form-modal-${this.formId}`)
-    },
-    deleteCosme(){
-      this.$store.dispatch('userData/deleteCosmeInfo', this.formId)
-    },
-    translateJ(word) {
+    toJapanese(word) {
       switch(word) {
         case 'spring':
           return '春'
