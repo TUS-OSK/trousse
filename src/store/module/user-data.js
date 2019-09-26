@@ -38,7 +38,7 @@ export default {
     },
     changeCosmeInformation(state, payload) {
       state.cosmes[payload.type] = state.cosmes[payload.type].map(cosmeInfo => {
-        if (cosmeInfo.id === payload.id) {
+        if (cosmeInfo.id === payload.info.id) {
           return payload.info
         } else {
           return cosmeInfo

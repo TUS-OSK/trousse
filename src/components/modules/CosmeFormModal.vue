@@ -77,8 +77,8 @@ export default {
     updateCosmeInfo(){
       const newCosme = {
         type: this.focusingType,
-        id: this.formId,
         info: {
+          id: this.focusingCosme.id,
           brand: this.cosmeBrandText,
           name: this.cosmeNameText,
           color: this.cosmeColorText,
