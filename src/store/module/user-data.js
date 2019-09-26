@@ -35,18 +35,18 @@ export default {
       }
       state.cosmeIdCount = Math.max(...flattenCosmes.map(cosme => +cosme.id))
     },
-    registerCosmeInformation(state, payload) {
+    registerCosmeInfo(state, payload) {
       state.cosmes[payload.type].push({
         id: '' + ++state.cosmeIdCount,
         ...payload.info
       })
     },
-    deleteCosmeInformation(state, payload) {
+    deleteCosmeInfo(state, payload) {
       for (const type of Object.keys(state.cosmes)) {
         state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
       }
     },
-    dragCosmeInformation(state, payload) {
+    dragCosmeInfo(state, payload) {
       state.cosmes[payload.type] = payload.array
     }
   },
@@ -56,14 +56,14 @@ export default {
       const mainData = await fetchMain()
       commit('updateMainData', mainData)
     },
-    registerCosmeInformation({ commit }, item) {
-      commit('registerCosmeInformation', item)
+    registerCosmeInfo({ commit }, item) {
+      commit('registerCosmeInfo', item)
     },
-    deleteCosmeInformation({ commit }, id) {
-      commit('deleteCosmeInformation', id)
+    deleteCosmeInfo({ commit }, id) {
+      commit('deleteCosmeInfo', id)
     },
-    dragCosmeInformation({ commit }, payload) {
-      commit('dragCosmeInformation', payload)
+    dragCosmeInfo({ commit }, payload) {
+      commit('dragCosmeInfo', payload)
     }
   }
 }

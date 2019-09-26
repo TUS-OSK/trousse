@@ -4,7 +4,7 @@
       <router-link class="link" to="/main">
         <h1>Trousse</h1>
       </router-link>
-      <button @click="changeSidebarState"></button>
+      <button @click="changeSidebarState">メニューボタン</button>
     </header>
     <aside v-if="isGuided" :class="{ 'is-guided': isGuided }">
       <nav>
@@ -41,11 +41,10 @@ export default {
 <style scoped>
 h1 {
   color: red;
+  text-align: center;
 }
-
 header {
   border-bottom: 2px dotted black;
-  display: flex;
   flex-direction: row;
 }
 
