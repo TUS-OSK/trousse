@@ -1,21 +1,20 @@
 <template>
-  <div>
-    <header :class="{'headroom--unpinned': scrolled}" class="headroom header">
-      <div class="Trousse">
+  <div class="navigation">
+    <header :class="{'headroom--unpinned': scrolled}" class="header headroom">
+      <div class="logo">
         <router-link class="link" to="/main">
           <p>Trousse</p>
         </router-link>
       </div>
     </header>
     <button class="btn" v-bind:class='{active:active01}' @click="changeSidebarState">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    <div class="brank"></div>
-    <aside class="is-guided" v-bind:class='{active:active01}'>
+      <span class="line"></span>
+      <span class="line"></span>
+      <span class="line"></span>
+    </button>
+    <aside class="sidebar" v-bind:class='{active:active01}'>
       <nav>
-        <router-link class="sublink" @click.native="resetGuideState" to="/user">ユーザー情報を見る</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/user">ユーザー情報</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
@@ -29,7 +28,6 @@ export default {
   name: 'Header',
   methods: {
     changeSidebarState() {
-      // this.isGuided = !this.isGuided
       this.active01 = !this.active01
     },
     resetGuideState() {
@@ -61,124 +59,138 @@ export default {
 </script>
 
 <style scoped>
-a{
+@import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
+
+a {
   text-decoration: none;
 }
-.Trousse {
-  margin-block-start: 4px;
-  margin-block-end: 4px;
-  display: inline-block;
-  height: 48px;
-}
+
 p {
-  color: red;
+  color: rgb(243, 225, 221);
   margin: 0;
   width: 150px;
-  font: 32px "sans-serif";
-  font-weight: 700;
+  font-family: 'Courgette', cursive;
+  font-size: 40px;
 }
-header {
-  border-bottom: 2px dotted black;
-  flex-direction: row;
-  text-align: center;
-  width: 100%;
-  height: 54px;
+
+.navigation {
+  height: 56px;
+  margin-bottom: 12px;
+}
+
+/* z-index 3 */
+.btn {
+  z-index: 3;
+  margin-block-start: 12px;
+  margin-block-end: 12px;
+  padding: 0px 0px 0px;
   position: fixed;
-  background-color: #fff;
+  top: 0;
+  right: 16px;
+  width: 36px;
+  height: 32px;
+  border: none;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background-color: rgb(245, 226, 226);
+  border-radius: 4px;
+  transition: all .4s;
+  box-sizing: border-box;
+}
+
+.btn span:nth-of-type(1) {
   top: 0;
 }
-.headroom {
-    will-change: transform;
-    transition: transform 200ms linear;
+.btn span:nth-of-type(2) {
+  top: 12px;
+}
+.btn span:nth-of-type(3) {
+  top: 24px;
+}
+
+.btn.active span:nth-of-type(1) {
+  transform: translateY(12px) rotate(-45deg);
+}
+.btn.active span:nth-of-type(2) {
+  opacity: 0;
+}
+.btn.active span:nth-of-type(3) {
+  transform: translateY(-12px) rotate(45deg);
+}
+/* z-index 2 */
+.sidebar {
+  z-index: 2;
+  width: 250px;
+  position: fixed;
+  top: 0px;
+  right: -250px;
+  bottom: 0px;
+  background-color: rgba(48, 43, 49, 0.9);
+  margin: auto auto;
+  transition: all .4s;
+}
+.sidebar.active {
+  right: 0;
+}
+
+nav {
+  position: absolute;
+  top: 60px;;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+	text-decoration: none;
+}
+
+nav > * {
+  color: white;
+  padding: 12px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* z-index-1 */
+.header {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 52px;
+  border-bottom: 4px dotted rgb(231, 195, 200);
+  text-align: center;
+  background-color: rgb(125, 73, 88);
+}
+
+/* .headroom {
+  will-change: transform;
+  transition: transform 200ms linear;
 }
 .headroom--pinned {
     transform: translateY(0%);
 }
 .headroom--unpinned {
     transform: translateY(-100%);
-}
-.brank {
-  top: 0;
+} */
+
+.logo {
+  margin-block-start: 4px;
+  margin-block-end: 4px;
+  display: inline-block;
   height: 48px;
 }
-nav {
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  -webkit-transform : translateY(-50%);
-  transform : translateY(-50%);
-  font-size: 24px;
-  font-family: "sans-serif";
-	text-decoration: none;
-  top: 125px;
+
+/* z-index 0 */
+.brank {
+  z-index: 0;
 }
-.sublink {
-  color: #fff;
-  top: 125px;
-}
-.is-guided  {
-  z-index: 1;
-  visibility: visible;
-  /* ここまで変更 */
-  position: fixed;
-  top: 0;
-  right: -250px;
-  bottom: 0;
-  width: 250px;
-  text-align: center;
-  background-color: rgba(210, 189, 212);
-  margin: auto auto;
-  transition: all .4s;
-}
-.is-guided.active {
-  right: 0px;
-}
-.btn {
-  z-index: 2;
-  position: fixed;
-  display: inline-block;
-  right: 16px;
-  width: 40px;
-  height: 32px;
-  margin-block-start: 12px;
-  margin-block-end: 12px;
-  padding: 0px 0px 0px;
-  top: 0;
-  border: none;
-  cursor: pointer;
-}
-.btn.active{
-  background-color: rgba(210, 189, 212, 0.8);
-}
-.btn span {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background-color: #000000;
-  border-radius: 4px;
-  transition: all .4s;
-  box-sizing: border-box;
-}
-.btn span:nth-of-type(1) {
-  top: 0;
-}
-.btn span:nth-of-type(2) {
-  top: 14px;
-}
-.btn span:nth-of-type(3) {
-  bottom: 0;
-}
-.btn.active span:nth-of-type(1) {
-  -webkit-transform: translateY(14px) rotate(-45deg);
-  transform: translateY(14px) rotate(-45deg);
-}
-.btn.active span:nth-of-type(2) {
-  opacity: 0;
-}
-.btn.active span:nth-of-type(3) {
-  -webkit-transform: translateY(-14px) rotate(45deg);
-  transform: translateY(-14px) rotate(45deg);
-}
+
 </style>
