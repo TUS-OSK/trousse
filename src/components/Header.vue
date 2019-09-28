@@ -7,10 +7,11 @@
         <span></span>
         <span></span>
       </button>
+      <h1>
       <router-link class="link" to="/main">
-        <h1>Trousse</h1>
+        <p>Trousse</p>
       </router-link>
-
+      </h1>
     </header>
     <aside v-if="isGuided" :class="{ 'is-guided': isGuided }">
       <nav>
@@ -34,6 +35,7 @@ export default {
     resetGuideState() {
       console.log(this.isGuided)
       this.isGuided = false
+      this.active01 = !this.active01
     }
   },
   data() {
@@ -47,19 +49,31 @@ export default {
 
 <style scoped>
 h1 {
-  color: red;
-  text-align: center;
   margin-block-start: 4px;
   margin-block-end: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+p {
+  color: red;
+  margin: 0;
+  width: 150px;
+  text-align: center;
 }
 header {
   border-bottom: 2px dotted black;
   flex-direction: row;
+  text-align: center;
 }
 nav {
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 50%;
+  -webkit-transform : translateY(-50%);
+  transform : translateY(-50%);
 }
 .closebutton {
   float: right;
@@ -69,12 +83,13 @@ nav {
   visibility: visible;
   /* ここまで変更 */
   position: fixed;
-  top:0;
+  top:0px;
   right: 0;
   bottom: 0;
   left: 0;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(210, 189, 212, 0.8);
+  margin: auto auto;
 }
 .btn span {
   display: inline-block;
