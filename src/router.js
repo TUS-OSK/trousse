@@ -5,8 +5,9 @@ import MainPage from './views/Main.vue'
 import UserPage from './views/User.vue'
 import ResultPage from './views/Result.vue'
 import EditPage from './views/Edit.vue'
-
-import store from './store'
+import store from '@/store'
+import { STATUS } from '@/constant'
+import { unreachable } from './util'
 
 Vue.use(Router)
 
@@ -47,10 +48,15 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'login') {
     next()
   } else {
-    if (store.state.userData.user.isLogged) {
-      next()
-    } else {
-      next('/')
+    switch (store.state.userData.user.status) {
+      case STATUS.UNCHECKED:
+        return next()
+      case STATUS.LOGIN:
+        return next()
+      case STATUS.LOGOUT:
+        return next({ name: 'login' })
+      default:
+        return unreachable(store.state.userData.user.status)
     }
   }
 })

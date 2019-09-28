@@ -1,9 +1,14 @@
+import router from '../../router'
+
 import { fetchMain } from '../../api'
-import * as firebase from 'firebase/app'
+import { auth, login, logout } from '@/api/auth'
+import { STATUS } from '@/constant'
 
 export default {
   state: {
-    user: {},
+    user: {
+      status: STATUS.UNCHECKED
+    },
     cosmes: {
       base: [],
       cheek: [],
@@ -24,15 +29,18 @@ export default {
     },
     cosmes: state => state.cosmes,
     cosmeIdCount: state => state.cosmeIdCount,
-    themes: state => state.themes
+    themes: state => state.themes,
+    status: state => state.user.status
   },
   mutations: {
     updateMainData(state, payload) {
-      state.user = payload.user
+      state.user.name = payload.user.name
+      state.user.token = payload.user.token
       state.cosmes = payload.cosmes
     },
-    updateUserData(state, payload) {
-      state.user.isLogged = payload.isLogged
+
+    updateLogin(state, payload) {
+      state.user.status = payload ? STATUS.LOGIN : STATUS.LOGOUT
     },
     registerCosmeInformation(state, payload) {
       state.cosmes[payload.type].push({
@@ -65,43 +73,39 @@ export default {
       async handler({ commit }) {
         const mainData = await fetchMain()
         commit('updateMainData', mainData)
-        console.log('ユーザーデータをロードしました')
 
-        await firebase.auth().onAuthStateChanged(user => {
-          const userData = {
-            user
-          }
-
+        auth(user => {
           if (user) {
-            userData.isLogged = true
-            console.log('ログイン状態です')
-          } else {
-            userData.isLogged = false
-            console.log('未ログイン状態です')
-          }
-          commit('updateUserData', userData)
-        })
+            commit('updateLogin', true)
 
-        console.log('オブザーバーをセットしました')
+            if (router.currentRoute.name === 'login') {
+              console.log(router.replace)
+              router.replace({ name: 'main' })
+            }
+          } else {
+            commit('updateLogin', false)
+            if (router.currentRoute.name !== 'login') {
+              router.replace({ name: 'login' })
+            }
+          }
+        })
       }
     },
     loadMain() {
-      console.log('ロードしました')
+      console.log('データをロードしました')
     },
-    async logIn({ state }) {
-      if (!state.user.isLogged) {
-        const provider = await new firebase.auth.GoogleAuthProvider()
-        firebase.auth().signInWithRedirect(provider)
-      } else {
+    async login({ state }) {
+      if (state.user.status == STATUS.LOGIN) {
         console.log('ログアウトしてください')
+      } else {
+        await login()
       }
     },
     async logOut({ state }) {
-      if (state.user.isLogged) {
-        await firebase.auth().signOut()
-        console.log('ログアウトしました')
-      } else {
+      if (state.user.status === STATUS.LOGOUT) {
         console.log('ログインしてください')
+      } else {
+        await logout()
       }
     },
     registerCosmeInfo({ commit }, item) {

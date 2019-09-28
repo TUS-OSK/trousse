@@ -7,6 +7,7 @@
       <button @click="changeSidebarState">メニューボタン</button>
     </header>
     <aside v-if="isGuided" :class="{ 'is-guided': isGuided }">
+      <button @click="logout()">log out!</button>
       <nav>
         <router-link class="link" @click.native="resetGuideState" to="/user">ユーザー情報を見る</router-link>
         <router-link class="link" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
@@ -27,6 +28,9 @@ export default {
     },
     resetGuideState() {
       this.isGuided = false
+    },
+    logout() {
+      this.$store.dispatch('userData/logOut')
     }
   },
   data() {
