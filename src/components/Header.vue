@@ -41,23 +41,16 @@ export default {
     window.removeEventListener('scroll', this.handleScroll)
     },
     handleScroll() {
-      if (this.lastPosition < window.scrollY && this.limitPosition < window.scrollY) {
-        this.scrolled = true
-        // move up!
-      }
       if (this.lastPosition > window.scrollY) {
         this.scrolled = false
-        // move down
       }
       this.lastPosition = window.scrollY
-      // this.scrolled = window.scrollY > 250;
     }
   },
   data() {
     return {
       isGuided: false,
       active01: false,
-      limitPosition: 500,
       scrolled: false,
       lastPosition: 0
     }
