@@ -80,8 +80,8 @@ p {
   color: red;
   margin: 0;
   width: 150px;
-  font-size: 32px;
-  display: inline-block;
+  font: 32px "sans-serif";
+  font-weight: 700;
 }
 header {
   border-bottom: 2px dotted black;
