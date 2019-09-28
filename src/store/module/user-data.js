@@ -101,7 +101,7 @@ export default {
         await login()
       }
     },
-    async logOut({ state }) {
+    async logout({ state }) {
       if (state.user.status === STATUS.LOGOUT) {
         console.log('ログインしてください')
       } else {

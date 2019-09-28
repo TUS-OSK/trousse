@@ -1,7 +1,7 @@
 import * as firebase from 'firebase/app'
 
 const USER = {}
-const DEFAULT_USER = null
+const DEFAULT_USER = USER
 let authCb = null
 export const auth =
   process.env.NODE_ENV === 'production'
