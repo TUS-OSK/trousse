@@ -23,7 +23,7 @@ export default {
     history: state => state.history
   },
   mutations: {
-    changeCosmesListState(state, payload) {
+    updateCosmesListState(state, payload) {
       state.cosmesListStates.isOpened[payload] = !state.cosmesListStates.isOpened[payload]
     },
     updateCheckedTypes(state, payload) {
@@ -38,7 +38,7 @@ export default {
   },
   actions: {
     loadCosmesListState({ commit }, payload) {
-      commit('changeCosmesListState', payload)
+      commit('updateCosmesListState', payload)
     },
     loadCheckedTypes({ commit }, payload) {
       commit('updateCheckedTypes', payload)

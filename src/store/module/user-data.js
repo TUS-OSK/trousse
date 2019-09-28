@@ -9,7 +9,8 @@ export default {
       cheek: [],
       lip: []
     },
-    cosmeIdCount: 0
+    themes: ['spring', 'summer', 'autumn', 'winter', 'cute'],
+    cosmeIdCount: 6
   },
   getters: {
     user: state => state.user,
@@ -22,25 +23,30 @@ export default {
       return allCosmeIds
     },
     cosmes: state => state.cosmes,
-    cosmeIdCount: state => state.cosmeIdCount
+    cosmeIdCount: state => state.cosmeIdCount,
+    themes: state => state.themes
   },
   mutations: {
     updateMainData(state, payload) {
       state.user = payload.user
       state.cosmes = payload.cosmes
-      let flattenCosmes = []
-      for (const key in payload.cosmes) {
-        flattenCosmes = flattenCosmes.concat(payload.cosmes[key])
-      }
-      state.cosmeIdCount = Math.max(...flattenCosmes.map(cosme => +cosme.id))
     },
     updateUserData(state, payload) {
       state.user.isLogged = payload.isLogged
     },
     registerCosmeInformation(state, payload) {
       state.cosmes[payload.type].push({
-        id: '' + ++state.cosmeIdCount,
+        id: '' + state.cosmeIdCount++,
         ...payload.info
+      })
+    },
+    changeCosmeInformation(state, payload) {
+      state.cosmes[payload.type] = state.cosmes[payload.type].map(cosmeInfo => {
+        if (cosmeInfo.id === payload.info.id) {
+          return payload.info
+        } else {
+          return cosmeInfo
+        }
       })
     },
     deleteCosmeInformation(state, payload) {
@@ -48,7 +54,7 @@ export default {
         state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
       }
     },
-    dragCosmeInformation(state, payload) {
+    dragCosmeIcon(state, payload) {
       state.cosmes[payload.type] = payload.array
     }
   },
@@ -79,6 +85,9 @@ export default {
         console.log('オブザーバーをセットしました')
       }
     },
+    loadMain() {
+      console.log('ロードしました')
+    },
     async logIn({ state }) {
       if (!state.user.isLogged) {
         const provider = await new firebase.auth.GoogleAuthProvider()
@@ -95,14 +104,17 @@ export default {
         console.log('ログインしてください')
       }
     },
-    registerCosmeInformation({ commit }, item) {
+    registerCosmeInfo({ commit }, item) {
       commit('registerCosmeInformation', item)
     },
-    deleteCosmeInformation({ commit }, id) {
+    changeCosmeInfo({ commit }, item) {
+      commit('changeCosmeInformation', item)
+    },
+    deleteCosmeInfo({ commit }, id) {
       commit('deleteCosmeInformation', id)
     },
-    dragCosmeInformation({ commit }, payload) {
-      commit('dragCosmeInformation', payload)
+    dragCosme({ commit }, payload) {
+      commit('dragCosmeIcon', payload)
     }
   }
 }

@@ -3,14 +3,16 @@
     <Header/>
     <div class="row">
       <main>
-        <h2>{{ type }}の編集画面</h2>
-        <ul class="list">
-          <draggable v-model="list">
-            <Cosmelist v-for="item in list" :key="item.id" :id="item.id" :type="type" :item="item"></Cosmelist>
-          </draggable>
-        </ul>
-        <button v-on:click="editAddButtonClicked()" >{{ cosmeAddFormButtonValue }}</button>
-        <Inputform :type="type" />
+        <h2 class="sub-title">{{ type }}の編集画面</h2>
+        <div class="cosme-area">
+          <div class="cosme-list">
+            <draggable v-model="cosmeAry">
+              <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme"></cosme-icon>
+            </draggable>
+          </div>
+          <button class="show-modal-button" v-on:click="showAddCosmeModal()" >{{ addCosmeValue }}</button>
+          <cosme-form-modal formId="new" formType="register" :focusingType="type"/>
+        </div>
       </main>
     </div>
   </div>
@@ -18,16 +20,16 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import Inputform from '@/components/Inputform.vue'
-import Cosmelist from '@/components/Cosmelist.vue'
+import CosmeIcon from '@/components/modules/CosmeIcon.vue'
+import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
 import draggable from 'vuedraggable'
 
 export default {
   name: 'edit',
   components: {
     Header,
-    Inputform,
-    Cosmelist,
+    CosmeIcon,
+    CosmeFormModal,
     draggable
   },
   props: {
@@ -38,28 +40,24 @@ export default {
   },
   data() {
     return {
-      cosmeBrandText: '',
-      cosmeNameText: '',
-      cosmeColorText: '',
-      cosmeThemeCheckbox: [],
-      cosmeAddFormButtonValue: 'コスメを追加'
+      addCosmeValue: 'コスメを追加'
     }
   },
   methods: {
-    editAddButtonClicked() {
-      this.$modal.show('inputform')
+    showAddCosmeModal() {
+      this.$modal.show('form-modal-new')
     }
   },
   computed: {
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
     },
-    list: {
+    cosmeAry: {
       get(){
         return this.$store.getters['userData/cosmes'][this.type]
       },
       set(array){
-        this.$store.dispatch('userData/dragCosmeInformation', {array, type: this.type})
+        this.$store.dispatch('userData/dragCosme', { array, type: this.type })
       }
     }
   }
@@ -69,15 +67,30 @@ export default {
 
 <style scoped>
 .row {
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
-
 }
-.item{
+.sub-title {
+  text-align: center;
+  color: rgb(99, 96, 92);
+  text-decoration: underline solid #ffb3f9;
+}
+.show-modal-button {
+  cursor:pointer;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 0 rgba(9,30,66,.25);
+  font-family: "serif";
+  border-radius: 10px;
+  white-space: normal;
   font-size: 20px;
-  border-bottom: 1px dashed #000000;
 }
-ul{
+.cosme-area {
+  background-color: antiquewhite;
+  padding: 4px;
+}
+ul {
   padding: 0px;
 }
 </style>
