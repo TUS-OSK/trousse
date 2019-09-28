@@ -2,7 +2,6 @@
   <div>
     <header>
       <button class="btn" v-bind:class='{active:active01}' @click="changeSidebarState">
-        <!-- <img src="../assets/menu_img.png" width="48px" height="48px"/> -->
         <span ></span>
         <span></span>
         <span></span>
