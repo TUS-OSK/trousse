@@ -1,23 +1,24 @@
 <template>
   <div class="navigation">
-    <header :class="{'headroom--unpinned': scrolled}" class="header headroom">
+    <header class="header">
       <div class="logo">
         <router-link class="link" to="/main">
           <p>Trousse</p>
         </router-link>
       </div>
     </header>
-    <button class="btn" v-bind:class='{active:active01}' @click="changeSidebarState">
+    <button class="btn" v-bind:class='{ active : active01 }' @click="changeSidebarState">
       <span class="line"></span>
       <span class="line"></span>
       <span class="line"></span>
     </button>
-    <aside class="sidebar" v-bind:class='{active:active01}'>
+    <aside class="sidebar" v-bind:class='{ active: active01 }'>
       <nav>
         <router-link class="sublink" @click.native="resetGuideState" to="/user">ユーザー情報</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
+        <button @click="logout()" class="logout">ログアウト</button>
       </nav>
     </aside>
   </div>
@@ -31,25 +32,28 @@ export default {
       this.active01 = !this.active01
     },
     resetGuideState() {
-      this.isGuided = false
+      this.active01 = false
+    },
+    // destroyed() {
+    // window.removeEventListener('scroll', this.handleScroll)
+    // },
+    // handleScroll() {
+    //   if (this.lastPosition > window.scrollY) {
+    //     this.scrolled = false
+    //   }
+    //   this.lastPosition = window.scrollY
+    // },
+    logout() {
+      this.$store.dispatch('userData/logout')
       this.active01 = !this.active01
-    },
-    destroyed() {
-    window.removeEventListener('scroll', this.handleScroll)
-    },
-    handleScroll() {
-      if (this.lastPosition > window.scrollY) {
-        this.scrolled = false
-      }
-      this.lastPosition = window.scrollY
     }
   },
   data() {
     return {
       isGuided: false,
-      active01: false,
-      scrolled: false,
-      lastPosition: 0
+      active01: false
+      // scrolled: false,
+      // lastPosition: 0
     }
   },
   created() {
@@ -132,7 +136,7 @@ p {
   top: 0px;
   right: -250px;
   bottom: 0px;
-  background-color: rgba(48, 43, 49, 0.9);
+  background-color: rgba(48, 43, 49, 0.95);
   margin: auto auto;
   transition: all .4s;
 }
@@ -157,6 +161,10 @@ nav > * {
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+.logout {
+  color: black;
+  font-size: 20px;
+}
 /* z-index-1 */
 .header {
   z-index: 1;

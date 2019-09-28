@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header/>
-    ログインページになるはず！
+    <button @click="login">Sign In!</button>
   </div>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   name: 'login',
   components: {
     Header
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('userData/login')
+    }
   }
 }
 </script>

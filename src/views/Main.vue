@@ -67,9 +67,6 @@ export default {
         }
       })
     }
-  },
-  created() {
-    this.$store.dispatch('userData/loadMain')
   }
 }
 
