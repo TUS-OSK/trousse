@@ -1,7 +1,6 @@
 <template>
   <div>
     <header :class="{'headroom--unpinned': scrolled}" class="headroom header">
-
       <div class="Trousse">
         <router-link class="link" to="/main">
           <p>Trousse</p>
@@ -16,10 +15,10 @@
     <div class="brank"></div>
     <aside v-if="isGuided" :class="{ 'is-guided': isGuided }">
       <nav>
-        <router-link class="link" @click.native="resetGuideState" to="/user">ユーザー情報を見る</router-link>
-        <router-link class="link" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
-        <router-link class="link" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
-        <router-link class="link" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/user">ユーザー情報を見る</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
       </nav>
     </aside>
   </div>
@@ -70,6 +69,9 @@ export default {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+}
 .Trousse {
   margin-block-start: 4px;
   margin-block-end: 4px;
@@ -110,13 +112,17 @@ header {
 }
 nav {
   z-index: 1;
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
   position: absolute;
   top: 50%;
   -webkit-transform : translateY(-50%);
   transform : translateY(-50%);
+  font-size: 24px;
+  font-family: "sans-serif";
+	text-decoration: none;
+	color: #ffffff;
 }
 .is-guided  {
   z-index: 1;
@@ -126,7 +132,7 @@ nav {
   top: 0;
   right: 0;
   bottom: 0;
-  left: 0;
+  width: 250px;
   text-align: center;
   background-color: rgba(210, 189, 212, 0.8);
   margin: auto auto;
