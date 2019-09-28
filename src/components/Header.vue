@@ -1,7 +1,6 @@
 <template>
   <div>
     <header :class="{'headroom--unpinned': scrolled}" class="headroom header">
-
       <div class="Trousse">
         <router-link class="link" to="/main">
           <p>Trousse</p>
@@ -14,12 +13,12 @@
         <span></span>
       </button>
     <div class="brank"></div>
-    <aside v-if="isGuided" :class="{ 'is-guided': isGuided }">
+    <aside class="is-guided" v-bind:class='{active:active01}'>
       <nav>
-        <router-link class="link" @click.native="resetGuideState" to="/user">ユーザー情報を見る</router-link>
-        <router-link class="link" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
-        <router-link class="link" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
-        <router-link class="link" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/user">ユーザー情報を見る</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
+        <router-link class="sublink" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
       </nav>
     </aside>
   </div>
@@ -30,7 +29,7 @@ export default {
   name: 'Header',
   methods: {
     changeSidebarState() {
-      this.isGuided = !this.isGuided
+      // this.isGuided = !this.isGuided
       this.active01 = !this.active01
     },
     resetGuideState() {
@@ -41,23 +40,16 @@ export default {
     window.removeEventListener('scroll', this.handleScroll)
     },
     handleScroll() {
-      if (this.lastPosition < window.scrollY && this.limitPosition < window.scrollY) {
-        this.scrolled = true
-        // move up!
-      }
       if (this.lastPosition > window.scrollY) {
         this.scrolled = false
-        // move down
       }
       this.lastPosition = window.scrollY
-      // this.scrolled = window.scrollY > 250;
     }
   },
   data() {
     return {
       isGuided: false,
       active01: false,
-      limitPosition: 500,
       scrolled: false,
       lastPosition: 0
     }
@@ -69,6 +61,9 @@ export default {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+}
 .Trousse {
   margin-block-start: 4px;
   margin-block-end: 4px;
@@ -91,7 +86,6 @@ header {
   position: fixed;
   background-color: #fff;
   top: 0;
-  /* z-index: 100; */
 }
 .headroom {
     will-change: transform;
@@ -109,13 +103,19 @@ header {
 }
 nav {
   z-index: 1;
-  width: 100%;
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 50%;
   -webkit-transform : translateY(-50%);
   transform : translateY(-50%);
+  font-size: 24px;
+  font-family: "sans-serif";
+	text-decoration: none;
+  top: 125px;
+}
+.sublink {
+  color: #fff;
+  top: 125px;
 }
 .is-guided  {
   z-index: 1;
@@ -123,12 +123,16 @@ nav {
   /* ここまで変更 */
   position: fixed;
   top: 0;
-  right: 0;
+  right: -250px;
   bottom: 0;
-  left: 0;
+  width: 250px;
   text-align: center;
-  background-color: rgba(210, 189, 212, 0.8);
+  background-color: rgba(210, 189, 212);
   margin: auto auto;
+  transition: all .4s;
+}
+.is-guided.active {
+  right: 0px;
 }
 .btn {
   z-index: 2;
