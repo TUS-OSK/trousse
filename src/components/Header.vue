@@ -166,6 +166,7 @@ nav > * {
   left: 0;
   display: flex;
   justify-content: center;
+  background-image: linear-gradient(-45deg, #f5eeed 25%, #f4e2de 25%, #f4e2de 50%, #f5eeed 50%, #f5eeed 75%, #f4e2de 75%, #f4e2de);
   background-color: rgb(125, 73, 88);
 }
 
