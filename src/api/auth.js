@@ -1,18 +1,20 @@
 import * as firebase from 'firebase/app'
 
-const USER = {}
+const USER = {
+  displayName: 'development mo',
+  email: 'xxxx@trousse.jp'
+}
 const DEFAULT_USER = USER
 let authCb = null
 export const auth =
   process.env.NODE_ENV === 'production'
-    ? firebase.auth().onAuthStateChanged
+    ? cd => firebase.auth().onAuthStateChanged(cd)
     : cb => {
       authCb = cb
       setTimeout(() => {
         authCb(DEFAULT_USER)
       }, 500)
     }
-
 export const login = async() => {
   if (process.env.NODE_ENV === 'production') {
     const provider = await new firebase.auth.GoogleAuthProvider()
@@ -24,7 +26,6 @@ export const login = async() => {
     return
   }
 }
-
 export const logout = async() => {
   if (process.env.NODE_ENV === 'production') {
     await firebase.auth().signOut()

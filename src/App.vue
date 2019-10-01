@@ -1,7 +1,9 @@
 <template>
-  <router-view v-if="viewPage"/>
-  <div v-else>
-    <h1>読み込み中です!</h1>
+  <div>
+    <router-view v-if="viewPage"/>
+    <div class="load-page" v-else>
+      <div class="load-img">ログイン状態を確認中</div>
+    </div>
   </div>
 </template>
 
@@ -11,7 +13,6 @@ import { STATUS } from '@/constant.js'
 export default {
   computed: {
     viewPage() {
-      console.log(this.$store.getters['userData/status'])
       return this.$store.getters['userData/status'] !== STATUS.UNCHECKED
       //このAPPはユーザーのログイン状態がチェックされるまでは画面を表示しません
       //ユーザーのログイン状態はinitアクションのauthenticatinのオブザーバーによってチェックされます
@@ -33,5 +34,16 @@ export default {
   font-family: 'Kosugi Maru', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+.load-page  {
+  z-index: 5;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: beige;
+  background-color: rgb(125, 73, 88);
 }
 </style>

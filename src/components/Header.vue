@@ -1,11 +1,9 @@
 <template>
   <div class="navigation">
     <header class="header">
-      <div class="logo">
-        <router-link class="link" to="/main">
-          <p>Trousse</p>
-        </router-link>
-      </div>
+      <router-link class="link" to="/main">
+        <div class="logo">Trousse</div>
+      </router-link>
     </header>
     <button class="btn" v-bind:class='{ active : active01 }' @click="changeSidebarState">
       <span class="line"></span>
@@ -69,14 +67,6 @@ a {
   text-decoration: none;
 }
 
-p {
-  color: rgb(243, 225, 221);
-  margin: 0;
-  width: 150px;
-  font-family: 'Courgette', cursive;
-  font-size: 40px;
-}
-
 .navigation {
   height: 56px;
   margin-bottom: 12px;
@@ -88,21 +78,21 @@ p {
   margin-block-start: 12px;
   margin-block-end: 12px;
   padding: 0px 0px 0px;
+  border: none;
   position: fixed;
   top: 0;
   right: 16px;
   width: 36px;
   height: 32px;
-  border: none;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0);
 }
 
 .line {
-  position: absolute;
-  left: 0;
   width: 100%;
   height: 5px;
+  position: absolute;
+  left: 0;
   background-color: rgb(245, 226, 226);
   border-radius: 4px;
   transition: all .4s;
@@ -132,12 +122,12 @@ p {
 .sidebar {
   z-index: 2;
   width: 250px;
+  margin: auto auto;
   position: fixed;
   top: 0px;
   right: -250px;
   bottom: 0px;
   background-color: rgba(48, 43, 49, 0.95);
-  margin: auto auto;
   transition: all .4s;
 }
 .sidebar.active {
@@ -156,9 +146,9 @@ nav {
 }
 
 nav > * {
-  color: white;
   padding: 12px 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
 }
 
 .logout {
@@ -168,13 +158,14 @@ nav > * {
 /* z-index-1 */
 .header {
   z-index: 1;
+  height: 52px;
+  border-bottom: 4px dotted rgb(231, 195, 200);
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  height: 52px;
-  border-bottom: 4px dotted rgb(231, 195, 200);
-  text-align: center;
+  display: flex;
+  justify-content: center;
   background-color: rgb(125, 73, 88);
 }
 
@@ -190,10 +181,14 @@ nav > * {
 } */
 
 .logo {
-  margin-block-start: 4px;
-  margin-block-end: 4px;
-  display: inline-block;
-  height: 48px;
+  width: 150px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Courgette', cursive;
+  font-size: 40px;
+  color: rgb(243, 225, 221);
 }
 
 /* z-index 0 */

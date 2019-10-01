@@ -1,8 +1,8 @@
 import router from '../../router'
 
 import { fetchMain } from '../../api'
-import { auth, login, logout } from '@/api/auth'
 import { STATUS } from '@/constant'
+import { auth, login, logout } from '@/api/auth'
 
 export default {
   state: {
@@ -72,14 +72,15 @@ export default {
       root: true,
       async handler({ commit }) {
         const mainData = await fetchMain()
-        commit('updateMainData', mainData)
-
         auth(user => {
+          mainData.user.name = user.displayName
+          mainData.user.token = user.email
+          commit('updateMainData', mainData)
+
           if (user) {
             commit('updateLogin', true)
 
             if (router.currentRoute.name === 'login') {
-              console.log(router.replace)
               router.replace({ name: 'main' })
             }
           } else {
@@ -92,20 +93,20 @@ export default {
       }
     },
     loadMain() {
-      console.log('データをロードしました')
+      // console.log('データをロードしました')
     },
     async login({ state }) {
       if (state.user.status == STATUS.LOGIN) {
-        console.log('ログアウトしてください')
+        // console.log('ログアウトしてください')
       } else {
-        await login()
+        login()
       }
     },
     async logout({ state }) {
       if (state.user.status === STATUS.LOGOUT) {
-        console.log('ログインしてください')
+        // console.log('ログインしてください')
       } else {
-        await logout()
+        logout()
       }
     },
     registerCosmeInfo({ commit }, item) {
