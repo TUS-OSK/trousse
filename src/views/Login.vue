@@ -2,7 +2,9 @@
   <div class="login-page">
     <div class="login-area">
       <div class="logo">Trousse</div>
-      <button @click="login"><img src="@/assets/btn_google_signin_light_normal_web@2x.png"></button>
+      <div class="login-btn">
+        <button @click="login"><img src="@/assets/btn_google_signin_light_normal_web@2x.png"></button>
+      </div>
     </div>
   </div>
 </template>
@@ -47,14 +49,18 @@ export default {
   color: rgb(243, 225, 221);
 }
 
-img {
+.login-btn {
   width: 200px;
   margin: 20px;
-  background-color: rgba(255, 255, 255, 0);
+}
+
+img {
+  width: 200px;
 }
 
 button {
   border: none;
+  outline: none;
   background-color: rgba(255, 255, 255, 0);
 }
 
