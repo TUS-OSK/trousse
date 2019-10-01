@@ -8,7 +8,7 @@
         <!-- ここからコスメ選択 -->
         <section class="select-cosme">
           <h2>コスメを選択しよう！</h2>
-          <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData"></accordion-cosmes-list>
+          <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="main"></accordion-cosmes-list>
         </section>
         <!-- ここからコスメ結果 -->
         <section class="suggest-cosme">
