@@ -2,13 +2,19 @@
 <!-- AccordionCosmesListコンポーネントはcosmesDataを渡すと開閉できるコスメリストを表示してくれるコンポーネント -->
   <div class="accordion-cosmes-li">
     <div class="accordion-cosmes-li-func">
+      <a v-if="formType === 'main'">
       <label class="accordion-cosmes-li-label">
-        <input class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">{{ cosmesData.type }}
+        <input class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">
+        {{ cosmesData.type }}
       </label>
+      </a>
+      <a v-else>
+         {{ cosmesData.type }}
+      </a>
       <button v-if="cosmesData.accordionCosmesList.isOpened" @click="changeCosmesListState(cosmesData.type)">▲</button>
       <button v-else @click="changeCosmesListState(cosmesData.type)">▼</button>
     </div>
-    <cosme-list :cosmesData="cosmesData"></cosme-list>
+    <cosme-list :cosmesData="cosmesData" :formType="formType"></cosme-list>
   </div>
 </template>
 
@@ -33,6 +39,11 @@ export default {
     cosmesData: {
       type: Object,
       required: true
+    },
+    formType: {
+      type: String,
+      required: true,
+      validator: value => ['main', 'user'].includes(value)
     }
   },
   computed: {

@@ -1,7 +1,8 @@
 <template>
-  <ul class="cosme-list">
+<div>
+  <ul v-if="formType==='main'" class="cosme-list">
     <li v-for="cosme in cosmesData.cosmeAry" :key="cosme.id" class="cosme-list">
-      <div class="cosme-list-function">
+      <div  class="cosme-list-function">
         <label class="cosme-list-label">
           <input class="cosme-list-checkbox" type="checkbox" v-model="isChecked" :value="cosme.id">- cosme info -
         </label>
@@ -11,6 +12,11 @@
       </ul>
     </li>
   </ul>
+  <ul  v-else>
+    <li v-for="cosme in cosmesData.cosmeAry" :key="cosme.id" class="cosme-list">{{ cosme.name }}
+    </li>
+  </ul>
+</div>
 </template>
 
 <script>
@@ -22,6 +28,11 @@ export default {
     cosmesData: {
       type: Object,
       required: true
+    },
+    formType: {
+      type: String,
+      required: true,
+      validator: value => ['main', 'user'].includes(value)
     }
   },
   computed: {
