@@ -38,12 +38,6 @@ export default {
     name() {
       return this.$store.getters['userData/user'].name
     },
-    // all() {
-    //   return this.$store.getters['userData/cosmeTypes'].map(type => ({
-    //     label: type,
-    //     list: this.$store.getters['userData/cosmes'][type]
-    //   }))
-    // }
     ...mapGetters('userData', [
       'cosmeTypes',
       'cosmes'
