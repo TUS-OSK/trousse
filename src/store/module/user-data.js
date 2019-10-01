@@ -1,8 +1,10 @@
 import router from '../../router'
+import * as firebase from 'firebase/app'
 
 import { fetchMain } from '../../api'
-import { auth, login, logout } from '@/api/auth'
 import { STATUS } from '@/constant'
+// import { auth, login, logout } from '@/api/auth'
+//本番環境で動かないのでコメントアウト
 
 export default {
   state: {
@@ -74,12 +76,11 @@ export default {
         const mainData = await fetchMain()
         commit('updateMainData', mainData)
 
-        auth(user => {
+        firebase.auth().onAuthStateChanged(user => {
           if (user) {
             commit('updateLogin', true)
 
             if (router.currentRoute.name === 'login') {
-              console.log(router.replace)
               router.replace({ name: 'main' })
             }
           } else {
@@ -92,20 +93,21 @@ export default {
       }
     },
     loadMain() {
-      console.log('データをロードしました')
+      // console.log('データをロードしました')
     },
     async login({ state }) {
       if (state.user.status == STATUS.LOGIN) {
-        console.log('ログアウトしてください')
+        // console.log('ログアウトしてください')
       } else {
-        await login()
+        const provider = await new firebase.auth.GoogleAuthProvider()
+        firebase.auth().signInWithRedirect(provider)
       }
     },
     async logout({ state }) {
       if (state.user.status === STATUS.LOGOUT) {
-        console.log('ログインしてください')
+        // console.log('ログインしてください')
       } else {
-        await logout()
+        await firebase.auth().signOut()
       }
     },
     registerCosmeInfo({ commit }, item) {

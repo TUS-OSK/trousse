@@ -7,7 +7,7 @@ import VModal from 'vue-js-modal'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: 'AIzaSyARevSHtst7JXJdLdYT_GDN5SABf7g8SDQ',
   authDomain: 'oskweb-trousse.firebaseapp.com',
   databaseURL: 'https://oskweb-trousse.firebaseio.com',
