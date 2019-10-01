@@ -11,6 +11,7 @@
       <span class="line"></span>
     </button>
     <aside class="sidebar" v-bind:class='{ active: active01 }'>
+
       <nav>
         <router-link class="sublink" @click.native="resetGuideState" to="/user">ユーザー情報</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
@@ -53,9 +54,6 @@ export default {
       // scrolled: false,
       // lastPosition: 0
     }
-  },
-  created() {
-    window.addEventListener('scroll', this.handleScroll)
   }
 }
 </script>
@@ -84,7 +82,6 @@ a {
   right: 16px;
   width: 36px;
   height: 32px;
-  cursor: pointer;
   background-color: rgba(255, 255, 255, 0);
 }
 
@@ -121,24 +118,24 @@ a {
 /* z-index 2 */
 .sidebar {
   z-index: 2;
-  width: 250px;
-  margin: auto auto;
+  width: 248px;
+  padding: 8px;
   position: fixed;
   top: 0px;
-  right: -250px;
+  right: -264px;
   bottom: 0px;
   background-color: rgba(48, 43, 49, 0.95);
   transition: all .4s;
 }
 .sidebar.active {
-  right: 0;
+  right: 0px;
 }
 
 nav {
   position: absolute;
-  top: 60px;;
-  right: 0;
-  bottom: 0;
+  top: 60px;
+  right: 8px;
+  bottom: 8px;;
   display: flex;
   flex-direction: column;
   font-size: 20px;
@@ -154,20 +151,20 @@ nav > * {
 .logout {
   color: black;
   font-size: 20px;
+  width: 248px;
 }
 /* z-index-1 */
 .header {
   z-index: 1;
   height: 52px;
-  border-bottom: 4px dotted rgb(231, 195, 200);
+  width: 100vw;
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   display: flex;
   justify-content: center;
-  background-image: linear-gradient(-45deg, #f5eeed 25%, #f4e2de 25%, #f4e2de 50%, #f5eeed 50%, #f5eeed 75%, #f4e2de 75%, #f4e2de);
-  background-color: rgb(125, 73, 88);
+  background-image: linear-gradient(-45deg, #7d4958 25%, #b36279 25%, #b36279 50%, #7d4958 50%, #7d4958 75%, #b36279 75%, #b36279);
 }
 
 /* .headroom {
