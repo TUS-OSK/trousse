@@ -30,6 +30,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* global */
+
+a {
+  text-decoration: none;
+}
+button {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+button:active {
+  filter: brightness(80%);
+}
 * {
   font-family: 'Kosugi Maru', sans-serif;
   margin: 0;

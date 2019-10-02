@@ -1,26 +1,25 @@
 <template>
-  <div class="navigation">
-    <header class="header">
-      <router-link class="link" to="/main">
-        <div class="logo">Trousse</div>
+  <header class="header-page">
+    <div class="hr-main">
+      <router-link class="" to="/main">
+        <div class="hr-main-logo">Trousse</div>
       </router-link>
-    </header>
-    <button class="btn" v-bind:class='{ active : active01 }' @click="changeSidebarState">
-      <span class="line"></span>
-      <span class="line"></span>
-      <span class="line"></span>
+    </div>
+    <button class="hr-btn" v-bind:class='{ active : active01 }' @click="changeSidebarState">
+      <span class="hr-btn-line"></span>
+      <span class="hr-btn-line"></span>
+      <span class="hr-btn-line"></span>
     </button>
-    <aside class="sidebar" v-bind:class='{ active: active01 }'>
-
-      <nav>
+    <aside class="hr-sidebar" v-bind:class='{ active: active01 }'>
+      <nav class="hr-sb-nav">
         <router-link class="sublink" @click.native="resetGuideState" to="/user">ユーザー情報</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
         <router-link class="sublink" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
-        <button @click="logout()" class="logout">ログアウト</button>
+        <button @click="logout()" class="hr-sb-logout-btn">ログアウト</button>
       </nav>
     </aside>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -33,15 +32,6 @@ export default {
     resetGuideState() {
       this.active01 = false
     },
-    // destroyed() {
-    // window.removeEventListener('scroll', this.handleScroll)
-    // },
-    // handleScroll() {
-    //   if (this.lastPosition > window.scrollY) {
-    //     this.scrolled = false
-    //   }
-    //   this.lastPosition = window.scrollY
-    // },
     logout() {
       this.$store.dispatch('userData/logout')
       this.active01 = !this.active01
@@ -61,17 +51,13 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
 
-a {
-  text-decoration: none;
-}
-
-.navigation {
+.header-page {
   height: 56px;
   margin-bottom: 12px;
 }
 
 /* z-index 3 */
-.btn {
+.hr-btn {
   z-index: 3;
   margin-block-start: 12px;
   margin-block-end: 12px;
@@ -85,7 +71,7 @@ a {
   background-color: rgba(255, 255, 255, 0);
 }
 
-.line {
+.hr-btn-line {
   width: 100%;
   height: 5px;
   position: absolute;
@@ -96,27 +82,27 @@ a {
   box-sizing: border-box;
 }
 
-.btn span:nth-of-type(1) {
+.hr-btn span:nth-of-type(1) {
   top: 0;
 }
-.btn span:nth-of-type(2) {
+.hr-btn span:nth-of-type(2) {
   top: 12px;
 }
-.btn span:nth-of-type(3) {
+.hr-btn span:nth-of-type(3) {
   top: 24px;
 }
 
-.btn.active span:nth-of-type(1) {
+.hr-btn.active span:nth-of-type(1) {
   transform: translateY(12px) rotate(-45deg);
 }
-.btn.active span:nth-of-type(2) {
+.hr-btn.active span:nth-of-type(2) {
   opacity: 0;
 }
-.btn.active span:nth-of-type(3) {
+.hr-btn.active span:nth-of-type(3) {
   transform: translateY(-12px) rotate(45deg);
 }
 /* z-index 2 */
-.sidebar {
+.hr-sidebar {
   z-index: 2;
   width: 248px;
   padding: 8px;
@@ -127,11 +113,11 @@ a {
   background-color: rgba(48, 43, 49, 0.95);
   transition: all .4s;
 }
-.sidebar.active {
+.hr-sidebar.active {
   right: 0px;
 }
 
-nav {
+.hr-sb-nav {
   position: absolute;
   top: 60px;
   right: 8px;
@@ -142,19 +128,19 @@ nav {
 	text-decoration: none;
 }
 
-nav > * {
+.hr-sb-nav > * {
   padding: 12px 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   color: white;
 }
 
-.logout {
+.hr-sb-logout-btn {
   color: black;
   font-size: 20px;
   width: 248px;
 }
 /* z-index-1 */
-.header {
+.hr-main {
   z-index: 1;
   height: 52px;
   width: 100vw;
@@ -166,19 +152,7 @@ nav > * {
   justify-content: center;
   background-image: linear-gradient(-45deg, #7d4958 25%, #b36279 25%, #b36279 50%, #7d4958 50%, #7d4958 75%, #b36279 75%, #b36279);
 }
-
-/* .headroom {
-  will-change: transform;
-  transition: transform 200ms linear;
-}
-.headroom--pinned {
-    transform: translateY(0%);
-}
-.headroom--unpinned {
-    transform: translateY(-100%);
-} */
-
-.logo {
+.hr-main-logo {
   width: 150px;
   height: 56px;
   display: flex;
@@ -188,10 +162,4 @@ nav > * {
   font-size: 40px;
   color: rgb(243, 225, 221);
 }
-
-/* z-index 0 */
-.brank {
-  z-index: 0;
-}
-
 </style>

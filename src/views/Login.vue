@@ -1,8 +1,8 @@
 <template>
   <div class="login-page">
-    <div class="login-area">
-      <div class="logo">Trousse</div>
-      <button @click="login"><img src="@/assets/btn_google_signin_light_normal_web@2x.png"></button>
+    <div class="lg-area">
+      <div class="lg-logo">Trousse</div>
+      <button class="lg-login-btn" @click="login"><img class="lg-btn-img" src="@/assets/btn_google_signin_light_normal_web@2x.png"></button>
     </div>
   </div>
 </template>
@@ -28,15 +28,13 @@ export default {
   height: 100vh;
   background-color: rgb(125, 73, 88);
 }
-
-.login-area {
+.lg-area {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
-.logo {
+.lg-logo {
   width: 200px;
   height: 56px;
   display: flex;
@@ -46,19 +44,9 @@ export default {
   font-size: 60px;
   color: rgb(243, 225, 221);
 }
-
-img {
+.lg-btn-img {
   width: 200px;
   margin: 20px;
   background-color: rgba(255, 255, 255, 0);
-}
-
-button {
-  border: none;
-  background-color: rgba(255, 255, 255, 0);
-}
-
-button:active {
-  filter: brightness(80%);
 }
 </style>
