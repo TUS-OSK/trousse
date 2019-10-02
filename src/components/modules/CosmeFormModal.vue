@@ -78,7 +78,6 @@ export default {
       const newCosme = {
         type: this.focusingType,
         info: {
-          id: this.focusingCosme.id,
           brand: this.cosmeBrandText,
           name: this.cosmeNameText,
           color: this.cosmeColorText,
@@ -86,9 +85,11 @@ export default {
         }
       }
       if(this.formType === 'edit') {
+        newCosme.info.id = this.focusingCosme.id
         this.$store.dispatch('userData/changeCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
       } else if(this.formType === 'register') {
+
         this.$store.dispatch('userData/registerCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
 

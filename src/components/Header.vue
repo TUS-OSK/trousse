@@ -52,8 +52,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
 
 .header-page {
-  height: 56px;
-  margin-bottom: 12px;
+  height: 52px;
 }
 
 /* z-index 3 */
@@ -75,8 +74,9 @@ export default {
   width: 100%;
   height: 5px;
   position: absolute;
-  left: 0;
-  background-color: rgb(245, 226, 226);
+  top: 0;
+  right: 0;
+  background-color: white;
   border-radius: 4px;
   transition: all .4s;
   box-sizing: border-box;
@@ -110,7 +110,7 @@ export default {
   top: 0px;
   right: -264px;
   bottom: 0px;
-  background-color: rgba(48, 43, 49, 0.95);
+  background-color: rgba(62, 58, 57, 0.95);
   transition: all .4s;
 }
 .hr-sidebar.active {
@@ -150,7 +150,7 @@ export default {
   left: 0;
   display: flex;
   justify-content: center;
-  background-image: linear-gradient(-45deg, #7d4958 25%, #b36279 25%, #b36279 50%, #7d4958 50%, #7d4958 75%, #b36279 75%, #b36279);
+  background-color: #B25A74;
 }
 .hr-main-logo {
   width: 150px;

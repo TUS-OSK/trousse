@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header/>
-    <div class="row">
+    <div>
       <main>
         <h2>Hello World!</h2>
         <h3>ユーザー名</h3>

@@ -2,7 +2,7 @@
 <!-- Mainページはコスメサジェスト機能が利用できるページ -->
   <div>
     <Header/>
-    <div class="row">
+    <div>
       <main>
         <h1>今日のコスメを決めよう！</h1>
         <!-- ここからコスメ選択 -->
@@ -15,7 +15,7 @@
           <h2>今日のコスメはこれだ！</h2>
           <suggested-cosmes-list></suggested-cosmes-list>
         </section>
-        <router-link class="link" to="/main/result">結果を画像で保存</router-link>
+        <!-- <router-link class="link" to="/main/result">結果を画像で保存</router-link> -->
       </main>
     </div>
   </div>

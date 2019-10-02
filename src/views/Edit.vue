@@ -1,21 +1,20 @@
 <template>
-  <div>
+  <div class="edit-page">
     <Header/>
-    <div class="row">
-      <main>
-        <h2 class="sub-title">{{ type }}の編集画面</h2>
-        <div class="cosme-area">
-          <div class="cosme-list">
-            <draggable v-model="cosmeAry">
+      <main class="ed-main">
+        <h2 class="ed-sub-title">{{ type }}の編集画面</h2>
+        <div class="ed-main-function">
+          <div class="ed-main-list">
+            <draggable class="ed-main-li-draggable" v-model="cosmeAry">
               <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme"></cosme-icon>
+              <div class="fake-icon" v-for="i in fakeCosmes" :key="i"></div>
             </draggable>
           </div>
-          <button class="show-modal-button" v-on:click="showAddCosmeModal()" >{{ addCosmeValue }}</button>
+          <button class="ed-modal-btn" v-on:click="showAddCosmeModal()" >+</button>
           <cosme-form-modal formId="new" formType="register" :focusingType="type"/>
         </div>
       </main>
     </div>
-  </div>
 </template>
 
 <script>
@@ -52,6 +51,9 @@ export default {
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
     },
+    fakeCosmes() {
+      return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
+    },
     cosmeAry: {
       get(){
         return this.$store.getters['userData/cosmes'][this.type]
@@ -66,31 +68,38 @@ export default {
 </script>
 
 <style scoped>
-.row {
-  /* display: flex; */
-  flex-direction: row;
+.ed-sub-title {
+  color: rgb(65, 52, 58);
 }
-.sub-title {
-  text-align: center;
-  color: rgb(99, 96, 92);
-  text-decoration: underline solid #ffb3f9;
-}
-.show-modal-button {
+.ed-modal-btn {
   cursor:pointer;
   width: 100%;
-  padding: 10px;
+  margin: 12px 0;
+  padding: 12px;
   margin-bottom: 8px;
-  box-shadow: 0 2px 0 rgba(9,30,66,.25);
-  font-family: "serif";
-  border-radius: 10px;
+  border-radius: 12px;
   white-space: normal;
+  background-color: #B25A74;
   font-size: 20px;
 }
-.cosme-area {
-  background-color: antiquewhite;
-  padding: 4px;
+.fake-icon {
+  width: 118px;
 }
-ul {
-  padding: 0px;
+.ed-main {
+  background-color: rgb(250, 244, 246);
+}
+.ed-main-list {
+  padding: 8px;
+  background-color: rgb(243, 234, 183);
+}
+.ed-main-li-draggable {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+}
+.ed-main-function {
+  padding: 8px;
 }
 </style>

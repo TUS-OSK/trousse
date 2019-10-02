@@ -35,6 +35,11 @@ export default {
 a {
   text-decoration: none;
 }
+
+h2 {
+  display: inline-block;
+  margin: 12px;
+}
 button {
   border: none;
   background-color: rgba(255, 255, 255, 0);
@@ -47,7 +52,12 @@ button:active {
   margin: 0;
   padding: 0;
 }
+.row {
+  display: flex;
+  flex-direction: row
+}
 
+/* load-page */
 .load-page  {
   z-index: 5;
   width: 100vw;
