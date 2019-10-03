@@ -1,28 +1,24 @@
 <template>
 <!-- Mainページはコスメサジェスト機能が利用できるページ -->
-  <div>
-    <Header/>
-    <div>
-      <main>
-        <h1>今日のコスメを決めよう！</h1>
-        <!-- ここからコスメ選択 -->
-        <section class="select-cosme">
-          <h2>コスメを選択しよう！</h2>
-          <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="main"></accordion-cosmes-list>
-        </section>
-        <!-- ここからコスメ結果 -->
-        <section class="suggest-cosme">
-          <h2>今日のコスメはこれだ！</h2>
-          <suggested-cosmes-list></suggested-cosmes-list>
-        </section>
-        <!-- <router-link class="link" to="/main/result">結果を画像で保存</router-link> -->
-      </main>
-    </div>
+  <div class="main-page">
+    <main class="mn-main">
+      <h1 class="mn-title">今日のコスメを決めよう！</h1>
+      <!-- ここからコスメ選択 -->
+      <section class="mn-select-cosme">
+        <h2 class="mn-sl-title">コスメを選択しよう！</h2>
+        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="main"></accordion-cosmes-list>
+      </section>
+      <!-- ここからコスメ結果 -->
+      <section class="mn-suggest-cosme">
+        <h2 class="mn-sg-title">今日のコスメはこれだ！</h2>
+        <suggested-cosmes-list></suggested-cosmes-list>
+      </section>
+      <!-- <router-link class="link" to="/main/result">結果を画像で保存</router-link> -->
+    </main>
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
 import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
 import SuggestedCosmesList from '@/components/SuggestedCosmesList.vue'
 
@@ -31,7 +27,6 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'main-page',
   components: {
-    Header,
     AccordionCosmesList,
     SuggestedCosmesList
   },
@@ -69,7 +64,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>

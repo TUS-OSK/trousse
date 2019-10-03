@@ -1,5 +1,5 @@
 <template>
-  <div class="cosme">
+  <div class="cosme-icon-component">
     <div class="cosme-icon" @click="showEditCosmeModal()">
       <div class="name">{{ cosme.name }}</div>
       <div class="brand">{{ cosme.brand }}</div>

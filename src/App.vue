@@ -51,6 +51,10 @@ button:active {
   font-family: 'Kosugi Maru', sans-serif;
   margin: 0;
   padding: 0;
+  outline: none;
+}
+*:focus {
+  outline: none;
 }
 .row {
   display: flex;

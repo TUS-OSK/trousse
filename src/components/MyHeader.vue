@@ -1,49 +1,58 @@
 <template>
   <header class="header-page">
     <div class="hr-main">
-      <router-link class="" to="/main">
+      <router-link class="" to="/first/main">
         <div class="hr-main-logo">Trousse</div>
       </router-link>
     </div>
-    <button class="hr-btn" v-bind:class='{ active : active01 }' @click="changeSidebarState">
+    <button class="hr-btn" v-bind:class='{ active : isActive }' @click="changeSidebarState">
       <span class="hr-btn-line"></span>
       <span class="hr-btn-line"></span>
       <span class="hr-btn-line"></span>
     </button>
-    <aside class="hr-sidebar" v-bind:class='{ active: active01 }'>
-      <nav class="hr-sb-nav">
-        <router-link class="sublink" @click.native="resetGuideState" to="/user">ユーザー情報</router-link>
-        <router-link class="sublink" @click.native="resetGuideState" to="/edit/base">ベースのコスメを追加</router-link>
-        <router-link class="sublink" @click.native="resetGuideState" to="/edit/cheek">チークのコスメを追加</router-link>
-        <router-link class="sublink" @click.native="resetGuideState" to="/edit/lip">リップのコスメを追加</router-link>
-        <button @click="logout()" class="hr-sb-logout-btn">ログアウト</button>
-      </nav>
-    </aside>
+    <transition name="slide" mode="out-in">
+      <aside class="hr-sidebar" v-if="isActive">
+        <transition name="nav-action">
+          <nav class="hr-sb-nav">
+            <router-link class="hr-link" @click.native="navigate" to="/first/user">ユーザー情報</router-link>
+            <router-link class="hr-link" @click.native="navigate" to="/first/edit/base">ベースのコスメを追加</router-link>
+            <router-link class="hr-link" @click.native="navigate" to="/first/edit/cheek">チークのコスメを追加</router-link>
+            <router-link class="hr-link" @click.native="navigate" to="/first/edit/lip">リップのコスメを追加</router-link>
+            <button @click="logout()" class="hr-sb-logout-btn">ログアウト</button>
+          </nav>
+        </transition>
+      </aside>
+    </transition>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'Header',
+  name: 'my-header',
+  data() {
+    return {
+      isActive: false,
+      // scrolled: false,
+      // lastPosition: 0
+      isLoaded: true
+    }
+  },
   methods: {
     changeSidebarState() {
-      this.active01 = !this.active01
+      this.isActive = !this.isActive
     },
-    resetGuideState() {
-      this.active01 = false
+    navigate() {
+      this.isActive = false
     },
     logout() {
       this.$store.dispatch('userData/logout')
       this.active01 = !this.active01
     }
   },
-  data() {
-    return {
-      isGuided: false,
-      active01: false
-      // scrolled: false,
-      // lastPosition: 0
-    }
+  created() {
+    setTimeout(() => {
+      this.isLoaded = false
+    }, 2000)
   }
 }
 </script>
@@ -78,7 +87,7 @@ export default {
   right: 0;
   background-color: white;
   border-radius: 4px;
-  transition: all .4s;
+  transition: all .3s;
   box-sizing: border-box;
 }
 
@@ -104,23 +113,29 @@ export default {
 /* z-index 2 */
 .hr-sidebar {
   z-index: 2;
-  width: 248px;
+  min-width: 248px;
   padding: 8px;
   position: fixed;
   top: 0px;
-  right: -264px;
+  right: 0px;
   bottom: 0px;
   background-color: rgba(62, 58, 57, 0.95);
-  transition: all .4s;
 }
-.hr-sidebar.active {
-  right: 0px;
+
+.slide-enter-active, .slide-leave-active{
+  transition: all .4s ease
+}
+.slide-enter, .slide-leave-to {
+  right: -264px;
+  filter: blur(1px);
+  opacity: 0.2;
 }
 
 .hr-sb-nav {
   position: absolute;
   top: 60px;
   right: 8px;
+  left: 8px;
   bottom: 8px;;
   display: flex;
   flex-direction: column;
@@ -128,7 +143,7 @@ export default {
 	text-decoration: none;
 }
 
-.hr-sb-nav > * {
+.hr-link {
   padding: 12px 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   color: white;
