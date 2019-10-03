@@ -72,13 +72,14 @@ export default {
       root: true,
       async handler({ commit }) {
         const mainData = await fetchMain()
-        auth(user => {
-          mainData.user.name = user.displayName
-          mainData.user.token = user.email
-          commit('updateMainData', mainData)
-
+        auth(async user => {
           if (user) {
+            // console.log('オブザーバーは君のことをみてるよ')
             commit('updateLogin', true)
+
+            mainData.user.name = user.displayName
+            mainData.user.token = await user.getIdToken()
+            commit('updateMainData', mainData)
 
             if (router.currentRoute.name === 'login') {
               router.replace({ name: 'main' })

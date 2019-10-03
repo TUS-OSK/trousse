@@ -5,8 +5,9 @@
       <main>
         <h2>Hello World!</h2>
         <h3>ユーザー名</h3>
-        <p>{{ name }} </p>
-         <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="user"></accordion-cosmes-list>
+        <p>{{ userData.name }} </p>
+        <p>{{ userData.token }}</p>
+        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="user"></accordion-cosmes-list>
       </main>
     </div>
   </div>
@@ -35,8 +36,8 @@ export default {
     }
   },
   computed: {
-    name() {
-      return this.$store.getters['userData/user'].name
+    userData() {
+      return this.$store.getters['userData/user']
     },
     ...mapGetters('userData', [
       'cosmeTypes',

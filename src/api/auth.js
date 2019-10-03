@@ -2,8 +2,16 @@ import * as firebase from 'firebase/app'
 
 const USER = {
   displayName: 'development mo',
-  email: 'xxxx@trousse.jp'
+  email: 'xxxx@trousse.jp',
+  getIdToken: () => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('token_xxxxx')
+      }, 200)
+    })
+  }
 }
+
 const DEFAULT_USER = USER
 let authCb = null
 export const auth =
