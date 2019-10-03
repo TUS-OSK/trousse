@@ -47,6 +47,9 @@ export default {
 .lg-btn-img {
   width: 200px;
   margin: 20px;
-  background-color: rgba(255, 255, 255, 0);
+}
+
+img {
+  width: 200px;
 }
 </style>
