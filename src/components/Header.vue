@@ -58,6 +58,8 @@ export default {
 /* z-index 3 */
 .hr-btn {
   z-index: 3;
+  width: 32px;
+  height: 28px;
   margin-block-start: 12px;
   margin-block-end: 12px;
   padding: 0px 0px 0px;
@@ -65,14 +67,12 @@ export default {
   position: fixed;
   top: 0;
   right: 16px;
-  width: 36px;
-  height: 32px;
   background-color: rgba(255, 255, 255, 0);
 }
 
 .hr-btn-line {
   width: 100%;
-  height: 5px;
+  height: 4px;
   position: absolute;
   top: 0;
   right: 0;
@@ -154,7 +154,7 @@ export default {
 }
 .hr-main-logo {
   width: 150px;
-  height: 56px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

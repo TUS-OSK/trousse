@@ -1,28 +1,26 @@
 <template>
-  <div class="cosme-form-modal">
-    <modal :name="`form-modal-${formId}`">
-      <div class="inputs">
-        <div>コスメの名前:
-          <input v-model="cosmeNameText" type="text" name="name" >
-        </div>
-        <div>コスメのブランド:
-          <input v-model="cosmeBrandText">
-        </div>
-        <div>コスメの色味:
-          <input v-model="cosmeColorText" type="text" name="color" >
-        </div>
-        <div>コスメのテーマ:
-          <label v-for="theme in themes" :key="theme">
-            <input v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
+  <modal :name="`form-modal-${formId}`" width="100%" height="70%" :pivotY="1.0">
+    <div class="cosme-form-modal">
+      <div class="ml-inputs">
+        <h3 class="ml-input-title">コスメの名前</h3>
+        <input class="ml-input" v-model="cosmeNameText" type="text" name="name" >
+        <h3 class="ml-input-title">コスメのブランド</h3>
+        <input class="ml-input" v-model="cosmeBrandText">
+        <h3 class="ml-input-title">コスメの色味</h3>
+        <input class="ml-input" v-model="cosmeColorText" type="text" name="color" >
+        <h3 class="ml-input-title">コスメのテーマ</h3>
+        <div class="ml-checkboxes-area">
+          <label class="ml-cb-label" v-for="theme in themes" :key="theme">
+            <input class="ml-cb-input" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
           </label>
         </div>
       </div>
       <div class="buttons" >
-        <div v-if="formType === 'edit'">
-          <button v-on:click="updateCosmeInfo()">コスメ情報を更新</button>
-          <button v-on:click="showConfirmModal()">コスメを削除</button>
+        <div class="ml-update-btns" v-if="formType === 'edit'">
+          <button class="ml-btn" v-on:click="updateCosmeInfo()">コスメ情報を更新</button>
+          <button class="ml-btn" v-on:click="showConfirmModal()">コスメを削除</button>
         </div>
-        <div v-else>
+        <div class="ml-update-btns" v-else>
           <button v-on:click="updateCosmeInfo()">コスメを登録</button>
         </div>
       </div>
@@ -31,8 +29,8 @@
         <button v-on:click="deleteCosmeInfo()">はい</button>
         <button v-on:click="hideConfirmModal()">いいえ</button>
       </modal>
-    </modal>
-  </div>
+    </div>
+  </modal>
 </template>
 
 <script>
@@ -133,4 +131,39 @@ export default {
 </script>
 
 <style scoped>
+.cosme-form-modal {
+  padding: 20px;
+}
+.ml-cb-label {
+  display: inline-block;
+  background-color: rgb(243, 234, 183);
+  padding: 8px;
+  margin: 8px;
+  border-radius: 12px;
+  font-size: 20px;
+  width: auto;
+}
+.ml-cb-input {
+  outline: none;
+  margin: 0 4px 0 0;
+}
+.ml-input {
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  background-color: rgb(243, 234, 183);
+  margin: 12px;
+  padding: 12px;
+  width: 85%;
+}
+.ml-update-btns {
+  width: 100vw;
+}
+.ml-btn {
+  background-color: blanchedalmond
+}
+.ml-checkboxes-area {
+  margin: 12px;
+}
+
 </style>

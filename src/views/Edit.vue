@@ -10,7 +10,7 @@
               <div class="fake-icon" v-for="i in fakeCosmes" :key="i"></div>
             </draggable>
           </div>
-          <button class="ed-modal-btn" v-on:click="showAddCosmeModal()" >+</button>
+          <button class="ed-modal-btn" @click="showAddCosmeModal()" >+</button>
           <cosme-form-modal formId="new" formType="register" :focusingType="type"/>
         </div>
       </main>
@@ -85,8 +85,12 @@ export default {
 .fake-icon {
   width: 118px;
 }
-.ed-main {
+.edit-page  {
+  min-height: 100vh;
   background-color: rgb(250, 244, 246);
+}
+.ed-main {
+  height: 100%;
 }
 .ed-main-list {
   padding: 8px;
