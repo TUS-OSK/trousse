@@ -87,11 +87,12 @@ export default {
           //チェックされてるtheme配列をcosmeが持つtheme配列でfilterして長さが小さくなったものはチェックしたい
           //つまりアンチェックリストに入れたくないのでfalseを返すようにする
             const dif = this.cosmeThemeCheckbox.filter(type => !cosme.theme.includes(type))
-            console.log(dif)
             return dif.length >= this.cosmeThemeCheckbox.length
         }).map(cosme => cosme.id)
 
         this.$store.dispatch('pages/main/loadCheckedItems', data)
+
+        this.cosmeThemeCheckbox = []
       })
     },
     toJapanese(word) {
