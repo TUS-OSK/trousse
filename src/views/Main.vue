@@ -1,31 +1,30 @@
 <template>
 <!-- Mainページはコスメサジェスト機能が利用できるページ -->
-  <div>
-    <Header/>
-    <div class="row">
-      <main>
-        <h1>今日のコスメを決めよう！</h1>
-        <!-- ここからコスメ選択 -->
-        <section class="select-cosme">
-          <h2>コスメを選択しよう！</h2>
-          <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="main"></accordion-cosmes-list>
-        </section>
-        <label v-for="theme in themes" :key="theme">
-          <input v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
-        </label>
-        <!-- ここからコスメ結果 -->
-        <section class="suggest-cosme">
-          <h2>今日のコスメはこれだ！</h2>
-          <suggested-cosmes-list></suggested-cosmes-list>
-        </section>
-        <router-link class="link" to="/main/result">結果を画像で保存</router-link>
-      </main>
-    </div>
+  <div class="main-page">
+    <main class="mn-main">
+      <h1 class="mn-title">今日のコスメを決めよう！</h1>
+      <!-- ここからコスメ選択 -->
+      <section class="mn-select-cosme">
+        <h2 class="mn-sl-title">コスメを選択しよう！</h2>
+        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="main"></accordion-cosmes-list>
+        <div class="mn-sl-cosme-filter">
+          <label v-for="theme in themes" :key="theme">
+            <input v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
+          </label>
+          <button @click="narrowCheckedItems">絞り込み</button>
+        </div>
+      </section>
+
+      <section class="mn-suggest-cosme">
+        <h2 class="mn-sg-title">今日のコスメはこれだ！</h2>
+        <suggested-cosmes-list></suggested-cosmes-list>
+      </section>
+      <!-- <router-link class="link" to="/main/result">結果を画像で保存</router-link> -->
+    </main>
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
 import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
 import SuggestedCosmesList from '@/components/SuggestedCosmesList.vue'
 
@@ -34,7 +33,6 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'main-page',
   components: {
-    Header,
     AccordionCosmesList,
     SuggestedCosmesList
   },
@@ -80,6 +78,22 @@ export default {
     }
   },
   methods: {
+    narrowCheckedItems() {
+      this.cosmeTypes.forEach(type => {
+        const data = {
+          type
+        }
+        data.cosmes = this.cosmes[type].filter(cosme => {
+          //チェックされてるtheme配列をcosmeが持つtheme配列でfilterして長さが小さくなったものはチェックしたい
+          //つまりアンチェックリストに入れたくないのでfalseを返すようにする
+            const dif = this.cosmeThemeCheckbox.filter(type => !cosme.theme.includes(type))
+            console.log(dif)
+            return dif.length >= this.cosmeThemeCheckbox.length
+        }).map(cosme => cosme.id)
+
+        this.$store.dispatch('pages/main/loadCheckedItems', data)
+      })
+    },
     toJapanese(word) {
       switch(word) {
         case 'spring':
@@ -95,7 +109,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>

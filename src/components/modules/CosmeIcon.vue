@@ -1,9 +1,8 @@
 <template>
-  <div class="cosme">
-    <div class="cosme-icon">
+  <div class="cosme-icon-component">
+    <div class="cosme-icon" @click="showEditCosmeModal()">
       <div class="name">{{ cosme.name }}</div>
       <div class="brand">{{ cosme.brand }}</div>
-      <button class="show-modal-button" v-on:click="showEditCosmeModal()">編集</button>
     </div>
     <cosme-form-modal :formId="cosme.id" formType="edit" :focusingType="type" :focusingCosme="cosme"/>
   </div>
@@ -46,16 +45,15 @@ export default {
   display: inline-block;
 }
 .cosme-icon {
-  width: 90px;
-  height: 120px;
-  margin: 4px;
-  padding: 10px;
-  box-shadow: 0 2px 0 rgba(9,30,66,.25);
-  border-radius: 10px;
-  font-family: "serif";
-  font-size: 15px;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 12px;
   text-align: center;
-  background-color: lightpink;
+  background-color: rgb(248, 241, 242);
+  border: 4px solid #B25A74;
   word-break: break-all;
   overflow: scroll;
   cursor:pointer;

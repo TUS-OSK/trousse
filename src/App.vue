@@ -30,12 +30,38 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* global */
+
+a {
+  text-decoration: none;
+}
+
+h2 {
+  display: inline-block;
+  margin: 12px;
+}
+button {
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+button:active {
+  filter: brightness(80%);
+}
 * {
   font-family: 'Kosugi Maru', sans-serif;
   margin: 0;
   padding: 0;
+  outline: none;
+}
+*:focus {
+  outline: none;
+}
+.row {
+  display: flex;
+  flex-direction: row
 }
 
+/* load-page */
 .load-page  {
   z-index: 5;
   width: 100vw;

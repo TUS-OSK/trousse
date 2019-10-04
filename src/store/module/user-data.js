@@ -86,6 +86,7 @@ export default {
             }
           } else {
             commit('updateLogin', false)
+
             if (router.currentRoute.name !== 'login') {
               router.replace({ name: 'login' })
             }

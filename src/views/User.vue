@@ -1,7 +1,6 @@
 <template>
   <div>
-    <Header/>
-    <div class="row">
+    <div>
       <main>
         <h2>Hello World!</h2>
         <h3>ユーザー名</h3>
@@ -14,7 +13,6 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
 import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
 
 import { mapGetters } from 'vuex'
@@ -22,7 +20,6 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'user',
   components: {
-    Header,
     AccordionCosmesList
   },
   data(){
