@@ -40,7 +40,8 @@ export default {
       'allCosmeIds'
     ]),
     ...mapGetters('pages/main', [
-      'unCheckedItems'
+      'unCheckedItems',
+      'unCheckedTypes'
     ]),
     isChecked: {
       get() {
@@ -52,6 +53,11 @@ export default {
           cosmes: this.allCosmeIds[this.cosmesData.type].filter(id => !value.includes(id))
         }
         this.$store.dispatch('pages/main/loadCheckedItems', listData)
+
+        const unCheckedTypes = [...this.unCheckedTypes]
+        if(unCheckedTypes.includes(listData.type)) {
+          this.$store.dispatch('pages/main/loadCheckedTypes', unCheckedTypes.filter(() => !unCheckedTypes.includes(listData.type)))
+        }
       }
     }
   }
