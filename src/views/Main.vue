@@ -10,6 +10,9 @@
           <h2>コスメを選択しよう！</h2>
           <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="main"></accordion-cosmes-list>
         </section>
+        <label v-for="theme in themes" :key="theme">
+          <input v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
+        </label>
         <!-- ここからコスメ結果 -->
         <section class="suggest-cosme">
           <h2>今日のコスメはこれだ！</h2>
@@ -35,6 +38,11 @@ export default {
     AccordionCosmesList,
     SuggestedCosmesList
   },
+  data() {
+    return {
+      cosmeThemeCheckbox: []
+    }
+  },
   computed: {
     ...mapGetters('userData', [
       'cosmeTypes',
@@ -43,6 +51,9 @@ export default {
     ...mapGetters('pages/main', [
       'isOpened'
     ]),
+    themes() {
+      return this.$store.getters['userData/themes']
+    },
     allCosmesAry() {
       return this.cosmeTypes.map(type => {
         const isOpened = this.isOpened[type]
@@ -66,6 +77,21 @@ export default {
           }
         }
       })
+    }
+  },
+  methods: {
+    toJapanese(word) {
+      switch(word) {
+        case 'spring':
+          return '春'
+        case 'summer':
+          return '夏'
+        case 'autumn':
+          return '秋'
+        case 'winter':
+          return '冬'
+      }
+      return word
     }
   }
 }
