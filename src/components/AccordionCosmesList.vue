@@ -48,7 +48,8 @@ export default {
   },
   computed: {
     ...mapGetters('userData', [
-      'cosmeTypes'
+      'cosmeTypes',
+      'cosmes'
     ]),
     ...mapGetters('pages/main', [
       'unCheckedTypes',
@@ -58,12 +59,24 @@ export default {
       get() {
         return this.cosmeTypes.filter(type => !this.unCheckedTypes.includes(type))
       },
-      set(newAry) {
-        const data = {
-          newUnCheckedTypes: this.cosmeTypes.filter(type => !newAry.includes(type))
+      set(newCheckedTypes) {
+        const newUnCheckedTypes = this.cosmeTypes.filter(type => !newCheckedTypes.includes(type))
+
+        if(this.unCheckedTypes > newUnCheckedTypes) {
+          const newData = {
+            newCheckedTypes,
+            cosmeTypes: this.cosmeTypes
+          }
+          this.$store.dispatch('pages/main/addCheckedItems', newData)
+        } else {
+          const newData = {
+            newUnCheckedTypes,
+            cosmes: this.cosmes
+          }
+          this.$store.dispatch('pages/main/filterCheckedItems', newData)
         }
-        //後の都合を考えてオブジェクトにしてます
-       this.$store.dispatch('pages/main/loadCheckedTypes', data.newUnCheckedTypes)
+
+       this.$store.dispatch('pages/main/loadCheckedTypes', newUnCheckedTypes)
       }
     }
   },

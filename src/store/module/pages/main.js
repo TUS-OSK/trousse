@@ -32,6 +32,16 @@ export default {
     updateCheckedItems(state, payload) {
       state.cosmesListStates.unCheckedItems[payload.type] = payload.cosmes
     },
+    filterChecked(state, payload) {
+      payload.newUnCheckedTypes.forEach(type => {
+        state.cosmesListStates.unCheckedItems[type] = payload.cosmes[type].map(cosme => cosme.id)
+      })
+    },
+    addChecked(state, payload) {
+      const oldCheckedTypes = payload.cosmeTypes.filter(type => !state.cosmesListStates.unCheckedTypes.includes(type))
+      const dif = payload.newCheckedTypes.filter(type => !oldCheckedTypes.includes(type))
+      dif.forEach(type => state.cosmesListStates.unCheckedItems[type] = [])
+    },
     updateHistory(state, payload) {
       state.history.push(payload)
     }
@@ -48,6 +58,12 @@ export default {
     },
     loadHistory({ commit }, payload) {
       commit('updateHistory', payload)
+    },
+    filterCheckedItems({ commit }, payload) {
+      commit('filterChecked', payload)
+    },
+    addCheckedItems({ commit }, payload) {
+      commit('addChecked', payload)
     }
   }
 }

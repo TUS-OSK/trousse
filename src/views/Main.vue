@@ -7,8 +7,14 @@
       <section class="mn-select-cosme">
         <h2 class="mn-sl-title">コスメを選択しよう！</h2>
         <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="main"></accordion-cosmes-list>
+        <div class="mn-sl-cosme-filter">
+          <label v-for="theme in themes" :key="theme">
+            <input v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
+          </label>
+          <button @click="narrowCheckedItems">絞り込み</button>
+        </div>
       </section>
-      <!-- ここからコスメ結果 -->
+
       <section class="mn-suggest-cosme">
         <h2 class="mn-sg-title">今日のコスメはこれだ！</h2>
         <suggested-cosmes-list></suggested-cosmes-list>
@@ -30,6 +36,11 @@ export default {
     AccordionCosmesList,
     SuggestedCosmesList
   },
+  data() {
+    return {
+      cosmeThemeCheckbox: []
+    }
+  },
   computed: {
     ...mapGetters('userData', [
       'cosmeTypes',
@@ -38,6 +49,9 @@ export default {
     ...mapGetters('pages/main', [
       'isOpened'
     ]),
+    themes() {
+      return this.$store.getters['userData/themes']
+    },
     allCosmesAry() {
       return this.cosmeTypes.map(type => {
         const isOpened = this.isOpened[type]
@@ -61,6 +75,37 @@ export default {
           }
         }
       })
+    }
+  },
+  methods: {
+    narrowCheckedItems() {
+      this.cosmeTypes.forEach(type => {
+        const data = {
+          type
+        }
+        data.cosmes = this.cosmes[type].filter(cosme => {
+          //チェックされてるtheme配列をcosmeが持つtheme配列でfilterして長さが小さくなったものはチェックしたい
+          //つまりアンチェックリストに入れたくないのでfalseを返すようにする
+            const dif = this.cosmeThemeCheckbox.filter(type => !cosme.theme.includes(type))
+            console.log(dif)
+            return dif.length >= this.cosmeThemeCheckbox.length
+        }).map(cosme => cosme.id)
+
+        this.$store.dispatch('pages/main/loadCheckedItems', data)
+      })
+    },
+    toJapanese(word) {
+      switch(word) {
+        case 'spring':
+          return '春'
+        case 'summer':
+          return '夏'
+        case 'autumn':
+          return '秋'
+        case 'winter':
+          return '冬'
+      }
+      return word
     }
   }
 }
