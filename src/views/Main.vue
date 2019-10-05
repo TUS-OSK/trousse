@@ -146,11 +146,14 @@ export default {
   0% {
     height: 2px;
   }
+  40% {
+    height: 4px;
+  }
   50% {
     height: 4px;
   }
   100% {
-    height: 2px;
+    height: 0px;
   }
 }
 
