@@ -3,9 +3,8 @@
   <ul v-if="formType==='main'" class="cosme-list">
     <li v-for="cosme in cosmesData.cosmeAry" :key="cosme.id" class="cosme-list">
       <div  class="cosme-list-function">
-        <label class="cosme-list-label">
-          <input class="cosme-list-checkbox" type="checkbox" v-model="isChecked" :value="cosme.id">- cosme info -
-        </label>
+        <input :id="`cosme${cosme.id}`" class="cosme-list-checkbox" type="checkbox" v-model="isChecked" :value="cosme.id">
+        <label :for="`cosme${cosme.id}`" class="cosme-list-label">- cosme info -</label>
       </div>
       <ul>
         <li v-for="( info, infoName ) in cosme" :key="infoName" class="cosme-list-info"> {{ infoName }}: {{ info }} </li>
