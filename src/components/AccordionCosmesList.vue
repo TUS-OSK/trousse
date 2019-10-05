@@ -3,8 +3,8 @@
   <div class="accordion-cosmes-li">
     <div class="accordion-cosmes-li-func">
       <a v-if="formType === 'main'">
-        <input :id="`type${formType}`" class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">
-        <label :for="`type${formType}`" class="accordion-cosmes-li-label">{{ cosmesData.type }}</label>
+        <input :id="`type${cosmesData.type}`" class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">
+        <label :for="`type${cosmesData.type}`" class="accordion-cosmes-li-label">{{ cosmesData.type }}</label>
       </a>
       <a v-else>
          {{ cosmesData.type }}
