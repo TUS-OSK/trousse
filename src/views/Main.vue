@@ -12,7 +12,13 @@
             <div class="mn-sl-cb" v-for="(theme, index) in themes" :key="theme">
               <input :id="`input-${index}`" class="mn-sl-cb-input" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">
               <label class="mn-sl-cb-label" :for="`input-${index}`">
-                <span class="mn-sl-cb-lb-canvas"></span>
+                <span class="mn-sl-cb-lb-canvas">
+                  <span class="stick"></span>
+                  <span class="stick"></span>
+                  <span class="box"></span>
+                  <span class="stick"></span>
+                  <span class="stick"></span>
+                </span>
                 <span class="mn-sl-cb-lb-value">{{ toJapanese(theme) }}</span>
               </label>
             </div>
@@ -123,18 +129,31 @@ export default {
 <style scoped>
 @keyframes shrink {
   0% {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
   }
   40% {
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
   }
   100% {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
   }
 }
+
+@keyframes stick {
+  0% {
+    height: 2px;
+  }
+  50% {
+    height: 4px;
+  }
+  100% {
+    height: 2px;
+  }
+}
+
 .mn-main {
   padding: 8px;
 }
@@ -167,8 +186,8 @@ export default {
   display: none;
 }
 .mn-sl-cb-lb-canvas, .mn-sl-cb-lb-value {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center
@@ -178,21 +197,59 @@ export default {
   width: auto;
 }
 
-.mn-sl-cb-input + .mn-sl-cb-label .mn-sl-cb-lb-canvas:after {
+.mn-sl-cb-input + .mn-sl-cb-label .box {
   content: '';
   border-radius: 4px;
-  width: 20px;;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   opacity: .6;
   border: 1px solid #6cc0e5;
-  transition: all .2s, border-color .08s;
+  transition: all .2s;
 }
 
-.mn-sl-cb-input:checked + .mn-sl-cb-label .mn-sl-cb-lb-canvas:after {
+.mn-sl-cb-input:checked + .mn-sl-cb-label .box {
   animation-name: shrink;
   animation-duration: .1s;
   opacity: 1;
   background-color: #6cc0e5;
+}
+
+.mn-sl-cb-input + .mn-sl-cb-label .stick {
+  height: 0px;
+  width: 1px;
+  background-color: #6cc0e5;
+  transition: all .4s
+}
+.mn-sl-cb-input:checked + .mn-sl-cb-label .stick {
+  animation-name: stick;
+  animation-duration: .4s;
+}
+.mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(1) {
+  transition: all .4s;
+  transform: translate(-1px,-8px)rotate(-65deg);
+}
+.mn-sl-cb-input:checked + .mn-sl-cb-label .stick:nth-child(1) {
+  transform: translate(-3px,-10px)rotate(-65deg);
+}
+.mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(2) {
+  transform: translate(2px,-12px)rotate(-25deg)
+}
+.mn-sl-cb-input:checked + .mn-sl-cb-label .stick:nth-child(2) {
+  transform: translate(0px,-14px)rotate(-25deg)
+}
+
+.mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(4) {
+  transition: all .4s;
+  transform: translate(-2px,12px)rotate(-25deg);
+}
+.mn-sl-cb-input:checked + .mn-sl-cb-label .stick:nth-child(4) {
+  transform: translate(0px,14px)rotate(-25deg);
+}
+.mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(5) {
+  transform: translate(1px,8px)rotate(-65deg);
+}
+.mn-sl-cb-input:checked + .mn-sl-cb-label .stick:nth-child(5) {
+  transform: translate(3px,10px)rotate(-65deg);
 }
 
 </style>

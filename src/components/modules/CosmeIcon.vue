@@ -10,7 +10,7 @@
     </div>
   </div>
   <div v-else>
-    <div class="cosme-icon" @click="showEditCosmeModal()">
+    <div class="cosme-icon" :class="cosme.color" @click="showEditCosmeModal()">
       <div class="name">{{ cosme.name }}</div>
       <div class="brand">{{ cosme.brand }}</div>
     </div>
@@ -59,6 +59,10 @@ export default {
 <style scoped>
 .cosme {
   display: inline-block;
+}
+
+.cosme-icon-component.sortable-ghost {
+  opacity: 0
 }
 
 .cosme-list-checkbox {

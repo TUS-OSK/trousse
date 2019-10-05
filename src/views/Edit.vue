@@ -5,7 +5,7 @@
       <div class="ed-main-function">
         <div class="ed-main-list">
           <div v-if="cosmeNumber">
-            <draggable class="ed-main-li-draggable" v-model="cosmeAry">
+            <draggable class="ed-main-li-draggable" v-model="cosmeAry" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
               <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme" iconType="edit"></cosme-icon>
               <div class="fake-icon" v-for="i in fakeCosmes" :key="i"></div>
             </draggable>
@@ -41,7 +41,8 @@ export default {
   },
   data() {
     return {
-      addCosmeValue: 'コスメを追加'
+      addCosmeValue: 'コスメを追加',
+      isDragging: false
     }
   },
   methods: {
@@ -50,6 +51,12 @@ export default {
     }
   },
   computed: {
+    dragOptions() {
+      return {
+        animation: 200,
+        disabled: false
+      }
+    },
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
     },
