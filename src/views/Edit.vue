@@ -6,7 +6,7 @@
         <div class="ed-main-list">
           <div v-if="cosmeNumber">
             <draggable class="ed-main-li-draggable" v-model="cosmeAry">
-              <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme"></cosme-icon>
+              <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme" iconType="edit"></cosme-icon>
               <div class="fake-icon" v-for="i in fakeCosmes" :key="i"></div>
             </draggable>
           </div>
@@ -103,7 +103,6 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-
 }
 .ed-main-function {
   padding: 8px;

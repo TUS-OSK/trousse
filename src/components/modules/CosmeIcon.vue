@@ -1,11 +1,22 @@
 <template>
-  <div class="cosme-icon-component">
+<div class="cosme-icon-component">
+  <div v-if="iconType === 'main'">
+    <div class="cosme-icon" :class="cosme.color">
+      <div class="name">{{ cosme.name }}</div>
+      <div class="brand">{{ cosme.brand }}</div>
+      <div class="theme">
+        <span v-for="(theme, index) in cosme.theme" :key="`$theme-${cosme.id}-${index}`">{{ theme }}</span>
+      </div>
+    </div>
+  </div>
+  <div v-else>
     <div class="cosme-icon" @click="showEditCosmeModal()">
       <div class="name">{{ cosme.name }}</div>
       <div class="brand">{{ cosme.brand }}</div>
     </div>
     <cosme-form-modal :formId="cosme.id" formType="edit" :focusingType="type" :focusingCosme="cosme"/>
   </div>
+</div>
 </template>
 
 <script>
@@ -17,6 +28,11 @@ export default {
     CosmeFormModal
   },
   props: {
+    iconType: {
+      type: String,
+      required: true,
+      validator: value => ['main', 'edit'].includes(value)
+    },
     type: {
       type: String,
       required: true
@@ -44,6 +60,16 @@ export default {
 .cosme {
   display: inline-block;
 }
+
+.cosme-list-checkbox {
+  display: none;
+}
+.mn-cm-li-checkbox:checked + .mn-cm-li-label .cosme-icon-component .cosme-icon {
+  filter: none;
+}
+.mn-cm-li-checkbox + .mn-cm-li-label .cosme-icon-component .cosme-icon {
+  filter: brightness(80%)
+}
 .cosme-icon {
   width: 64px;
   height: 64px;
@@ -68,5 +94,17 @@ export default {
   font-size: 8px;
   color: rgb(99, 96, 92);
   text-align: center;
+}
+.pink {
+  border-color: pink;
+}
+.orange {
+  border-color: orange;
+}
+.red {
+  border-color: red;
+}
+.beige {
+  border-color: rgb(83, 83, 30);
 }
 </style>

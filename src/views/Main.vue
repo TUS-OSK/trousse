@@ -6,7 +6,7 @@
       <!-- ここからコスメ選択 -->
       <section class="mn-select-cosme">
         <h2 class="mn-sl-title">コスメを選択しよう！</h2>
-        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="main"></accordion-cosmes-list>
+        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
         <div class="mn-sl-cosme-filter">
           <div class="mn-sl-checkbox-group">
             <div class="mn-sl-cb" v-for="(theme, index) in themes" :key="theme">
@@ -74,7 +74,7 @@ export default {
         } else {
           return {
             type,
-            cosmeAry: cosmeAry.slice(0, 1),
+            cosmeAry: cosmeAry.slice(0, 3),
             accordionCosmesList: {
               isOpened
             }
@@ -135,7 +135,9 @@ export default {
     height: 20px;
   }
 }
-
+.mn-main {
+  padding: 8px;
+}
 .row {
   display: flex;
   flex-direction: row;
