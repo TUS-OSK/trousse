@@ -1,25 +1,14 @@
 const functions = require('firebase-functions');
 const express = require('express');
+const cors = require('cors')
 
 const REGION = 'asia-northeast1';
 
+const app = express();
 
-// Create and Deploy Your First Cloud Functions
-// https://firebase.google.com/docs/functions/write-firebase-functions
+app.use(cors())
 
-// exports.helloWorld = functions
-//   .region(REGION)
-//   .https.onRequest((request, response) => {
-//     response.send("Hello from Firebase!");
-//   });
-
-
-
-  const app = express();
-
-  var cors = require('cors')
-
-  const MOCK_COSMES = {
+const MOCK_COSMES = {
     base: [
       {
         id: '1',
@@ -29,15 +18,13 @@ const REGION = 'asia-northeast1';
         theme: []
       }
     ]
-  }
+}
 
-  app.get('/cosmes', (req, res) => {
+app.get('/cosmes', (req, res) => {
     const data = MOCK_COSMES
     res.json(data)
-  })
+})
 
-  module.exports.api = functions
+module.exports.api = functions
     .region(REGION)
     .https.onRequest(app);
-
-app.use(cors())
