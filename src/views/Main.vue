@@ -33,12 +33,16 @@
       </section>
       <!-- <router-link class="link" to="/main/result">結果を画像で保存</router-link> -->
     </main>
+    <transition name="fade">
+      <load-page pageName="Main" v-if="!isLoaded"></load-page>
+    </transition>
   </div>
 </template>
 
 <script>
 import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
 import SuggestedCosmesList from '@/components/SuggestedCosmesList.vue'
+import loadPage from '@/components/LoadPage.vue'
 
 import { mapGetters } from 'vuex'
 
@@ -46,11 +50,13 @@ export default {
   name: 'main-page',
   components: {
     AccordionCosmesList,
-    SuggestedCosmesList
+    SuggestedCosmesList,
+    loadPage
   },
   data() {
     return {
-      cosmeThemeCheckbox: []
+      cosmeThemeCheckbox: [],
+      isLoaded: false
     }
   },
   computed: {
@@ -122,6 +128,11 @@ export default {
       }
       return word
     }
+  },
+  created() {
+    setTimeout(() => {
+      this.isLoaded = true
+    }, 2000)
   }
 }
 </script>
@@ -255,4 +266,14 @@ export default {
   transform: translate(3px,10px)rotate(-65deg);
 }
 
+.fade-leave-active, .fade-enter-active {
+  transition: opacity .2s;
+}
+
+.fade-enter-to, .fade-leave {
+  opacity: 1;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>

@@ -1,11 +1,11 @@
 <template>
   <header class="header-page">
     <div class="hr-main">
-      <router-link class="" to="/first/main">
+      <router-link to="/first/main">
         <div class="hr-main-logo">Trousse</div>
       </router-link>
     </div>
-    <button class="hr-btn" v-bind:class='{ active : isActive }' @click="changeSidebarState">
+    <button class="hr-btn" :class='{ active : isActive }' @click="changeSidebarState">
       <span class="hr-btn-line"></span>
       <span class="hr-btn-line"></span>
       <span class="hr-btn-line"></span>
@@ -31,10 +31,9 @@ export default {
   name: 'my-header',
   data() {
     return {
-      isActive: false,
+      isActive: false
       // scrolled: false,
       // lastPosition: 0
-      isLoaded: true
     }
   },
   methods: {
@@ -46,13 +45,8 @@ export default {
     },
     logout() {
       this.$store.dispatch('userData/logout')
-      this.active01 = !this.active01
+      this.isActive = !this.isActive
     }
-  },
-  created() {
-    setTimeout(() => {
-      this.isLoaded = false
-    }, 2000)
   }
 }
 </script>
@@ -90,6 +84,9 @@ export default {
   transition: all .3s;
   box-sizing: border-box;
 }
+.hr-btn.hr-btn.active > .hr-btn-line {
+  background-color: #B25A74;
+}
 
 .hr-btn span:nth-of-type(1) {
   top: 0;
@@ -119,9 +116,8 @@ export default {
   top: 0px;
   right: 0px;
   bottom: 0px;
-  background-color: rgba(62, 58, 57, 0.95);
+  background-color: rgba(255, 255, 255, 0.95);
 }
-
 .slide-enter-active, .slide-leave-active{
   transition: all .4s ease
 }
@@ -130,7 +126,6 @@ export default {
   filter: blur(1px);
   opacity: 0.2;
 }
-
 .hr-sb-nav {
   position: absolute;
   top: 60px;
@@ -142,17 +137,16 @@ export default {
   font-size: 20px;
 	text-decoration: none;
 }
-
 .hr-link {
   padding: 12px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  color: white;
+  border-bottom: 1px solid rgba(161, 161, 161, 0.5);
+  color: rgba(20, 20, 20, 0.8);
 }
-
 .hr-sb-logout-btn {
-  color: black;
+  color: rgba(179, 99, 99, 0.8);
   font-size: 20px;
-  width: 248px;
+  width: 208px;
+  margin: 20px;
 }
 /* z-index-1 */
 .hr-main {

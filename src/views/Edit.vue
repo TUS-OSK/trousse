@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-page">
+  <div  class="edit-page">
     <main class="ed-main">
       <h2 class="ed-sub-title">{{ type }}の編集画面</h2>
       <div class="ed-main-function">
@@ -18,6 +18,9 @@
         <cosme-form-modal formId="new" formType="register" :focusingType="type"/>
       </div>
     </main>
+    <transition name="fade">
+      <load-page v-if="!isLoaded" pageName="Edit"></load-page>
+    </transition>
   </div>
 </template>
 
@@ -25,13 +28,15 @@
 import CosmeIcon from '@/components/modules/CosmeIcon.vue'
 import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
 import draggable from 'vuedraggable'
+import LoadPage from '@/components/LoadPage.vue'
 
 export default {
   name: 'edit',
   components: {
     CosmeIcon,
     CosmeFormModal,
-    draggable
+    draggable,
+    LoadPage
   },
   props: {
     type: {
@@ -42,7 +47,8 @@ export default {
   data() {
     return {
       addCosmeValue: 'コスメを追加',
-      isDragging: false
+      isDragging: false,
+      isLoaded: true
     }
   },
   methods: {
@@ -74,12 +80,80 @@ export default {
     cosmeNumber() {
       return this.$store.getters['userData/cosmes'][this.type].length
     }
+  },
+  created() {
+    this.isLoaded = false
+    setTimeout(() => {
+      this.isLoaded = true
+    }, 2000)
   }
 }
 
 </script>
 
 <style scoped>
+@keyframes rotate {
+  0% {
+    transform: rotate(30deg)
+  }
+  50% {
+    transform: rotate(210deg)
+  }
+  100% {
+    transform: rotate(390deg)
+  }
+}
+
+.load-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+}
+
+.ball {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 0;
+  width: 0;
+  border-radius: 50%;
+  background-color: blue;
+  transition: all .4s
+}
+
+.load-page.action > .ball {
+  height: 90vh;
+  width: 90vh;
+}
+
+.load-bar {
+  transform: rotate(30deg);
+  animation: rotate 2s infinite;
+  position: fixed;
+  border-radius: 50%;
+  height: 0;
+  width: 0;
+  border: 0px solid white;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  transition: all .4s
+}
+
+.load-page.action > .ball .load-bar {
+  border: 5vh solid white;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  height: 70vh;
+  width: 70vh;
+}
+
 .ed-sub-title {
   color: rgb(65, 52, 58);
 }
@@ -113,5 +187,13 @@ export default {
 }
 .ed-main-function {
   padding: 8px;
+}
+
+.fade-leave-active, .fade-enter-active {
+  transition: opacity .2s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
