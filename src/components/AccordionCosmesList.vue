@@ -2,13 +2,19 @@
 <!-- AccordionCosmesListコンポーネントはcosmesDataを渡すと開閉できるコスメリストを表示してくれるコンポーネント -->
   <div class="accordion-cosmes-li">
     <div class="accordion-cosmes-li-func">
+      <a v-if="formType === 'main'">
       <label class="accordion-cosmes-li-label">
-        <input class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">{{ cosmesData.type }}
+        <input class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">
+        {{ cosmesData.type }}
       </label>
+      </a>
+      <a v-else>
+         {{ cosmesData.type }}
+      </a>
       <button v-if="cosmesData.accordionCosmesList.isOpened" @click="changeCosmesListState(cosmesData.type)">▲</button>
       <button v-else @click="changeCosmesListState(cosmesData.type)">▼</button>
     </div>
-    <cosme-list :cosmesData="cosmesData"></cosme-list>
+    <cosme-list :cosmesData="cosmesData" :formType="formType"></cosme-list>
   </div>
 </template>
 
@@ -33,11 +39,17 @@ export default {
     cosmesData: {
       type: Object,
       required: true
+    },
+    formType: {
+      type: String,
+      required: true,
+      validator: value => ['main', 'user'].includes(value)
     }
   },
   computed: {
     ...mapGetters('userData', [
-      'cosmeTypes'
+      'cosmeTypes',
+      'cosmes'
     ]),
     ...mapGetters('pages/main', [
       'unCheckedTypes',
@@ -47,12 +59,24 @@ export default {
       get() {
         return this.cosmeTypes.filter(type => !this.unCheckedTypes.includes(type))
       },
-      set(newAry) {
-        const data = {
-          newUnCheckedTypes: this.cosmeTypes.filter(type => !newAry.includes(type))
+      set(newCheckedTypes) {
+        const newUnCheckedTypes = this.cosmeTypes.filter(type => !newCheckedTypes.includes(type))
+
+        if(this.unCheckedTypes > newUnCheckedTypes) {
+          const newData = {
+            newCheckedTypes,
+            cosmeTypes: this.cosmeTypes
+          }
+          this.$store.dispatch('pages/main/addCheckedItems', newData)
+        } else {
+          const newData = {
+            newUnCheckedTypes,
+            cosmes: this.cosmes
+          }
+          this.$store.dispatch('pages/main/filterCheckedItems', newData)
         }
-        //後の都合を考えてオブジェクトにしてます
-       this.$store.dispatch('pages/main/loadCheckedTypes', data.newUnCheckedTypes)
+
+       this.$store.dispatch('pages/main/loadCheckedTypes', newUnCheckedTypes)
       }
     }
   },

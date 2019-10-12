@@ -1,8 +1,14 @@
+import router from '../../router'
+
 import { fetchMain } from '../../api'
+import { STATUS } from '@/constant'
+import { auth, login, logout } from '@/api/auth'
 
 export default {
   state: {
-    user: {},
+    user: {
+      status: STATUS.UNCHECKED
+    },
     cosmes: {
       base: [],
       cheek: [],
@@ -23,12 +29,18 @@ export default {
     },
     cosmes: state => state.cosmes,
     cosmeIdCount: state => state.cosmeIdCount,
-    themes: state => state.themes
+    themes: state => state.themes,
+    status: state => state.user.status
   },
   mutations: {
     updateMainData(state, payload) {
-      state.user = payload.user
+      state.user.name = payload.user.name
+      state.user.token = payload.user.token
       state.cosmes = payload.cosmes
+    },
+
+    updateLogin(state, payload) {
+      state.user.status = payload ? STATUS.LOGIN : STATUS.LOGOUT
     },
     registerCosmeInformation(state, payload) {
       state.cosmes[payload.type].push({
@@ -56,9 +68,48 @@ export default {
   },
 
   actions: {
-    async loadMain({ commit }) {
-      const mainData = await fetchMain()
-      commit('updateMainData', mainData)
+    init: {
+      root: true,
+      async handler({ commit }) {
+        const mainData = await fetchMain()
+        auth(async user => {
+          if (user) {
+            // console.log('オブザーバーは君のことをみてるよ')
+            commit('updateLogin', true)
+
+            mainData.user.name = user.displayName
+            mainData.user.token = await user.getIdToken()
+            commit('updateMainData', mainData)
+
+            if (router.currentRoute.name === 'login') {
+              router.replace({ name: 'main' })
+            }
+          } else {
+            commit('updateLogin', false)
+
+            if (router.currentRoute.name !== 'login') {
+              router.replace({ name: 'login' })
+            }
+          }
+        })
+      }
+    },
+    loadMain() {
+      // console.log('データをロードしました')
+    },
+    async login({ state }) {
+      if (state.user.status == STATUS.LOGIN) {
+        // console.log('ログアウトしてください')
+      } else {
+        login()
+      }
+    },
+    async logout({ state }) {
+      if (state.user.status === STATUS.LOGOUT) {
+        // console.log('ログインしてください')
+      } else {
+        logout()
+      }
     },
     registerCosmeInfo({ commit }, item) {
       commit('registerCosmeInformation', item)

@@ -1,40 +1,75 @@
 <template>
   <div>
-    <Header/>
-    <div class="row">
+    <div>
       <main>
         <h2>Hello World!</h2>
         <h3>ユーザー名</h3>
-        <p>{{ name }} </p>
-        <div v-for="category in all" :key="category.label" class="category">
-          <h3 class="category-label">{{ category.label }}</h3>
-          <ul class="list">
-            <li v-for="item in category.list" :key="item.id" class="item">{{ item.name }}</li>
-          </ul>
-        </div>
+        <p>{{ userData.name }} </p>
+        <p>{{ userData.token }}</p>
+        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="user"></accordion-cosmes-list>
       </main>
     </div>
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
+import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
+
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'user',
   components: {
-    Header
+    AccordionCosmesList
+  },
+  data(){
+    return{
+      cosmeitem: false
+    }
+  },
+  methods: {
+    cosmeDisplay(){
+      this.cosmeitem = !this.cosmeitem
+    }
   },
   computed: {
-    name() {
-      return this.$store.getters['userData/user'].name
+    userData() {
+      return this.$store.getters['userData/user']
     },
-    all() {
-      return this.$store.getters['userData/cosmeTypes'].map(type => ({
-        label: type,
-        list: this.$store.getters['userData/cosmes'][type]
-      }))
+    ...mapGetters('userData', [
+      'cosmeTypes',
+      'cosmes'
+    ]),
+    ...mapGetters('pages/main', [
+      'isOpened'
+    ]),
+    allCosmesAry() {
+      return this.cosmeTypes.map(type => {
+        const isOpened = this.isOpened[type]
+        const cosmeAry = this.cosmes[type]
+
+        if(isOpened) {
+          return {
+            type,
+            cosmeAry,
+            accordionCosmesList: {
+              isOpened
+            }
+          }
+        } else {
+          return {
+            type,
+            cosmeAry: cosmeAry.slice(0, 1),
+            accordionCosmesList: {
+              isOpened
+            }
+          }
+        }
+      })
     }
+  },
+  created() {
+    this.$store.dispatch('userData/loadMain')
   }
 }
 </script>
