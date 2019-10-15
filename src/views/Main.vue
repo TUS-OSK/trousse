@@ -222,8 +222,7 @@ export default {
 }
 
 .mn-sl-cb-input:checked + .mn-sl-cb-label .box {
-  animation-name: shrink;
-  animation-duration: .1s;
+  animation: shrink .1s;
   opacity: 1;
   background-color: #6cc0e5;
 }
@@ -235,8 +234,7 @@ export default {
   transition: all .4s
 }
 .mn-sl-cb-input:checked + .mn-sl-cb-label .stick {
-  animation-name: stick;
-  animation-duration: .4s;
+  animation: stick .4s;
 }
 .mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(1) {
   transition: all .4s;
@@ -269,7 +267,6 @@ export default {
 .fade-leave-active, .fade-enter-active {
   transition: opacity .2s;
 }
-
 .fade-enter-to, .fade-leave {
   opacity: 1;
 }

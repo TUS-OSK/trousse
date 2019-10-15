@@ -104,59 +104,6 @@ export default {
   }
 }
 
-.load-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: white;
-}
-
-.ball {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  height: 0;
-  width: 0;
-  border-radius: 50%;
-  background-color: blue;
-  transition: all .4s
-}
-
-.load-page.action > .ball {
-  height: 90vh;
-  width: 90vh;
-}
-
-.load-bar {
-  transform: rotate(30deg);
-  animation: rotate 2s infinite;
-  position: fixed;
-  border-radius: 50%;
-  height: 0;
-  width: 0;
-  border: 0px solid white;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  transition: all .4s
-}
-
-.load-page.action > .ball .load-bar {
-  border: 5vh solid white;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  height: 70vh;
-  width: 70vh;
-}
-
-.ed-sub-title {
-  color: rgb(65, 52, 58);
-}
 .ed-modal-btn {
   color: white;
   cursor:pointer;
