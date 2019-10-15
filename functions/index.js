@@ -16,13 +16,6 @@ const MOCK_COSMES = {
         name: 'colorbase-pink',
         color: 'pink',
         theme: []
-      },
-      {
-        id: '2',
-        brand: 'CANMAKE',
-        name: 'colorbase-pink',
-        color: 'pink',
-        theme: []
       }
     ]
 }
