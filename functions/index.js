@@ -8,20 +8,35 @@ const app = express();
 
 app.use(cors())
 
-const MOCK_COSMES = {
+// const MOCK_COSMES = {
+//     base: [
+//       {
+//         id: '1',
+//         brand: 'CANMAKE',
+//         name: 'colorbase-pink',
+//         color: 'pink',
+//         theme: []
+//       }
+//     ]
+// }
+
+var usersRef = ref.child("users");
+usersRef.set({
+  MOCK_COSMES: {
     base: [
       {
         id: '1',
-        brand: 'CANMAKE',
+        brand: 'AAAAAAA',
         name: 'colorbase-pink',
-        color: 'pink',
+        color: 'pppink',
         theme: []
       }
     ]
-}
+  }
+});
 
 app.get('/cosmes', (req, res) => {
-    const data = MOCK_COSMES
+    const data = usersRef.child("MOCE_COSMES")
     res.json(data)
 })
 
