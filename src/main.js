@@ -23,6 +23,13 @@ firebase.initializeApp(firebaseConfig)
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 
+//Bootstrap
+
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue)
+
 new Vue({
   router,
   store,

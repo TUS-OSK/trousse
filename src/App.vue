@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view v-if="viewPage"/>
-    <div class="load-page" v-else>
+    <div id="load" class="load-page" v-else>
       <div class="load-img">ログイン状態を確認中</div>
     </div>
   </div>
@@ -32,37 +32,12 @@ export default {
 
 /* global */
 
-a {
+a:hover {
   text-decoration: none;
 }
 
-h2 {
-  display: inline-block;
-  margin: 12px;
-}
-button {
-  border: none;
-  background-color: rgba(255, 255, 255, 0);
-}
-button:active {
-  filter: brightness(80%);
-}
-* {
-  font-family: 'Kosugi Maru', sans-serif;
-  margin: 0;
-  padding: 0;
-  outline: none;
-}
-*:focus {
-  outline: none;
-}
-.row {
-  display: flex;
-  flex-direction: row
-}
-
 /* load-page */
-.load-page  {
+#load .load-page  {
   z-index: 5;
   width: 100vw;
   height: 100vh;

@@ -1,25 +1,26 @@
 <template>
-<!-- Mainページはコスメサジェスト機能が利用できるページ -->
-  <div class="main-page">
-    <main class="mn-main">
-      <h1 class="mn-title">今日のコスメを決めよう！</h1>
-      <!-- ここからコスメ選択 -->
-      <section class="mn-select-cosme">
-        <h2 class="mn-sl-title">コスメを選択しよう！</h2>
-        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
-        <div class="mn-sl-cosme-filter">
-          <div class="mn-sl-checkbox-group">
-            <div class="mn-sl-cb" v-for="(theme, index) in themes" :key="theme">
-              <input :id="`input-${index}`" class="mn-sl-cb-input" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">
-              <label class="mn-sl-cb-label" :for="`input-${index}`">
-                <span class="mn-sl-cb-lb-canvas">
+  <div id="main" class="main-page">
+    <main class="main-inner container-fluid">
+      <h1 class="title">Let's find Your cosme!</h1>
+
+      <section class="select-area container-fluid">
+        <h2 class="sub-title">コスメを選択しよう！</h2>
+        <div class="select">
+          <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
+        </div>
+        <div class="filter">
+          <div class="checkbox-group">
+            <div class="check-button-wrap" v-for="(theme, index) in themes" :key="theme">
+              <input :id="`input-${index}`" class="input-checkbox" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">
+              <label class="check-button" :for="`input-${index}`">
+                <span class="checkbox-wrap">
                   <span class="stick"></span>
                   <span class="stick"></span>
-                  <span class="box"></span>
+                  <span class="checkbox"></span>
                   <span class="stick"></span>
                   <span class="stick"></span>
                 </span>
-                <span class="mn-sl-cb-lb-value">{{ toJapanese(theme) }}</span>
+                <span class="checkvalue">{{ toJapanese(theme) }}</span>
               </label>
             </div>
           </div>
@@ -27,8 +28,8 @@
         </div>
       </section>
 
-      <section class="mn-suggest-cosme">
-        <h2 class="mn-sg-title">今日のコスメはこれだ！</h2>
+      <section class="suggest-area container-fluid">
+        <h2 class="sub-title">今日のコスメはこれだ！</h2>
         <suggested-cosmes-list></suggested-cosmes-list>
       </section>
       <!-- <router-link class="link" to="/main/result">結果を画像で保存</router-link> -->
@@ -168,12 +169,8 @@ export default {
   }
 }
 
-.mn-main {
+#main .main-page {
   padding: 8px;
-}
-.row {
-  display: flex;
-  flex-direction: row;
 }
 
 .mn-sl-checkbox-group {
