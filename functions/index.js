@@ -20,6 +20,21 @@ const MOCK_COSMES = {
     ]
 }
 
+// var usersRef = ref.child("users");
+// usersRef.set({
+//   MOCK_COSMES: {
+//     base: [
+//             {
+//               id: '1',
+//               brand: 'CANMAKE',
+//               name: 'colorbase-pink',
+//               color: 'pink',
+//               theme: []
+//             }
+//           ]
+//   }
+// });
+
 app.get('/cosmes', (req, res) => {
     const data = MOCK_COSMES
     res.json(data)
