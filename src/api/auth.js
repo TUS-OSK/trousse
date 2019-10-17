@@ -13,6 +13,7 @@ const USER = {
 }
 
 const DEFAULT_USER = USER
+console.log(process.env.NODE_ENV)
 let authCb = null
 export const auth =
   process.env.NODE_ENV === 'production'
@@ -20,6 +21,7 @@ export const auth =
     : cb => {
       authCb = cb
       setTimeout(() => {
+          console.log(DEFAULT_USER)
         authCb(DEFAULT_USER)
       }, 500)
     }

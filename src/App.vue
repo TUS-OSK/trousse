@@ -13,6 +13,7 @@ import { STATUS } from '@/constant.js'
 export default {
   computed: {
     viewPage() {
+      console.log(this.$store.getters['userData/status'])
       return this.$store.getters['userData/status'] !== STATUS.UNCHECKED
       //このAPPはユーザーのログイン状態がチェックされるまでは画面を表示しません
       //ユーザーのログイン状態はinitアクションのauthenticatinのオブザーバーによってチェックされます

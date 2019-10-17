@@ -43,7 +43,6 @@ export default {
   created: function() {
     this.database = firebase.database()
     this.CosmesRef = this.database.ref('cosmes')
-
     var _this = this
     this.CosmesRef.on('value', function(snapshot) {
       _this.cosmes = snapshot.val() // データに変化が起きたときに再取得する

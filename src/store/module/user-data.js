@@ -76,9 +76,9 @@ export default {
           if (user) {
             // console.log('オブザーバーは君のことをみてるよ')
             commit('updateLogin', true)
-
             mainData.user.name = user.displayName
             mainData.user.token = await user.getIdToken()
+            console.log(mainData)
             commit('updateMainData', mainData)
 
             if (router.currentRoute.name === 'login') {

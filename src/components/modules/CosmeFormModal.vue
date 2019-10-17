@@ -86,12 +86,11 @@ export default {
         }
       }
       if(this.formType === 'edit') {
-        this.$store.dispatch('userData/changeCosmeInfo', newCosme)
-        this.$store.dispatch('userData/loadMain')
+        // this.$store.dispatch('userData/changeCosmeInfo', newCosme)
+        // this.$store.dispatch('userData/loadMain')
       } else if(this.formType === 'register') {
         this.$store.dispatch('userData/registerCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
-
         this.cosmeBrandText = ''
         this.cosmeNameText = ''
         this.cosmeColorText = ''
