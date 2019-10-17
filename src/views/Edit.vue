@@ -6,7 +6,7 @@
         <div class="ed-main-list">
           <div v-if="cosmeNumber">
             <draggable class="ed-main-li-draggable" v-model="cosmeAry">
-              <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme"></cosme-icon>
+              <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme" :cosmesRef="cosmesRef"></cosme-icon>
               <div class="fake-icon" v-for="i in fakeCosmes" :key="i"></div>
             </draggable>
           </div>
@@ -25,9 +25,19 @@
 import CosmeIcon from '@/components/modules/CosmeIcon.vue'
 import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
 import draggable from 'vuedraggable'
+import firebase from 'firebase'
 
 export default {
   name: 'edit',
+  created: function() {
+    this.database = firebase.database()
+    this.cosmesRef = this.database.ref('cosmes')
+
+    var _this = this
+    this.cosmesRef.on('value', function(snapshot) {
+      _this.cosmes = snapshot.val() // データに変化が起きたときに再取得する
+    })
+  },
   components: {
     CosmeIcon,
     CosmeFormModal,
@@ -41,7 +51,14 @@ export default {
   },
   data() {
     return {
-      addCosmeValue: 'コスメを追加'
+      addCosmeValue: 'コスメを追加',
+      database: null,
+      cosmesRef: null,
+      cosmes: {
+        base: [],
+        cheek: [],
+        lip: []
+      }
     }
   },
   methods: {
@@ -56,13 +73,16 @@ export default {
     fakeCosmes() {
       return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
     },
-    cosmeAry: {
-      get(){
-        return this.$store.getters['userData/cosmes'][this.type]
-      },
-      set(array){
-        this.$store.dispatch('userData/dragCosme', { array, type: this.type })
-      }
+    // cosmeAry: {
+    //   get(){
+    //     return this.$store.getters['userData/cosmes'][this.type]
+    //   },
+    //   set(array){
+    //     this.$store.dispatch('userData/dragCosme', { array, type: this.type })
+    //   }
+    // },
+    cosmeAry: function(){
+      return this.cosmes[this.type]
     },
     cosmeNumber() {
       return this.$store.getters['userData/cosmes'][this.type].length
