@@ -36,19 +36,8 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-
 export default {
   name: 'cosme-form-modal',
-  created: function() {
-    this.database = firebase.database()
-    this.cosmesRef = this.database.ref('cosmes')
-
-    var _this = this
-    this.cosmesRef.on('value', function(snapshot) {
-      _this.cosmes = snapshot.val() // データに変化が起きたときに再取得する
-    })
-  },
   props: {
     formId: {
       type: String,
@@ -96,18 +85,7 @@ export default {
   },
   methods: {
     updateCosmeInfo(){
-      // const newCosme = {
-      //   type: this.focusingType,
-      //   info: {
-      //     id: this.focusingCosme.id,
-      //     brand: this.cosmeBrandText,
-      //     name: this.cosmeNameText,
-      //     color: this.cosmeColorText,
-      //     theme: this.cosmeThemeCheckbox
-      //   }
-      // }
-      if(this.formType === 'edit') {
-        const newCosme = {
+      const newCosme = {
         type: this.focusingType,
         info: {
           id: this.focusingCosme.id,
@@ -117,19 +95,11 @@ export default {
           theme: this.cosmeThemeCheckbox
         }
       }
+      if(this.formType === 'edit') {
         this.$store.dispatch('userData/changeCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
       } else if(this.formType === 'register') {
-        // this.$store.dispatch('userData/registerCosmeInfo', newCosme)
-        var Type = 'this.type'
-        this.cosmesRef.child(Type).push({
-        // id: this.cosmeIdCount,
-        brand: this.cosmeBrandText,
-        name: this.cosmeNameText,
-        color: this.cosmeColorText,
-        theme: [this.cosmeThemeCheckbox]
-      })
-      this.cosmeIdCount = this.cosmeIdCount + 1
+        this.$store.dispatch('userData/registerCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
 
         this.cosmeBrandText = ''
