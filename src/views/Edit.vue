@@ -1,14 +1,11 @@
 <template>
-  <div  class="edit-page">
+  <div id="edit" class="edit-page container-fluid">
     <main class="ed-main">
       <h2 class="ed-sub-title">{{ type }}の編集画面</h2>
       <div class="ed-main-function">
         <div class="ed-main-list">
           <div v-if="cosmeNumber">
-            <draggable class="ed-main-li-draggable" v-model="cosmeAry" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
-              <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme" iconType="edit"></cosme-icon>
-              <div class="fake-icon" v-for="i in fakeCosmes" :key="i"></div>
-            </draggable>
+            <cosme-list :cosmeType="this.type" :cosmeAry="cosmeAry" listType="edit"></cosme-list>
           </div>
           <div v-else>
             <h3>コスメを登録しましょう！</h3>
@@ -25,17 +22,15 @@
 </template>
 
 <script>
-import CosmeIcon from '@/components/modules/CosmeIcon.vue'
+import CosmeList from '@/components/modules/CosmeList.vue'
 import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
-import draggable from 'vuedraggable'
 import LoadPage from '@/components/LoadPage.vue'
 
 export default {
   name: 'edit',
   components: {
-    CosmeIcon,
+    CosmeList,
     CosmeFormModal,
-    draggable,
     LoadPage
   },
   props: {
@@ -48,7 +43,11 @@ export default {
     return {
       addCosmeValue: 'コスメを追加',
       isDragging: false,
-      isLoaded: true
+      isLoaded: true,
+      cosmesData: {
+        type: this.type,
+        cosmeAry: this.$store.getters['userData/cosmes'][this.type]
+      }
     }
   },
   methods: {
@@ -57,25 +56,14 @@ export default {
     }
   },
   computed: {
-    dragOptions() {
-      return {
-        animation: 200,
-        disabled: false
-      }
+    cosmeAry() {
+      return this.$store.getters['userData/cosmes'][this.type]
     },
     cosmeIdcount(){
       return this.$store.getters['userData/cosmeIdCount']
     },
     fakeCosmes() {
       return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
-    },
-    cosmeAry: {
-      get(){
-        return this.$store.getters['userData/cosmes'][this.type]
-      },
-      set(array){
-        this.$store.dispatch('userData/dragCosme', { array, type: this.type })
-      }
     },
     cosmeNumber() {
       return this.$store.getters['userData/cosmes'][this.type].length
@@ -85,7 +73,8 @@ export default {
     this.isLoaded = false
     setTimeout(() => {
       this.isLoaded = true
-    }, 2000)
+    }, 1000)
+    console.log(this.cosmesData)
   }
 }
 
@@ -104,7 +93,7 @@ export default {
   }
 }
 
-.ed-modal-btn {
+/* .ed-modal-btn {
   color: white;
   cursor:pointer;
   width: 100%;
@@ -142,5 +131,5 @@ export default {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
-}
+} */
 </style>

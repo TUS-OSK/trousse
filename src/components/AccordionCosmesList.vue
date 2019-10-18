@@ -1,7 +1,7 @@
 <template>
 <!-- AccordionCosmesListコンポーネントはcosmesDataを渡すと開閉できるコスメリストを表示してくれるコンポーネント -->
-  <div class="accordion-cosmes-li">
-    <div class="accordion-cosmes-li-func">
+  <div id="accordion" class="accordion-cosmes-list-component">
+    <div class="cosme-list-wrap">
       <a v-if="listType === 'main'">
         <input :id="`type${cosmesData.type}`" class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">
         <label :for="`type${cosmesData.type}`" class="accordion-cosmes-li-label">{{ cosmesData.type }}</label>
@@ -11,7 +11,7 @@
       </a>
       <button v-if="cosmesData.accordionCosmesList.isOpened" @click="changeCosmesListState(cosmesData.type)">▲</button>
       <button v-else @click="changeCosmesListState(cosmesData.type)">▼</button>
-      <cosme-list :cosmesData="cosmesData" :listType="listType"></cosme-list>
+      <cosme-list :cosmeType=cosmesData.type :cosmeAry="cosmesData.cosmeAry" :listType="listType"></cosme-list>
     </div>
   </div>
 </template>

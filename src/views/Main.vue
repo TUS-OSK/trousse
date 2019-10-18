@@ -1,19 +1,19 @@
 <template>
-  <div id="main" class="main-page">
-    <main class="main-inner container-fluid">
+  <div id="main" class="main-page container-fluid">
+    <main class="main-inner">
       <h1 class="title">Let's find Your cosme!</h1>
 
-      <section class="select-area container-fluid">
+      <section class="select-area">
         <h2 class="sub-title">コスメを選択しよう！</h2>
         <div class="select">
           <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
         </div>
         <div class="filter">
-          <div class="checkbox-group">
+          <div class="checkbox-group d-flex align-items-center">
             <div class="check-button-wrap" v-for="(theme, index) in themes" :key="theme">
-              <input :id="`input-${index}`" class="input-checkbox" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">
+              <input :id="`input-${index}`" class="input-checkbox d-none" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">
               <label class="check-button" :for="`input-${index}`">
-                <span class="checkbox-wrap">
+                <span class="checkbox-wrap d-flex align-items-center justify-content-center">
                   <span class="stick"></span>
                   <span class="stick"></span>
                   <span class="checkbox"></span>
@@ -173,42 +173,34 @@ export default {
   padding: 8px;
 }
 
-.mn-sl-checkbox-group {
+#main .checkbox-group {
   height: 40px;
-  display: flex;
-  align-items: center;
 }
 
-.mn-sl-cb {
+#main .check-button {
   display: inline-block;
   width: auto;
 }
 
-.mn-sl-cb-label {
+#main .check-button {
   padding: 4px;
   display: flex;
   flex-direction: row;
 }
-.mn-sl-cb-label > * {
+#main .check-button .checkvalue > * {
   margin-right: 4px;
 }
 
-.mn-sl-cb-input {
-  display: none;
-}
-.mn-sl-cb-lb-canvas, .mn-sl-cb-lb-value {
+#main .check-button .checkbox-wrap {
   width: 30px;
   height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center
 }
 
-.mn-sl-cb-lb-value {
+#main .check-button .checkvalue {
   width: auto;
 }
 
-.mn-sl-cb-input + .mn-sl-cb-label .box {
+#main .check-button .checkbox {
   content: '';
   border-radius: 4px;
   width: 16px;
@@ -218,56 +210,56 @@ export default {
   transition: all .2s;
 }
 
-.mn-sl-cb-input:checked + .mn-sl-cb-label .box {
+#main .input-checkbox:checked + .check-button .checkbox {
   animation: shrink .1s;
   opacity: 1;
   background-color: #6cc0e5;
 }
 
-.mn-sl-cb-input + .mn-sl-cb-label .stick {
+#main .input-checkbox + .check-button .stick {
   height: 0px;
   width: 1px;
   background-color: #6cc0e5;
   transition: all .4s
 }
-.mn-sl-cb-input:checked + .mn-sl-cb-label .stick {
+#main .input-checkbox:checked + .check-button .stick {
   animation: stick .4s;
 }
-.mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(1) {
+#main .input-checkbox + .check-button .stick:nth-child(1) {
   transition: all .4s;
   transform: translate(-1px,-8px)rotate(-65deg);
 }
-.mn-sl-cb-input:checked + .mn-sl-cb-label .stick:nth-child(1) {
+#main .input-checkbox:checked + .check-button .stick:nth-child(1) {
   transform: translate(-3px,-10px)rotate(-65deg);
 }
-.mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(2) {
+#main .input-checkbox + .check-button .stick:nth-child(2) {
   transform: translate(2px,-12px)rotate(-25deg)
 }
-.mn-sl-cb-input:checked + .mn-sl-cb-label .stick:nth-child(2) {
+#main .input-checkbox:checked + .check-button .stick:nth-child(2) {
   transform: translate(0px,-14px)rotate(-25deg)
 }
 
-.mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(4) {
+#main .input-checkbox + .check-button .stick:nth-child(4) {
   transition: all .4s;
   transform: translate(-2px,12px)rotate(-25deg);
 }
-.mn-sl-cb-input:checked + .mn-sl-cb-label .stick:nth-child(4) {
+#main .input-checkbox:checked + .check-button .stick:nth-child(4) {
   transform: translate(0px,14px)rotate(-25deg);
 }
-.mn-sl-cb-input + .mn-sl-cb-label .stick:nth-child(5) {
+#main .input-checkbox + .check-button .stick:nth-child(5) {
   transform: translate(1px,8px)rotate(-65deg);
 }
-.mn-sl-cb-input:checked + .mn-sl-cb-label .stick:nth-child(5) {
+#main .input-checkbox:checked + .check-button .stick:nth-child(5) {
   transform: translate(3px,10px)rotate(-65deg);
 }
 
-.fade-leave-active, .fade-enter-active {
+#main .fade-leave-active, .fade-enter-active {
   transition: opacity .2s;
 }
-.fade-enter-to, .fade-leave {
+#main .fade-enter-to, .fade-leave {
   opacity: 1;
 }
-.fade-enter, .fade-leave-to {
+#main .fade-enter, .fade-leave-to {
   opacity: 0;
 }
 </style>

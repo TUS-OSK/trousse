@@ -1,37 +1,43 @@
 <template>
-  <div class="cosme-form-modal-component">
+  <div id="modal" class="cosme-form-modal-component">
     <modal :name="`form-modal-${formId}`" width="100%" height="70%" :pivotY="1.0">
-      <div class="cosme-form-modal">
-        <div class="ml-inputs">
-          <h3 class="ml-input-title">コスメの名前</h3>
-          <input class="ml-input" v-model="cosmeNameText" type="text" name="name" >
-          <h3 class="ml-input-title">コスメのブランド</h3>
-          <input class="ml-input" v-model="cosmeBrandText">
-          <h3 class="ml-input-title">コスメの色味</h3>
-          <input class="ml-input" v-model="cosmeColorText" type="text" name="color" >
-          <h3 class="ml-input-title">コスメのテーマ</h3>
-          <div class="ml-checkboxes-area">
-            <label class="ml-cb-label" v-for="theme in themes" :key="theme">
-              <input class="ml-cb-input" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
-            </label>
+      <div class="cosme-form-modal container-fluid">
+        <div class="form-wrap container-fluid">
+          <h3 class="title">コスメの名前</h3>
+          <div class="row"><div class="col-12"><input class="input-text col-12" v-model="cosmeNameText" type="text" name="name" ></div></div>
+          <h3 class="title">コスメのブランド</h3>
+          <div class="row"><div class="col-12"><input class="input-text col-12"  v-model="cosmeBrandText" type="text" name="name" ></div></div>
+          <h3 class="title">コスメの色味</h3>
+          <div class="row"><div class="col-12"><input class="input-text col-12" v-model="cosmeColorText" type="text" name="name" ></div></div>
+          <h3 class="title">コスメのテーマ</h3>
+          <div class="checkbox-group row">
+            <div class="col-3" v-for="theme in themes" :key="theme">
+              <label class="check-btn">
+                <input class="input-checkbox" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
+              </label>
+            </div>
           </div>
         </div>
-        <div class="buttons" >
-          <div class="ml-update-btns" v-if="formType === 'edit'">
-            <button class="ml-btn ml-delete-btn" v-on:click="showConfirmModal()">コスメを削除</button>
-            <button class="ml-btn ml-change-btn" v-on:click="updateCosmeInfo()">コスメを更新</button>
+        <div class="button-group" >
+          <div class="update-btn" v-if="formType === 'edit'">
+            <button class="modal-btn delete-btn col-6" v-on:click="showConfirmModal()">コスメを削除</button>
+            <button class="modal-btn change-btn col-6" v-on:click="updateCosmeInfo()">コスメを更新</button>
           </div>
-          <div class="ml-update-btns" v-else>
-            <button class="ml-btn ml-register-btn" v-on:click="updateCosmeInfo()">コスメを登録</button>
+          <div class="update-btn" v-else>
+            <button class="modal-btn register-btn" v-on:click="updateCosmeInfo()">コスメを登録</button>
           </div>
         </div>
-        <modal :name="`delete-modal-${formId}`" width="100%" height="20%" :pivotY="1.0" >
-          <div class="ml-cosme-warning-modal">
-            <h3 class="ml-ml-warning-title">Warning!</h3>
-            <p class="ml-ml-warning-txt">本当に削除しますか？</p>
-            <div class="ml-ml-warning-btns">
-              <button class="ml-btn ml-delete-btn" v-on:click="deleteCosmeInfo()">はい</button>
-              <button class="ml-btn" v-on:click="hideConfirmModal()">いいえ</button>
+        <modal :name="`delete-modal-${formId}`" width="100%" height="30%" :pivotY="1.0" >
+          <div class="cosme-delete-modal container-fluid">
+            <div class="warning">
+              <h3 class="title">Warning!</h3>
+              <p class="text">本当に削除しますか？</p>
+              <div class="warning-btn container-fluid">
+                <div class="row">
+                  <button class="modal-btn delete-btn col-6" v-on:click="deleteCosmeInfo()">はい</button>
+                  <button class="modal-btn col-6" v-on:click="hideConfirmModal()">いいえ</button>
+                </div>
+              </div>
             </div>
           </div>
         </modal>
@@ -107,7 +113,7 @@ export default {
     },
     deleteCosmeInfo(){
       this.$store.dispatch('userData/deleteCosmeInfo', this.formId)
-      this.$store.dispatch('userData/loadMain')
+      this.$modal.hide(`form-modal-${this.formId}`)
     },
     showConfirmModal(){
       this.$modal.show(`delete-modal-${this.formId}`)
@@ -138,55 +144,39 @@ export default {
 </script>
 
 <style scoped>
-.cosme-form-modal {
-  padding: 20px;
+#modal .cosme-form-modal {
+  position: relative;
+  height: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
-.ml-cb-label {
-  display: inline-block;
+#modal .cosme-delete-modal {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* for form-modal */
+
+#modal .check-btn {
   background-color: rgb(243, 234, 183);
-  padding: 8px;
-  margin: 0 12px 12px 0;
-  border-radius: 12px;
-  font-size: 16px;
-  width: auto;
-}
-
-/* for input */
-
-.ml-cb-input {
-  margin: 0 4px 0 0;
-}
-.ml-cb-label {
   border: 2px solid rgb(196, 183, 114);
 }
-.ml-checkboxes-area {
-  margin: 12px;
-}
-.ml-input-title {
+#modal .input-text title {
   font-size: 16px;
 }
-.ml-input {
+#modal .input-text {
   border: 2px solid rgb(196, 183, 114);
   border-radius: 12px;
   font-size: 16px;
   background-color: rgb(243, 234, 183);
-  margin: 12px;
-  padding: 8px;
-  width: 85%;
 }
-.ml-input:focus, .ml-cb-input:focus {
+#modal .input-text:focus, .input-checkbox:focus {
   border: 2px solid rgb(182, 55, 86);
 }
 
 /* for btns */
 
-.ml-update-btns {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-}
-.ml-btn {
+#modal .modal-btn {
   padding: 8px;
   text-align: center;
   font-size: 20px;
@@ -194,27 +184,19 @@ export default {
   background-color: blanchedalmond;
   border: 2px solid rgb(196, 183, 114);
 }
-.ml-delete-btn {
+#modal .delete-btn {
   color: white;
   background-color: rgb(192, 29, 70);
   border: 2px solid rgb(192, 29, 70);
 }
 
 /* for delete modal */
-.ml-ml-warning-title {
-  margin: 12px;
+
+#modal .warning .title {
   text-align: center;
 }
-.ml-ml-warning-txt {
+#modal .warning .text {
   text-align: center;
-  margin: 4px;
-}
-.ml-ml-warning-btns {
-  display: flex;
-  justify-content: center;
-}
-.ml-cosme-delete-modal {
-  width: 100px;
 }
 
 </style>
