@@ -20,13 +20,13 @@ export default {
   getters: {
     user: state => state.user,
     cosmeTypes: state => Object.keys(state.cosmes),
-    allCosmeIds: (state, getters) => {
-      const allCosmeIds = {}
-      getters.cosmeTypes.forEach(type => {
-        allCosmeIds[type] = getters.cosmes[type].map(item => item.id)
-      })
-      return allCosmeIds
-    },
+    // allCosmeIds: (state, getters) => {
+    //   const allCosmeIds = {}
+    //   getters.cosmeTypes.forEach(type => {
+    //     allCosmeIds[type] = getters.cosmes[type].map(item => item.id)
+    //   })
+    //   return allCosmeIds
+    // },
     cosmes: state => state.cosmes,
     cosmeIdCount: state => state.cosmeIdCount,
     themes: state => state.themes,

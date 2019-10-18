@@ -41,14 +41,7 @@ export default {
   },
   data() {
     return {
-      addCosmeValue: 'コスメを追加',
-      database: null,
-      cosmesRef: null,
-      cosmes: {
-        base: [],
-        cheek: [],
-        lip: []
-      }
+      addCosmeValue: 'コスメを追加'
     }
   },
   methods: {
@@ -71,11 +64,9 @@ export default {
         this.$store.dispatch('userData/dragCosme', { array, type: this.type })
       }
     },
-    // cosmeAry: function(){
-    //   return this.cosmes[this.type]
-    // },
     cosmeNumber() {
-      return this.$store.getters['userData/cosmes'][this.type].length
+      // return this.$store.getters['userData/cosmes'][this.type].length
+      return 1
     }
   }
 }
