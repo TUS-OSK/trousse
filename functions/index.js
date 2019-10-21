@@ -13,29 +13,17 @@ app.use(cors())
 
 const fireStore = admin.firestore()
 
-const MOCK_COSMES = {
-    base: [
-      {
-        id: '1',
-        brand: 'CANMAKE',
-        name: 'colorbase-pink',
-        color: 'peeink',
-        theme: []
-      }
-    ]
-}
 
-
-  const usersRef = fireStore.collection('users');
-  usersRef.doc('MOCK_COSMES').set({
-      base: [{
-        id: '1',
-        brand: 'CANMAKE',
-        name: 'colorbase-pink',
-        color: 'pink',
-        theme: []
-      }]
-  })
+const usersRef = fireStore.collection('users');
+usersRef.doc('MOCK_COSMES').set({
+  base: [{
+    id: '1',
+    brand: 'CANMAKE',
+    name: 'colorbase-pink',
+    color: 'pink',
+    theme: []
+  }]
+})
 
 
 
