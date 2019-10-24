@@ -1,8 +1,8 @@
 <template>
   <div>
     <router-view v-if="viewPage"/>
-    <div id="load" class="load-page" v-else>
-      <div class="load-img">ログイン状態を確認中</div>
+    <div id="load-auth" class="load-page"  v-else>
+      <div class="load-img"><span class="load-txt">Loading...</span></div>
     </div>
   </div>
 </template>
@@ -36,7 +36,11 @@ body a:hover {
   text-decoration: none;
 }
 
-body label {
+body button {
+  border: none;
+}
+
+body label, body p {
   margin-bottom: 0;
 }
 
@@ -46,19 +50,27 @@ body span {
   justify-content: center;
 }
 
-body input {
+body input, body button{
   outline: none;
 }
 
 /* load-page */
-#load .load-page  {
-  z-index: 5;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: beige;
+.load-page#load-auth {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   background-color: rgb(125, 73, 88);
+  z-index: 5;
+  color: beige;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+#load-auth .load-txt {
+  font-size: 32px;
+}
+
 </style>

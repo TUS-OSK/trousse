@@ -1,5 +1,5 @@
 <template>
-  <div class="first-page">
+  <div class="first-page" :class="{ main : $route.name === 'main' }">
     <my-header />
     <router-view></router-view>
   </div>
@@ -12,11 +12,6 @@ export default {
   name: 'first',
   components: {
     MyHeader
-  },
-  data() {
-    return {
-      isLoaded: false
-    }
   }
 }
 </script>
@@ -24,6 +19,15 @@ export default {
 <style scoped>
  .first-page  {
   min-height: 100vh;
-  background-color: rgb(250, 244, 246);
+  background-color: #B25A74;
+}
+
+.first-page .header-page {
+  position: sticky;
+  top: 0;
+}
+
+.first-page.main {
+  padding-top: 120px;
 }
 </style>

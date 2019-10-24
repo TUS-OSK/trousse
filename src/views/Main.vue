@@ -1,9 +1,10 @@
 <template>
-  <div id="main" class="main-page container-fluid">
+  <div id="main" class="main-page">
     <main class="main-inner">
-      <h1 class="title">Let's find Your cosme!</h1>
-
-      <section class="select-area">
+      <div class="hero">
+        <p class="hero-text d-flex justify-content-center" :class="{ active : isLoaded }">trousueがきっとあなたのコスメを見つけてくれます！</p>
+      </div>
+      <section class="select-area container-fluid">
         <h2 class="sub-title">コスメを選択しよう！</h2>
         <div class="select">
           <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
@@ -34,16 +35,12 @@
       </section>
       <!-- <router-link class="link" to="/main/result">結果を画像で保存</router-link> -->
     </main>
-    <transition name="fade">
-      <load-page pageName="Main" v-if="!isLoaded"></load-page>
-    </transition>
   </div>
 </template>
 
 <script>
 import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
 import SuggestedCosmesList from '@/components/SuggestedCosmesList.vue'
-import loadPage from '@/components/LoadPage.vue'
 
 import { mapGetters } from 'vuex'
 
@@ -51,8 +48,7 @@ export default {
   name: 'main-page',
   components: {
     AccordionCosmesList,
-    SuggestedCosmesList,
-    loadPage
+    SuggestedCosmesList
   },
   data() {
     return {
@@ -72,25 +68,13 @@ export default {
       return this.$store.getters['userData/themes']
     },
     allCosmesAry() {
+      console.log(this.isOpened)
       return this.cosmeTypes.map(type => {
-        const isOpened = this.isOpened[type]
-        const cosmeAry = this.cosmes[type]
-
-        if(isOpened) {
-          return {
-            type,
-            cosmeAry,
-            accordionCosmesList: {
-              isOpened
-            }
-          }
-        } else {
-          return {
-            type,
-            cosmeAry: cosmeAry.slice(0, 3),
-            accordionCosmesList: {
-              isOpened
-            }
+        return {
+          type,
+          cosmeAry: this.cosmes[type],
+          accordionCosmesList: {
+            isOpend: this.isOpened[type]
           }
         }
       })
@@ -133,7 +117,7 @@ export default {
   created() {
     setTimeout(() => {
       this.isLoaded = true
-    }, 2000)
+    }, 100)
   }
 }
 </script>
@@ -262,4 +246,26 @@ export default {
 #main .fade-enter, .fade-leave-to {
   opacity: 0;
 }
+
+#main .main-inner .select-area {
+  background-color: white;
+}
+#main .main-inner .hero {
+  position: relative;
+  color: white;
+  text-align: center;
+  padding-bottom: 120px;
+}
+
+#main .main-inner .hero .hero-text {
+  padding: 20px 32px;
+  opacity: 0;
+  transition: all .4s
+}
+
+#main .main-inner .hero .hero-text.active {
+  top: 0;
+  opacity: 1;
+}
+
 </style>

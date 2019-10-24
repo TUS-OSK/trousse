@@ -1,22 +1,22 @@
 <template>
 <div id="list" class="cosme-list-component container-fluid">
   <div v-if="listType==='main'" class="cosme-list row">
-    <div class="cosme-button col-4" v-for="cosme in cosmeAry" :key="cosme.id">
+    <div class="cosme-button col-xl-2 col-md-3 col-4" v-for="cosme in cosmeAry" :key="cosme.id">
       <input :id="`cosme${cosme.id}`" class="input-checkbox d-none" type="checkbox" v-model="isChecked" :value="cosme.id">
       <label :for="`cosme${cosme.id}`" class="cosme-icon-wrap">
         <cosme-icon :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
       </label>
     </div>
-    <div class="fake-icon col-4" v-for="i in fakeCosmes" :key="i"></div>
+    <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
   </div>
   <div v-else-if="listType === 'edit'">
     <draggable class="cosme-list row" v-model="draggableAry" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
-      <div class="cosme-button col-4" v-for="cosme in cosmeAry" :key="cosme.id">
+      <div class="cosme-button col-xl-2 col-md-3 col-4" v-for="cosme in cosmeAry" :key="cosme.id">
         <div class="cosme-icon-wrap" @click="showEditCosmeModal(cosme.id)">
           <cosme-icon :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
         </div>
       </div>
-      <div class="fake-icon col-4" v-for="i in fakeCosmes" :key="i"></div>
+      <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
     </draggable>
     <cosme-form-modal v-for="cosme in cosmeAry" :key="cosme.id" :formId="cosme.id" :formType="listType" :focusingType="cosmeType" :focusingCosme="cosme"/>
   </div>
@@ -102,9 +102,6 @@ export default {
     showEditCosmeModal(id){
       this.$modal.show(`form-modal-${id}`)
     }
-  },
-  created() {
-    console.log(this.cosmesData)
   }
 }
 </script>

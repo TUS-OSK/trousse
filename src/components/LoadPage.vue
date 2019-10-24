@@ -1,6 +1,6 @@
 <template>
-  <div class="load-page" :class="{ action : isLoading }">
-    <div class="ball">
+  <div id="load" class="load-page" :class="{ active : isLoading }">
+    <!-- <div class="ball">
       <div class="load-bar">
         <div class="load-bar2">
         </div>
@@ -10,7 +10,7 @@
     </div>
     <div class="page-title">
       <strong>{{ pageName }}</strong>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -21,27 +21,43 @@ export default {
     pageName: {
       type: String,
       required: true
+    },
+    isLoading: {
+      type: Boolean,
+      required: true
     }
-  },
-  data() {
-    return {
-      isLoading: null,
-      isLoaded: null
-    }
-  },
-  created() {
-    setTimeout(() => {
-      this.isLoading = true
-    }, 0)
-    setTimeout(() => {
-      this.isLoaded = true
-    }, 1000)
   }
 }
 </script>
 
 <style scoped>
-@keyframes rotate1 {
+@keyframes movePage {
+  0%{
+    top: 100vh;
+  }
+  50% {
+    top: 0;
+  }
+  100% {
+    top: -100vh;
+  }
+}
+
+.load-page#load  {
+  z-index: 5;
+  background-color: white;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 100vh;
+  transition: all 1s;
+}
+
+.load-page#load.active {
+  animation: movePage 1s
+}
+
+/* @keyframes rotate1 {
   0% {
     transform: rotate(20deg)
   }
@@ -150,6 +166,6 @@ export default {
   border-right-color: transparent;
   height: 70vh;
   width: 70vh;
-}
+} */
 
 </style>

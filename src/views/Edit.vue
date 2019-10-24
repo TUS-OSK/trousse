@@ -15,23 +15,18 @@
         <cosme-form-modal formId="new" formType="register" :focusingType="type"/>
       </div>
     </main>
-    <transition name="fade">
-      <load-page v-if="!isLoaded" pageName="Edit"></load-page>
-    </transition>
   </div>
 </template>
 
 <script>
 import CosmeList from '@/components/modules/CosmeList.vue'
 import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
-import LoadPage from '@/components/LoadPage.vue'
 
 export default {
   name: 'edit',
   components: {
     CosmeList,
-    CosmeFormModal,
-    LoadPage
+    CosmeFormModal
   },
   props: {
     type: {
@@ -43,7 +38,6 @@ export default {
     return {
       addCosmeValue: 'コスメを追加',
       isDragging: false,
-      isLoaded: true,
       cosmesData: {
         type: this.type,
         cosmeAry: this.$store.getters['userData/cosmes'][this.type]
@@ -68,13 +62,6 @@ export default {
     cosmeNumber() {
       return this.$store.getters['userData/cosmes'][this.type].length
     }
-  },
-  created() {
-    this.isLoaded = false
-    setTimeout(() => {
-      this.isLoaded = true
-    }, 1000)
-    console.log(this.cosmesData)
   }
 }
 
