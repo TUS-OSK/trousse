@@ -1,21 +1,26 @@
 <template>
   <header id="header" class="header-page">
+    <load-page pageName="main" :isLoading="transIsActive.main"></load-page>
+    <load-page pageName="user" :isLoading="transIsActive.user"></load-page>
+    <load-page pageName="edit/base" :isLoading="transIsActive['edit/base']"></load-page>
+    <load-page pageName="edit/cheek" :isLoading="transIsActive['edit/cheek']"></load-page>
+    <load-page pageName="edit/lip" :isLoading="transIsActive['edit/lip']"></load-page>
     <div class="logo-wrap  d-flex align-items-center justify-content-center">
-      <router-link to="/first/main">
+      <button class="link" @click="navigate('main')">
         <span class="logo d-inline-block">Trousse</span>
-      </router-link>
+      </button>
     </div>
-    <button class="btn-wrap" :class="{ active : isActive }" @click="changeSidebarState">
+    <button class="btn-wrap" :class="{ active : sidebarIsActive }" @click="changeSidebarState">
       <span class="line"></span>
       <span class="line"></span>
       <span class="line"></span>
     </button>
-    <div class="navbar d-fles align-items-start" :class="{ active : isActive }" v-if="isActive">
+    <div class="navbar d-fles align-items-start" :class="{ active : sidebarIsActive }" v-if="sidebarIsActive">
       <nav class="link-wrap d-flex flex-column">
-        <router-link class="link" @click.native="navigate" to="/first/user">ユーザー情報</router-link>
-        <router-link class="link" @click.native="navigate" to="/first/edit/base">ベースのコスメを追加</router-link>
-        <router-link class="link" @click.native="navigate" to="/first/edit/cheek">チークのコスメを追加</router-link>
-        <router-link class="link" @click.native="navigate" to="/first/edit/lip">リップのコスメを追加</router-link>
+        <button class="link" @click="navigate('user')">ユーザー情報</button>
+        <button class="link" @click="navigate('edit/base')">ベースのコスメを追加</button>
+        <button class="link" @click="navigate('edit/cheek')">ベースのコスメを追加</button>
+        <button class="link" @click="navigate('edit/lip')">ベースのコスメを追加</button>
         <button @click="logout()" class="logout-btn">ログアウト</button>
       </nav>
     </div>
@@ -23,25 +28,43 @@
 </template>
 
 <script>
+import LoadPage from '@/components/LoadPage.vue'
 export default {
   name: 'my-header',
+  components: {
+    LoadPage
+  },
   data() {
     return {
-      isActive: false
-      // scrolled: false,
-      // lastPosition: 0
+      sidebarIsActive: false,
+      locate: null,
+      transIsActive: {
+        'main': false,
+        'user': false,
+        'edit/base': false,
+        'edit/cheek': false,
+        'edit/lip': false
+      }
     }
   },
   methods: {
     changeSidebarState() {
-      this.isActive = !this.isActive
+      this.sidebarIsActive = !this.sidebarIsActive
     },
-    navigate() {
-      this.isActive = false
+    navigate(page) {
+      const path = `/first/${page}`
+      Object.keys(this.transIsActive).forEach(where => {
+        this.transIsActive[where] = false
+      })
+      this.transIsActive[page] = true
+      setTimeout(() => {
+        this.$router.push({ path }).catch()
+      }, 300)
+      this.sidebarIsActive = false
     },
     logout() {
       this.$store.dispatch('userData/logout')
-      this.isActive = !this.isActive
+      this.sideBarisActive = false
     }
   }
 }
@@ -52,8 +75,13 @@ export default {
 
 .header-page#header {
   z-index: 1;
-  background-color: #B25A74;
+  background-color: rgba(178, 90, 116, 0.95);
 }
+
+#header .link {
+  background-color: transparent;
+}
+
 #header .logo {
   font-family: 'Courgette', cursive;
   font-size: 40px;
@@ -116,7 +144,7 @@ export default {
 #header .link-wrap {
   width: 100%;
 }
-#header .link {
+#header .navbar .link {
   padding: 12px 24px;
   border-bottom: 1px solid gray;
   color: rgba(20, 20, 20, 0.8);
@@ -127,7 +155,4 @@ export default {
   font-size: 20px;
   margin: 20px;
 }
-
-/* z-index-1 */
-
 </style>

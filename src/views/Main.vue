@@ -1,11 +1,11 @@
 <template>
   <div id="main" class="main-page">
     <main class="main-inner">
-      <div class="hero">
-        <p class="hero-text d-flex justify-content-center" :class="{ active : isLoaded }">trousueがきっとあなたのコスメを見つけてくれます！</p>
+      <div class="hero d-flex justify-content-center">
+        <p class="hero-text text-center" :class="{ active : isLoaded }">trousueがきっとあなたのコスメを見つけてくれます！</p>
       </div>
       <section class="select-area container-fluid">
-        <h2 class="sub-title">コスメを選択しよう！</h2>
+        <h2 class="sub-title"> SELECT</h2>
         <div class="select">
           <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
         </div>
@@ -117,7 +117,7 @@ export default {
   created() {
     setTimeout(() => {
       this.isLoaded = true
-    }, 100)
+    }, 1000)
   }
 }
 </script>
@@ -150,6 +150,12 @@ export default {
   }
   100% {
     height: 0px;
+  }
+}
+
+@keyframes floatArrow {
+  50% {
+    transform: rotate(45deg) translate(5px, 5px);
   }
 }
 
@@ -248,6 +254,7 @@ export default {
 }
 
 #main .main-inner .select-area {
+  padding-top: 40px;
   background-color: white;
 }
 #main .main-inner .hero {
@@ -255,6 +262,18 @@ export default {
   color: white;
   text-align: center;
   padding-bottom: 120px;
+}
+#main .main-inner .hero::after  {
+  content: "";
+  border: 6px solid white;
+  border-left: none;
+  border-top: none;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  bottom: 32px;
+  transform: rotate(45deg);
+  animation: floatArrow .6s infinite
 }
 
 #main .main-inner .hero .hero-text {

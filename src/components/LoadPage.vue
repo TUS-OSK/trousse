@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 @keyframes movePage {
-  0%{
+  0% {
     top: 100vh;
   }
   50% {
@@ -45,16 +45,16 @@ export default {
 
 .load-page#load  {
   z-index: 5;
-  background-color: white;
+  background-color: rgb(101, 49, 64);
   position: fixed;
   height: 100vh;
   width: 100vw;
   top: 100vh;
-  transition: all 1s;
+  transition: all .6s;
 }
 
 .load-page#load.active {
-  animation: movePage 1s
+  animation: movePage .6s
 }
 
 /* @keyframes rotate1 {

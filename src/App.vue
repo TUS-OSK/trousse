@@ -24,6 +24,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
 #app {
   -webkit-font-smoothing: antialiased;
@@ -31,13 +32,22 @@ export default {
 }
 
 /* global */
+body {
+  font-family: 'Ubuntu', sans-serif;
+
+}
+
+body h2 {
+  font-weight: 1000;
+}
 
 body a:hover {
   text-decoration: none;
 }
 
-body button {
+body button, body button:focus {
   border: none;
+  outline: none;
 }
 
 body label, body p {
