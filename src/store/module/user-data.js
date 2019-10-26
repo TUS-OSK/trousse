@@ -14,8 +14,7 @@ export default {
       cheek: [],
       lip: []
     },
-    themes: ['spring', 'summer', 'autumn', 'winter', 'cute'],
-    cosmeIdCount: 6
+    themes: ['spring', 'summer', 'autumn', 'winter', 'cute']
   },
   getters: {
     user: state => state.user,
@@ -28,7 +27,6 @@ export default {
       return allCosmeIds
     },
     cosmes: state => state.cosmes,
-    cosmeIdCount: state => state.cosmeIdCount,
     themes: state => state.themes,
     status: state => state.user.status
   },
@@ -44,7 +42,6 @@ export default {
     },
     registerCosmeInformation(state, payload) {
       state.cosmes[payload.type].push({
-        id: '' + state.cosmeIdCount++,
         ...payload.info
       })
     },
@@ -112,10 +109,9 @@ export default {
       }
     },
     async registerCosmeInfo({ commit }, item) {
-      const res = await post.cosme('api/cosmes', {
-        item
-      })
+      const res = await post.cosme('api/cosmes', item)
       console.log('regiterCosmeInfo', res)
+      item.info.id = res.id
       commit('registerCosmeInformation', item)
     },
     changeCosmeInfo({ commit }, item) {

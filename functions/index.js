@@ -11,6 +11,7 @@ admin.initializeApp()
 // console.log(functions.config())
 const express = require('express');
 const cors = require('cors')
+const bodyParser = require('body-parser')
 
 const REGION = 'asia-northeast1';
 
@@ -18,49 +19,51 @@ const app = express();
 
 app.use(cors())
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+
 const db = admin.firestore()
 
-const usersRef = db.collection('users').doc('MOCK_COSMES');
-usersRef.set({
-    base:[{
-      id: '1',
-  brand: 'CANMAKE',
-  name: 'colorbase-pink',
-  color: 'pink',
-  theme: []
-    }]
-})
-//base array
-
 app.get('/cosmes', async (req, res) => {
-  const usersRef = db.collection('users').doc('MOCK_COSMES')
-  const data = await usersRef.get()
-  res.json(data.data())
+  const baseRef = db.collection('users').doc('MOCK_COSMES').collection('cosmes').doc('base').collection('data');
+  const basedatalist = await baseRef.get()
+  const cheekRef = db.collection('users').doc('MOCK_COSMES').collection('cosmes').doc('cheek').collection('data');
+  const cheekdatalist = await cheekRef.get()
+  const lipRef = db.collection('users').doc('MOCK_COSMES').collection('cosmes').doc('lip').collection('data');
+  const lipdatalist = await lipRef.get()
+  const cosmes ={
+    base:[],
+    cheek:[],
+    lip:[]
+  }
+  basedatalist.forEach(v=>
+    {cosmes.base.push({id:v.id,...v.data()})})
+  cheekdatalist.forEach(v=>
+    {cosmes.cheek.push({id:v.id,...v.data()})})
+  lipdatalist.forEach(v=>
+    {cosmes.lip.push({id:v.id,...v.data()})})
+  res.json(cosmes)
 })
-
-
-// // Atomically add a new region to the "regions" array field.
-// let arrUnion = washingtonRef.update({
-//   regions: admin.firestore.FieldValue.arrayUnion('greater_virginia')
-// });
-// // Atomically remove a region from the "regions" array field.
-// let arrRm = washingtonRef.update({
-//   regions: admin.firestore.FieldValue.arrayRemove('east_coast')
-// });
 
 
 app.post('/cosmes', async (req, res) => {
-  const usersRef = db.collection('users').doc('MOCK_COSMES');
-  const data = await usersRef.set({
-  }
-    )
-    .catch(_err => {
-      res.json({
-        error: "hoge"
-      })
+  console.log(req.body.type)
+  if(req.body.type!== "base" && req.body.type!=="cheek" && req.body.type!=="lip"){
+    res.json({
+      error: "hugo"
     })
+  }
+  const usersRef = db.collection('users').doc('MOCK_COSMES').collection('cosmes').doc(req.body.type).collection('data');
+  // console.log('ok!')
+  const addReq = await usersRef.add(req.body.info)
+  // console.log(JSON.stringify(req.body,2))
   res.json({
-    status: "ok!"
+    status: "ok!",
+    id:addReq.id
   })
 })
 
@@ -96,4 +99,4 @@ module.exports.api = functions
     .region(REGION)
     .https.onRequest(app);
 
-    // process.on('unhandledRejection', console.dir);
+process.on('unhandledRejection', console.dir);
