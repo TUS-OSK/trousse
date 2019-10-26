@@ -15,7 +15,7 @@ const USER = {
 const DEFAULT_USER = USER
 let authCb = null
 export const auth =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV === 'production' || process.env.VUE_APP_AUTHENTICATION === 'production'
     ? cd => firebase.auth().onAuthStateChanged(cd)
     : cb => {
       authCb = cb
@@ -24,7 +24,8 @@ export const auth =
       }, 500)
     }
 export const login = async() => {
-  if (process.env.NODE_ENV === 'production') {
+  console.log(process.env.VUE_APP_AUTHENTICATION)
+  if (process.env.NODE_ENV === 'production' || process.env.VUE_APP_AUTHENTICATION === 'production') {
     const provider = await new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithRedirect(provider)
   } else {
@@ -35,7 +36,7 @@ export const login = async() => {
   }
 }
 export const logout = async() => {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' || process.env.VUE_APP_AUTHENTICATION === 'production') {
     await firebase.auth().signOut()
   } else {
     setTimeout(() => {

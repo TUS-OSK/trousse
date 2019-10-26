@@ -1,6 +1,6 @@
 import router from '../../router'
 
-import { fetchMain, creatPosts } from '../../api'
+import { fetchCosme, creatPosts } from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
 
@@ -31,9 +31,11 @@ export default {
     status: state => state.user.status
   },
   mutations: {
-    updateMainData(state, payload) {
+    updateUserData(state, payload) {
       state.user.name = payload.user.name
       state.user.token = payload.user.token
+    },
+    updateCosmeData(state, payload) {
       state.cosmes = payload.cosmes
     },
 
@@ -68,15 +70,18 @@ export default {
     init: {
       root: true,
       async handler({ commit }) {
-        const mainData = await fetchMain()
         auth(async user => {
           if (user) {
             // console.log('オブザーバーは君のことをみてるよ')
             commit('updateLogin', true)
 
-            mainData.user.name = user.displayName
-            mainData.user.token = await user.getIdToken()
-            commit('updateMainData', mainData)
+            const token = await user.getIdToken()
+            commit ('uptadeUserData', {
+              name: user.displayName,
+              token
+            })
+            const cosmeData = await fetchCosme(token)
+            commit('updateCosmeData', cosmeData)
 
             if (router.currentRoute.name === 'login') {
               router.replace({ name: 'main' })
@@ -92,7 +97,6 @@ export default {
       }
     },
     loadMain() {
-      console.log('データをロードしました')
     },
     async login({ state }) {
       if (state.user.status == STATUS.LOGIN) {
@@ -110,7 +114,6 @@ export default {
     },
     async registerCosmeInfo({ commit }, item) {
       const res = await creatPosts.cosme('api/cosmes', item)
-      console.log('regiterCosmeInfo', res)
       item.info.id = res.id
       commit('registerCosmeInformation', item)
     },
