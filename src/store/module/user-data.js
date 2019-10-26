@@ -1,6 +1,6 @@
 import router from '../../router'
 
-import { fetchMain } from '../../api'
+import { fetchMain, post } from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
 
@@ -20,13 +20,13 @@ export default {
   getters: {
     user: state => state.user,
     cosmeTypes: state => Object.keys(state.cosmes),
-    // allCosmeIds: (state, getters) => {
-    //   const allCosmeIds = {}
-    //   getters.cosmeTypes.forEach(type => {
-    //     allCosmeIds[type] = getters.cosmes[type].map(item => item.id)
-    //   })
-    //   return allCosmeIds
-    // },
+    allCosmeIds: (state, getters) => {
+      const allCosmeIds = {}
+      getters.cosmeTypes.forEach(type => {
+        allCosmeIds[type] = getters.cosmes[type].map(item => item.id)
+      })
+      return allCosmeIds
+    },
     cosmes: state => state.cosmes,
     cosmeIdCount: state => state.cosmeIdCount,
     themes: state => state.themes,
@@ -95,7 +95,7 @@ export default {
       }
     },
     loadMain() {
-      // console.log('データをロードしました')
+      console.log('データをロードしました')
     },
     async login({ state }) {
       if (state.user.status == STATUS.LOGIN) {
@@ -111,7 +111,11 @@ export default {
         logout()
       }
     },
-    registerCosmeInfo({ commit }, item) {
+    async registerCosmeInfo({ commit }, item) {
+      const res = await post.cosme('api/cosmes', {
+        item
+      })
+      console.log('regiterCosmeInfo', res)
       commit('registerCosmeInformation', item)
     },
     changeCosmeInfo({ commit }, item) {

@@ -12,3 +12,21 @@ export async function fetchMain() {
     cosmes: data
   }
 }
+
+export const post = {
+  async cosme(ep, data) {
+    const rp = await fetch(endpoint(ep), {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+      },
+      redirect: 'follow',
+      referrer: 'no-referrer',
+      body: JSON.stringify(data)
+    })
+    return await rp.json()
+  }
+}
