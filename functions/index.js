@@ -1,5 +1,3 @@
-console.log("Users/yoshidaruna/Downloads", process.env.GOOGLE_APPLICATION_CREDENTIALS)
-
 const functions = require('firebase-functions');
 require("firebase/firestore")
 const admin = require('firebase-admin')
