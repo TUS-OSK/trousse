@@ -13,7 +13,7 @@ export async function fetchMain() {
   }
 }
 
-export const post = {
+export const creatPosts = {
   async cosme(ep, data) {
     const rp = await fetch(endpoint(ep), {
       method: 'POST',

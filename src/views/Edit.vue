@@ -4,7 +4,7 @@
       <h2 class="ed-sub-title">{{ type }}の編集画面</h2>
       <div class="ed-main-function">
         <div class="ed-main-list">
-          <div v-if="cosmeNumber">
+          <div v-if="cosmeNumber!==0">
             <draggable class="ed-main-li-draggable" v-model="cosmeAry">
               <cosme-icon v-for="cosme in cosmeAry" :key="cosme.id" :type="type" :cosme="cosme" ></cosme-icon>
               <div class="fake-icon" v-for="i in fakeCosmes" :key="i"></div>
@@ -65,8 +65,7 @@ export default {
       }
     },
     cosmeNumber() {
-      // return this.$store.getters['userData/cosmes'][this.type].length
-      return 1
+      return this.$store.getters['userData/cosmes'][this.type].length
     }
   }
 }

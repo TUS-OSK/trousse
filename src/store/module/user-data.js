@@ -1,6 +1,6 @@
 import router from '../../router'
 
-import { fetchMain, post } from '../../api'
+import { fetchMain, creatPosts } from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
 
@@ -109,7 +109,7 @@ export default {
       }
     },
     async registerCosmeInfo({ commit }, item) {
-      const res = await post.cosme('api/cosmes', item)
+      const res = await creatPosts.cosme('api/cosmes', item)
       console.log('regiterCosmeInfo', res)
       item.info.id = res.id
       commit('registerCosmeInformation', item)

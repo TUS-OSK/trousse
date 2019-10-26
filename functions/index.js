@@ -4,11 +4,6 @@ const functions = require('firebase-functions');
 require("firebase/firestore")
 const admin = require('firebase-admin')
 admin.initializeApp()
-// admin.initializeApp({
-//   credential: admin.credential.applicationDefault(),
-//   databaseURL: 'https://oskweb-trousse.firebaseio.com'
-// });
-// console.log(functions.config())
 const express = require('express');
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -21,7 +16,6 @@ app.use(cors())
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
-
 // parse application/json
 app.use(bodyParser.json())
 
@@ -51,16 +45,13 @@ app.get('/cosmes', async (req, res) => {
 
 
 app.post('/cosmes', async (req, res) => {
-  console.log(req.body.type)
   if(req.body.type!== "base" && req.body.type!=="cheek" && req.body.type!=="lip"){
     res.json({
       error: "hugo"
     })
   }
   const usersRef = db.collection('users').doc('MOCK_COSMES').collection('cosmes').doc(req.body.type).collection('data');
-  // console.log('ok!')
   const addReq = await usersRef.add(req.body.info)
-  // console.log(JSON.stringify(req.body,2))
   res.json({
     status: "ok!",
     id:addReq.id
@@ -78,7 +69,6 @@ const ALLOWED_METHODS = [
 ];
 
 const ALLOWED_ORIGINS = [
-  // 'http://localhost:5000',
   'http://localhost:8080'
 ];
 
