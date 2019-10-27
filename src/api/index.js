@@ -7,7 +7,7 @@ function endpoint(path) {
 export async function fetchCosme(token) {
   const rp = await fetch(endpoint('api/cosmes'), {
     headers: {
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     }
   })
   const data = await rp.json()
@@ -25,11 +25,12 @@ export const creatPosts = {
       cache: 'no-cache',
       credentials: 'same-origin',
       headers: {
-          'Content-Type': 'application/json; charset=utf-8'
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${data.token}`
       },
       redirect: 'follow',
       referrer: 'no-referrer',
-      body: JSON.stringify(data)
+      body: JSON.stringify(data.item)
     })
     return await rp.json()
   }

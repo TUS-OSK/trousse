@@ -76,7 +76,7 @@ export default {
             commit('updateLogin', true)
 
             const token = await user.getIdToken()
-            commit ('uptadeUserData', {
+            commit('uptadeUserData', {
               name: user.displayName,
               token
             })
@@ -96,8 +96,7 @@ export default {
         })
       }
     },
-    loadMain() {
-    },
+    loadMain() {},
     async login({ state }) {
       if (state.user.status == STATUS.LOGIN) {
         // console.log('ログアウトしてください')
@@ -113,9 +112,13 @@ export default {
       }
     },
     async registerCosmeInfo({ commit }, item) {
-      const res = await creatPosts.cosme('api/cosmes', item)
-      item.info.id = res.id
-      commit('registerCosmeInformation', item)
+      auth(async user => {
+        const token = await user.getIdToken()
+        console.log('action', token)
+        const res = await creatPosts.cosme('api/cosmes', { item, token })
+        item.info.id = res.id
+        commit('registerCosmeInformation', item)
+      })
     },
     changeCosmeInfo({ commit }, item) {
       commit('changeCosmeInformation', item)

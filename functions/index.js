@@ -31,7 +31,7 @@ app.get("/cosmes", async (req, res) => {
   const decodedToken = await isAuthenticated(req.token);
   if (decodedToken === null) {
     res.json({
-      error: "認証error"
+      error: "get認証error"
     });
     return;
   }
@@ -75,6 +75,15 @@ app.get("/cosmes", async (req, res) => {
 });
 
 app.post("/cosmes", async (req, res) => {
+  console.log("post", req.token);
+  const decodedToken = await isAuthenticated(req.token);
+  if (decodedToken === null) {
+    res.json({
+      error: "post認証error"
+    });
+    return;
+  }
+  const uid = decodedToken.uid;
   if (
     req.body.type !== "base" &&
     req.body.type !== "cheek" &&
@@ -86,7 +95,7 @@ app.post("/cosmes", async (req, res) => {
   }
   const usersRef = db
     .collection("users")
-    .doc("MOCK_COSMES")
+    .doc(uid)
     .collection("cosmes")
     .doc(req.body.type)
     .collection("data");
