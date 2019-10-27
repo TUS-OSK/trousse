@@ -75,7 +75,7 @@ export default {
 
 .header-page#header {
   z-index: 1;
-  background-color: rgba(178, 90, 116, 0.95);
+  background-color: #b97085;
 }
 
 #header .link {

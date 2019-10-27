@@ -43,8 +43,10 @@ export default {
     themes() {
       return this.$store.getters['userData/themes']
     }
+  },
+  mounted() {
+    this.$emit('mounted')
   }
-
 }
 </script>
 

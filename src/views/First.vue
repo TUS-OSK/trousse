@@ -19,7 +19,7 @@ export default {
 <style scoped>
  .first-page  {
   min-height: 100vh;
-  background-color: #B25A74;
+  background-color: #b97085;
 }
 
 .first-page .header-page {
@@ -28,6 +28,6 @@ export default {
 }
 
 .first-page.main {
-  padding-top: 120px;
+  padding-top: 160px;
 }
 </style>

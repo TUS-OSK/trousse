@@ -54,12 +54,6 @@ body label, body p {
   margin-bottom: 0;
 }
 
-body span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 body input, body button{
   outline: none;
 }

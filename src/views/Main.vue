@@ -5,7 +5,7 @@
         <p class="hero-text text-center" :class="{ active : isLoaded }">trousueがきっとあなたのコスメを見つけてくれます！</p>
       </div>
       <section class="select-area container-fluid">
-        <h2 class="sub-title"> SELECT</h2>
+        <h2 class="sub-title">SELECT</h2>
         <div class="select">
           <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
         </div>
@@ -68,7 +68,6 @@ export default {
       return this.$store.getters['userData/themes']
     },
     allCosmesAry() {
-      console.log(this.isOpened)
       return this.cosmeTypes.map(type => {
         return {
           type,
@@ -255,13 +254,13 @@ export default {
 
 #main .main-inner .select-area {
   padding-top: 40px;
-  background-color: white;
+  background-color: #f9ecdd;
 }
 #main .main-inner .hero {
   position: relative;
   color: white;
   text-align: center;
-  padding-bottom: 120px;
+  padding-bottom: 160px;
 }
 #main .main-inner .hero::after  {
   content: "";

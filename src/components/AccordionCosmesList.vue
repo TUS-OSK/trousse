@@ -1,16 +1,17 @@
 <template>
 <!-- AccordionCosmesListコンポーネントはcosmesDataを渡すと開閉できるコスメリストを表示してくれるコンポーネント -->
-  <div id="accordion" class="accordion-cosmes-list-component">
+  <div id="accordion" class="accordion-cosmes-list-component" :class="{ isOpened : isOpened[cosmesData.type] }">
     <div class="cosme-list-wrap">
-      <a v-if="listType === 'main'">
-        <input :id="`type${cosmesData.type}`" class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">
-        <label :for="`type${cosmesData.type}`" class="accordion-cosmes-li-label">{{ cosmesData.type }}</label>
-      </a>
-      <a v-else>
-         {{ cosmesData.type }}
-      </a>
-      <button v-if="cosmesData.accordionCosmesList.isOpened" @click="changeCosmesListState(cosmesData.type)">▲</button>
-      <button v-else @click="changeCosmesListState(cosmesData.type)">▼</button>
+      <div class="list-title">
+        <span class="check-btn" v-if="listType === 'main'">
+          <input :id="`type${cosmesData.type}`" class="accordion-cosmes-li-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">
+          <label :for="`type${cosmesData.type}`" class="accordion-cosmes-li-label">{{ cosmesData.type }}</label>
+        </span>
+        <span v-else>
+          {{ cosmesData.type }}
+        </span>
+        <button class="accordion-btn" v-if="cosmesData.cosmeAry.length" @click="changeCosmesListState(cosmesData.type)"></button>
+      </div>
       <cosme-list :cosmeType=cosmesData.type :cosmeAry="cosmesData.cosmeAry" :listType="listType"></cosme-list>
     </div>
   </div>
@@ -51,7 +52,8 @@ export default {
     ]),
     ...mapGetters('pages/main', [
       'unCheckedTypes',
-      'unCheckedItems'
+      'unCheckedItems',
+      'isOpened'
     ]),
     isChecked: {
       get() {
@@ -86,5 +88,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.accordion-cosmes-list-component#accordion {
+  margin: 32px 0px;
+}
 </style>

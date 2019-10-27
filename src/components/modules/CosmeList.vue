@@ -1,17 +1,17 @@
 <template>
 <div id="list" class="cosme-list-component container-fluid">
-  <div v-if="listType==='main'" class="cosme-list row">
-    <div class="cosme-button col-xl-2 col-md-3 col-4" v-for="cosme in cosmeAry" :key="cosme.id">
+  <div v-if="listType==='main'" ref="cosmeList" class="cosme-list main row" :class="{ isOpened : isOpened[cosmeType] }" :style="customProperty">
+    <div class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex" v-for="cosme in cosmeAry" :key="cosme.id">
       <input :id="`cosme${cosme.id}`" class="input-checkbox d-none" type="checkbox" v-model="isChecked" :value="cosme.id">
       <label :for="`cosme${cosme.id}`" class="cosme-icon-wrap">
-        <cosme-icon :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
+        <cosme-icon @mounted="test" :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
       </label>
     </div>
     <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
   </div>
   <div v-else-if="listType === 'edit'">
-    <draggable class="cosme-list row" v-model="draggableAry" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
-      <div class="cosme-button col-xl-2 col-md-3 col-4" v-for="cosme in cosmeAry" :key="cosme.id">
+    <draggable class="cosme-list edit row" v-model="draggableAry" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
+      <div class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex align-items-center" v-for="cosme in cosmeAry" :key="cosme.id">
         <div class="cosme-icon-wrap" @click="showEditCosmeModal(cosme.id)">
           <cosme-icon :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
         </div>
@@ -40,6 +40,13 @@ export default {
     draggable,
     CosmeFormModal
   },
+  data() {
+    return {
+      mounted: false,
+      renderedIconNumber: 0,
+      elmentHeight: null
+    }
+  },
   props: {
     cosmeType: {
       type: String,
@@ -61,7 +68,8 @@ export default {
     ]),
     ...mapGetters('pages/main', [
       'unCheckedItems',
-      'unCheckedTypes'
+      'unCheckedTypes',
+      'isOpened'
     ]),
     draggableAry: {
       get(){
@@ -79,6 +87,23 @@ export default {
     },
     fakeCosmes() {
       return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
+    },
+    customProperty() {
+      if(this.mounted) {
+        if(this.isOpened[this.cosmeType]) {
+          return {
+            '--origin-height': '124px',
+            '--opened-height': `${this.elmentHeight}px`
+          }
+        } else {
+          return {
+            '--origin-height': '124px',
+            '--opened-height': '124px'
+          }
+        }
+      } else {
+        return {}
+      }
     },
     isChecked: {
       get() {
@@ -101,6 +126,13 @@ export default {
   methods: {
     showEditCosmeModal(id){
       this.$modal.show(`form-modal-${id}`)
+    },
+    test() {
+      if(this.cosmeAry.length === ++this.renderedIconNumber) {
+        this.elmentHeight = this.$refs.cosmeList.clientHeight
+        this.mounted = true
+        console.log(this.elmentHeight)
+      }
     }
   }
 }
@@ -124,32 +156,44 @@ export default {
     transform: scale(1.0);
   }
 }
+@keyframes collapse {
+  0% {
+    height: 124px;
+  }
+}
 
 #list .fake-icon {
   height: 0;
 }
 #list .cosme-list {
-  padding: 24px 0;
-  background-color: rgb(243, 234, 183);
+  overflow: hidden;
+  padding: 8px;
+  background-color: #ffb9b9;
+}
+#list .cosme-list.main {
+  height: var(--origin-height);
+  transition: height .3s;
+}
+#list .cosme-list.main.isOpened {
+  height: var(--opened-height);
+}
+#list .cosme-button {
+  height: 92px;
+  margin: 8px 0;
+  padding: 0 8px;
 }
 #list .cosme-icon-wrap {
   position: relative;
-  content: "";
   width: 100%;
-  padding-top: 100%;
-  border-radius: 12px;
   font-size: 12px;
   text-align: center;
   background-color: rgb(248, 241, 242);
   border: 4px solid #B25A74;
+  border-radius: 12px;
   word-break: break-all;
   overflow: hidden;
   cursor:pointer;
 }
-#list .cosme-button.col-4 {
-  padding: 0 8px;
-}
-
 #list .input-checkbox + .cosme-icon-wrap {
   filter: brightness(80%);
   transition: all .4s
