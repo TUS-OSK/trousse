@@ -41,7 +41,7 @@
             </div>
           </div>
         </modal>
-      </div>
+        </div>
     </modal>
   </div>
 </template>
@@ -100,10 +100,8 @@ export default {
         this.$store.dispatch('userData/changeCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
       } else if(this.formType === 'register') {
-
         this.$store.dispatch('userData/registerCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
-
         this.cosmeBrandText = ''
         this.cosmeNameText = ''
         this.cosmeColorText = ''
@@ -154,7 +152,6 @@ export default {
   padding-top: 20px;
   padding-bottom: 20px;
 }
-
 /* for form-modal */
 
 #modal .check-btn {
@@ -173,9 +170,7 @@ export default {
 #modal .input-text:focus, .input-checkbox:focus {
   border: 2px solid rgb(182, 55, 86);
 }
-
 /* for btns */
-
 #modal .modal-btn {
   padding: 8px;
   text-align: center;
@@ -189,7 +184,6 @@ export default {
   background-color: rgb(192, 29, 70);
   border: 2px solid rgb(192, 29, 70);
 }
-
 /* for delete modal */
 
 #modal .warning .title {
