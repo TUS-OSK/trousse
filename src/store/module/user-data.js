@@ -1,6 +1,6 @@
 import router from '../../router'
 
-import { fetchCosme, creatPosts, changePatchs } from '../../api'
+import { fetchCosme, creatPosts, changePatchs, cosmeDeletes } from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
 
@@ -49,7 +49,7 @@ export default {
     },
     changeCosmeInformation(state, payload) {
       state.cosmes[payload.type] = state.cosmes[payload.type].map(cosmeInfo => {
-        if (cosmeInfo.id === payload.id) {
+        if (cosmeInfo.id === payload.info.id) {
           return payload.info
         } else {
           return cosmeInfo
@@ -58,7 +58,9 @@ export default {
     },
     deleteCosmeInformation(state, payload) {
       for (const type of Object.keys(state.cosmes)) {
-        state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
+        state.cosmes[type] = state.cosmes[type].filter(
+          v => v.id !== payload.id
+        )
       }
     },
     dragCosmeIcon(state, payload) {
@@ -123,12 +125,17 @@ export default {
       auth(async user => {
         const token = await user.getIdToken()
         const res = await changePatchs.cosme('api/cosmes', { item, token })
-        res.id = item.id
+        res.id = item.info.id
         commit('changeCosmeInformation', item)
       })
     },
-    deleteCosmeInfo({ commit }, id) {
-      commit('deleteCosmeInformation', id)
+    deleteCosmeInfo({ commit }, item) {
+      commit('deleteCosmeInformation', item)
+      auth(async user => {
+        const token = await user.getIdToken()
+        const res = await cosmeDeletes.cosme('api/cosmes', { item, token })
+        res.id = item.id
+      })
     },
     dragCosme({ commit }, payload) {
       commit('dragCosmeIcon', payload)

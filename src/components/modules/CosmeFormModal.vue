@@ -96,7 +96,7 @@ export default {
         }
       }
       if (this.formType === 'edit') {
-        newCosme.id = this.focusingCosme.id
+        newCosme.info.id = this.focusingCosme.id
         this.$store.dispatch('userData/changeCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
       } else if (this.formType === 'register') {
@@ -110,7 +110,11 @@ export default {
       this.$modal.hide(`form-modal-${this.formId}`)
     },
     deleteCosmeInfo() {
-      this.$store.dispatch('userData/deleteCosmeInfo', this.formId)
+      const newCosme = {
+        type: this.focusingType,
+        id: this.focusingCosme.id
+      }
+      this.$store.dispatch('userData/deleteCosmeInfo', newCosme)
       this.$store.dispatch('userData/loadMain')
     },
     showConfirmModal() {

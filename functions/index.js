@@ -89,7 +89,7 @@ app.post("/cosmes", async (req, res) => {
     req.body.type !== "lip"
   ) {
     res.json({
-      error: "hugo"
+      error: "postコスメのtypeが見つかりませんでした"
     });
   }
   const usersRef = db
@@ -120,7 +120,39 @@ app.patch("/cosmes", async (req, res) => {
     req.body.type !== "lip"
   ) {
     res.json({
-      error: "hugo"
+      error: "patchコスメのtypeが見つかりませんでした"
+    });
+  }
+  const usersRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc(req.body.type)
+    .collection("data")
+    .doc(req.body.info.id);
+  const changeRef = await usersRef.set(req.body.info);
+  res.json({
+    status: "ok!",
+    id: changeRef.id
+  });
+});
+
+app.delete("/cosmes", async (req, res) => {
+  const decodedToken = await isAuthenticated(req.token);
+  if (decodedToken === null) {
+    res.json({
+      error: "delete認証error"
+    });
+    return;
+  }
+  const uid = decodedToken.uid;
+  if (
+    req.body.type !== "base" &&
+    req.body.type !== "cheek" &&
+    req.body.type !== "lip"
+  ) {
+    res.json({
+      error: "deleteコスメのtypeが見つかりませんでした"
     });
   }
   const usersRef = db
@@ -130,10 +162,9 @@ app.patch("/cosmes", async (req, res) => {
     .doc(req.body.type)
     .collection("data")
     .doc(req.body.id);
-  const addReq = await usersRef.set(req.body.info);
+  const deleteRef = await usersRef.delete();
   res.json({
-    status: "ok!",
-    id: addReq.id
+    status: "ok!"
   });
 });
 

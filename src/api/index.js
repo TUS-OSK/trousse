@@ -52,3 +52,20 @@ export const changePatchs = {
     return await rp.json()
   }
 }
+
+export const cosmeDeletes = {
+  async cosme(ep, data) {
+    const rp = await fetch(endpoint(ep), {
+      method: 'DELETE',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Authorization: `Bearer ${data.token}`
+      },
+      body: JSON.stringify(data.item)
+    })
+    return await rp.json()
+  }
+}
