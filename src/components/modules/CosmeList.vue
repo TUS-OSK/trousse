@@ -130,8 +130,8 @@ export default {
     test() {
       if(this.cosmeAry.length === ++this.renderedIconNumber) {
         this.elmentHeight = this.$refs.cosmeList.clientHeight
+        this.$emit('mounted', this.elmentHeight)
         this.mounted = true
-        console.log(this.elmentHeight)
       }
     }
   }
@@ -169,6 +169,7 @@ export default {
   overflow: hidden;
   padding: 8px;
   background-color: #ffb9b9;
+  transition: all .4s;
 }
 #list .cosme-list.main {
   height: var(--origin-height);

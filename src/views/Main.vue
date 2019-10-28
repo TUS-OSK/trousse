@@ -10,8 +10,9 @@
           <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
         </div>
         <div class="filter">
-          <div class="checkbox-group d-flex align-items-center">
-            <div class="check-button-wrap" v-for="(theme, index) in themes" :key="theme">
+          <h3>FILTER</h3>
+          <div class="checkbox-group">
+            <div class="check-button-wrap d-inline-block" v-for="(theme, index) in themes" :key="theme">
               <input :id="`input-${index}`" class="input-checkbox d-none" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">
               <label class="check-button" :for="`input-${index}`">
                 <span class="checkbox-wrap d-flex align-items-center justify-content-center">
@@ -21,16 +22,16 @@
                   <span class="stick"></span>
                   <span class="stick"></span>
                 </span>
-                <span class="checkvalue">{{ toJapanese(theme) }}</span>
+                <span class="checkvalue d-flex align-items-center">{{ toJapanese(theme) }}</span>
               </label>
             </div>
           </div>
-          <button @click="narrowCheckedItems">絞り込み</button>
         </div>
+        <button @click="narrowCheckedItems">絞り込み</button>
       </section>
 
       <section class="suggest-area container-fluid">
-        <h2 class="sub-title">今日のコスメはこれだ！</h2>
+        <h2 class="sub-title">RESULT</h2>
         <suggested-cosmes-list></suggested-cosmes-list>
       </section>
       <!-- <router-link class="link" to="/main/result">結果を画像で保存</router-link> -->
@@ -116,36 +117,30 @@ export default {
   created() {
     setTimeout(() => {
       this.isLoaded = true
-    }, 1000)
+    }, 300)
   }
 }
 </script>
 
 <style scoped>
 @keyframes shrink {
-  0% {
-    width: 16px;
-    height: 16px;
+  0%  {
+    transform: scale(1)
   }
-  40% {
-    width: 12px;
-    height: 12px;
+  50% {
+    transform: scale(0.8)
   }
   100% {
-    width: 16px;
-    height: 16px;
+    transform: scale(1)
   }
 }
 
 @keyframes stick {
   0% {
-    height: 2px;
+    height: 0px;
   }
-  40% {
-    height: 4px;
-  }
-  50% {
-    height: 4px;
+  30% {
+    height: 5px;
   }
   100% {
     height: 0px;
@@ -162,15 +157,17 @@ export default {
   padding: 8px;
 }
 
-#main .checkbox-group {
-  height: 40px;
+/* select-area */
+#main .main-inner .select-area {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f9ecdd;
 }
 
 #main .check-button {
   display: inline-block;
   width: auto;
 }
-
 #main .check-button {
   padding: 4px;
   display: flex;
@@ -179,36 +176,35 @@ export default {
 #main .check-button .checkvalue > * {
   margin-right: 4px;
 }
-
 #main .check-button .checkbox-wrap {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 }
-
 #main .check-button .checkvalue {
-  width: auto;
+  font-size: 16px;
 }
 
 #main .check-button .checkbox {
   content: '';
   border-radius: 4px;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   opacity: .6;
-  border: 1px solid #6cc0e5;
+  border: 2px solid #f56868;
   transition: all .2s;
 }
 
 #main .input-checkbox:checked + .check-button .checkbox {
   animation: shrink .1s;
   opacity: 1;
-  background-color: #6cc0e5;
+  background-color: #f56868e3;
 }
-
 #main .input-checkbox + .check-button .stick {
+  position: absolute;
   height: 0px;
-  width: 1px;
-  background-color: #6cc0e5;
+  width: 2px;
+  border-radius: 2px;
+  background-color: #f56868;
   transition: all .4s
 }
 #main .input-checkbox:checked + .check-button .stick {
@@ -216,30 +212,29 @@ export default {
 }
 #main .input-checkbox + .check-button .stick:nth-child(1) {
   transition: all .4s;
-  transform: translate(-1px,-8px)rotate(-65deg);
+  transform: translate(-12px,-8px)rotate(-65deg);
 }
 #main .input-checkbox:checked + .check-button .stick:nth-child(1) {
-  transform: translate(-3px,-10px)rotate(-65deg);
+  transform: translate(-18px,-12px)rotate(-65deg);
 }
 #main .input-checkbox + .check-button .stick:nth-child(2) {
-  transform: translate(2px,-12px)rotate(-25deg)
+  transform: translate(-8px,-12px)rotate(-25deg)
 }
 #main .input-checkbox:checked + .check-button .stick:nth-child(2) {
-  transform: translate(0px,-14px)rotate(-25deg)
+  transform: translate(-12px,-18px)rotate(-25deg)
 }
-
 #main .input-checkbox + .check-button .stick:nth-child(4) {
   transition: all .4s;
-  transform: translate(-2px,12px)rotate(-25deg);
+  transform: translate(8px,12px)rotate(-25deg);
 }
 #main .input-checkbox:checked + .check-button .stick:nth-child(4) {
-  transform: translate(0px,14px)rotate(-25deg);
+  transform: translate(12px,18px)rotate(-25deg);
 }
 #main .input-checkbox + .check-button .stick:nth-child(5) {
-  transform: translate(1px,8px)rotate(-65deg);
+  transform: translate(12px,8px)rotate(-65deg);
 }
 #main .input-checkbox:checked + .check-button .stick:nth-child(5) {
-  transform: translate(3px,10px)rotate(-65deg);
+  transform: translate(18px,12px)rotate(-65deg);
 }
 
 #main .fade-leave-active, .fade-enter-active {
@@ -252,10 +247,7 @@ export default {
   opacity: 0;
 }
 
-#main .main-inner .select-area {
-  padding-top: 40px;
-  background-color: #f9ecdd;
-}
+/* hero-area */
 #main .main-inner .hero {
   position: relative;
   color: white;
@@ -285,5 +277,7 @@ export default {
   top: 0;
   opacity: 1;
 }
+
+/* result-are */
 
 </style>

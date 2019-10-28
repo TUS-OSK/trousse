@@ -1,7 +1,7 @@
 <template>
   <div>
-    <router-view v-if="viewPage"/>
-    <div id="load-auth" class="load-page"  v-else>
+    <router-view />
+    <div id="load-auth" class="load-page" v-if="!viewPage">
       <div class="load-img"><span class="load-txt">Loading...</span></div>
     </div>
   </div>

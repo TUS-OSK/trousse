@@ -15,7 +15,7 @@
       <span class="line"></span>
       <span class="line"></span>
     </button>
-    <div class="navbar d-fles align-items-start" :class="{ active : sidebarIsActive }" v-if="sidebarIsActive">
+    <div class="navbar d-flex align-items-start" :class="{ active : sidebarIsActive }">
       <nav class="link-wrap d-flex flex-column">
         <button class="link" @click="navigate('user')">ユーザー情報</button>
         <button class="link" @click="navigate('edit/base')">ベースのコスメを追加</button>
@@ -37,7 +37,6 @@ export default {
   data() {
     return {
       sidebarIsActive: false,
-      locate: null,
       transIsActive: {
         'main': false,
         'user': false,
@@ -74,7 +73,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
 
 .header-page#header {
-  z-index: 1;
+  z-index: 11;
   background-color: #b97085;
 }
 
@@ -86,9 +85,12 @@ export default {
   font-family: 'Courgette', cursive;
   font-size: 40px;
 }
+#header .logo.main {
+  opacity: 0;
+}
 /* z-index 3 */
 #header .btn-wrap {
-  z-index: 3;
+  z-index: 13;
   width: 32px;
   height: 28px;
   margin: 12px;
@@ -130,15 +132,18 @@ export default {
 
 /* z-index 2 */
 #header .navbar {
-  z-index: 2;
-  min-width: 248px;
+  width: 100vw;
+  z-index: 12;
   padding: 60px 8px 8px 8px;
   position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
+  top: 0;
+  right: -100vw;
+  bottom: 0;
   background-color: rgba(255, 255, 255, 0.95);
-  transition: all .4s
+  transition: all .3s ease;
+}
+#header .navbar.active  {
+  right: 0;
 }
 
 #header .link-wrap {
@@ -148,7 +153,6 @@ export default {
   padding: 12px 24px;
   border-bottom: 1px solid gray;
   color: rgba(20, 20, 20, 0.8);
-  transition: all .2s
 }
 #header .logout-btn {
   color: red;
