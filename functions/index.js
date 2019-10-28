@@ -189,10 +189,6 @@ app.use((req, res, next) => {
     });
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Methods", ALLOWED_METHODS.join(","));
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Content-type,Accept,X-Custom-Header"
-    );
   }
 
   next();
