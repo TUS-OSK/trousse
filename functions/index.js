@@ -23,7 +23,6 @@ async function isAuthenticated(token) {
     const decodedToken = await admin.auth().verifyIdToken(token);
     return decodedToken;
   } catch (e) {
-    console.log("error");
     return null;
   }
 }
@@ -31,7 +30,7 @@ app.get("/cosmes", async (req, res) => {
   const decodedToken = await isAuthenticated(req.token);
   if (decodedToken === null) {
     res.json({
-      error: "get認証error"
+      error: "認証ERROR"
     });
     return;
   }
@@ -78,7 +77,7 @@ app.post("/cosmes", async (req, res) => {
   const decodedToken = await isAuthenticated(req.token);
   if (decodedToken === null) {
     res.json({
-      error: "post認証error"
+      error: "認証ERROR"
     });
     return;
   }
@@ -89,7 +88,7 @@ app.post("/cosmes", async (req, res) => {
     req.body.type !== "lip"
   ) {
     res.json({
-      error: "postコスメのtypeが見つかりませんでした"
+      error: "コスメのTYPEが見つかりませんでした"
     });
   }
   const usersRef = db
@@ -109,7 +108,7 @@ app.patch("/cosmes", async (req, res) => {
   const decodedToken = await isAuthenticated(req.token);
   if (decodedToken === null) {
     res.json({
-      error: "patch認証error"
+      error: "認証ERROR"
     });
     return;
   }
@@ -120,7 +119,7 @@ app.patch("/cosmes", async (req, res) => {
     req.body.type !== "lip"
   ) {
     res.json({
-      error: "patchコスメのtypeが見つかりませんでした"
+      error: "コスメのTYPEが見つかりませんでした"
     });
   }
   const usersRef = db
@@ -141,7 +140,7 @@ app.delete("/cosmes", async (req, res) => {
   const decodedToken = await isAuthenticated(req.token);
   if (decodedToken === null) {
     res.json({
-      error: "delete認証error"
+      error: "認証ERROR"
     });
     return;
   }
@@ -152,7 +151,7 @@ app.delete("/cosmes", async (req, res) => {
     req.body.type !== "lip"
   ) {
     res.json({
-      error: "deleteコスメのtypeが見つかりませんでした"
+      error: "コスメのTYPEが見つかりませんでした"
     });
   }
   const usersRef = db
