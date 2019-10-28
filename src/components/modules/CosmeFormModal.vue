@@ -1,22 +1,28 @@
 <template>
- <div class="cosme-form-modal-component">
+  <div class="cosme-form-modal-component">
     <modal :name="`form-modal-${formId}`" width="100%" height="70%" :pivotY="1.0">
       <div class="cosme-form-modal">
         <div class="ml-inputs">
           <h3 class="ml-input-title">コスメの名前</h3>
-          <input class="ml-input" v-model="cosmeNameText" type="text" name="name" >
+          <input class="ml-input" v-model="cosmeNameText" type="text" name="name" />
           <h3 class="ml-input-title">コスメのブランド</h3>
-          <input class="ml-input" v-model="cosmeBrandText">
+          <input class="ml-input" v-model="cosmeBrandText" />
           <h3 class="ml-input-title">コスメの色味</h3>
-          <input class="ml-input" v-model="cosmeColorText" type="text" name="color" >
+          <input class="ml-input" v-model="cosmeColorText" type="text" name="color" />
           <h3 class="ml-input-title">コスメのテーマ</h3>
           <div class="ml-checkboxes-area">
             <label class="ml-cb-label" v-for="theme in themes" :key="theme">
-              <input class="ml-cb-input" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">{{ toJapanese(theme) }}
+              <input
+                class="ml-cb-input"
+                v-model="cosmeThemeCheckbox"
+                :value="theme"
+                type="checkbox"
+              />
+              {{ toJapanese(theme) }}
             </label>
           </div>
         </div>
-        <div class="buttons" >
+        <div class="buttons">
           <div class="ml-update-btns" v-if="formType === 'edit'">
             <button class="ml-btn ml-delete-btn" v-on:click="showConfirmModal()">コスメを削除</button>
             <button class="ml-btn ml-change-btn" v-on:click="updateCosmeInfo()">コスメを更新</button>
@@ -25,7 +31,7 @@
             <button class="ml-btn ml-register-btn" v-on:click="updateCosmeInfo()">コスメを登録</button>
           </div>
         </div>
-      <modal :name="`delete-modal-${formId}`" width="100%" height="20%" :pivotY="1.0" >
+        <modal :name="`delete-modal-${formId}`" width="100%" height="20%" :pivotY="1.0">
           <div class="ml-cosme-warning-modal">
             <h3 class="ml-ml-warning-title">Warning!</h3>
             <p class="ml-ml-warning-txt">本当に削除しますか？</p>
@@ -35,7 +41,7 @@
             </div>
           </div>
         </modal>
-        </div>
+      </div>
     </modal>
   </div>
 </template>
@@ -61,15 +67,15 @@ export default {
       type: Object
     }
   },
-  data(){
-    if(this.formType === 'edit') {
+  data() {
+    if (this.formType === 'edit') {
       return {
         cosmeBrandText: this.focusingCosme.brand,
         cosmeNameText: this.focusingCosme.name,
         cosmeColorText: this.focusingCosme.color,
         cosmeThemeCheckbox: this.focusingCosme.theme
       }
-    } else if(this.formType === 'register') {
+    } else if (this.formType === 'register') {
       return {
         cosmeBrandText: '',
         cosmeNameText: '',
@@ -79,7 +85,7 @@ export default {
     }
   },
   methods: {
-    updateCosmeInfo(){
+    updateCosmeInfo() {
       const newCosme = {
         type: this.focusingType,
         info: {
@@ -89,11 +95,11 @@ export default {
           theme: this.cosmeThemeCheckbox
         }
       }
-      if(this.formType === 'edit') {
-        newCosme.info.id = this.focusingCosme.id
+      if (this.formType === 'edit') {
+        newCosme.id = this.focusingCosme.id
         this.$store.dispatch('userData/changeCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
-      } else if(this.formType === 'register') {
+      } else if (this.formType === 'register') {
         this.$store.dispatch('userData/registerCosmeInfo', newCosme)
         this.$store.dispatch('userData/loadMain')
         this.cosmeBrandText = ''
@@ -103,18 +109,18 @@ export default {
       }
       this.$modal.hide(`form-modal-${this.formId}`)
     },
-    deleteCosmeInfo(){
+    deleteCosmeInfo() {
       this.$store.dispatch('userData/deleteCosmeInfo', this.formId)
       this.$store.dispatch('userData/loadMain')
     },
-    showConfirmModal(){
+    showConfirmModal() {
       this.$modal.show(`delete-modal-${this.formId}`)
     },
-    hideConfirmModal(){
+    hideConfirmModal() {
       this.$modal.hide(`delete-modal-${this.formId}`)
     },
     toJapanese(word) {
-      switch(word) {
+      switch (word) {
         case 'spring':
           return '春'
         case 'summer':
@@ -170,7 +176,8 @@ export default {
   padding: 8px;
   width: 85%;
 }
-.ml-input:focus, .ml-cb-input:focus {
+.ml-input:focus,
+.ml-cb-input:focus {
   border: 2px solid rgb(182, 55, 86);
 }
 /* for btns */
@@ -209,5 +216,4 @@ export default {
 .ml-cosme-delete-modal {
   width: 100px;
 }
-
 </style>

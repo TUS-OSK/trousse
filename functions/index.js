@@ -75,7 +75,6 @@ app.get("/cosmes", async (req, res) => {
 });
 
 app.post("/cosmes", async (req, res) => {
-  console.log("post", req.token);
   const decodedToken = await isAuthenticated(req.token);
   if (decodedToken === null) {
     res.json({
@@ -100,6 +99,38 @@ app.post("/cosmes", async (req, res) => {
     .doc(req.body.type)
     .collection("data");
   const addReq = await usersRef.add(req.body.info);
+  res.json({
+    status: "ok!",
+    id: addReq.id
+  });
+});
+
+app.patch("/cosmes", async (req, res) => {
+  const decodedToken = await isAuthenticated(req.token);
+  if (decodedToken === null) {
+    res.json({
+      error: "patch認証error"
+    });
+    return;
+  }
+  const uid = decodedToken.uid;
+  if (
+    req.body.type !== "base" &&
+    req.body.type !== "cheek" &&
+    req.body.type !== "lip"
+  ) {
+    res.json({
+      error: "hugo"
+    });
+  }
+  const usersRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc(req.body.type)
+    .collection("data")
+    .doc(req.body.id);
+  const addReq = await usersRef.set(req.body.info);
   res.json({
     status: "ok!",
     id: addReq.id
