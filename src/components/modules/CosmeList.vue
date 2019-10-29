@@ -1,6 +1,7 @@
 <template>
 <div id="list" class="cosme-list-component container-fluid">
   <div v-if="listType==='main'" ref="cosmeList" class="cosme-list main row" :class="{ isOpened : isOpened[cosmeType] }" :style="customProperty">
+    <div v-if="!cosmeAry.length"><span>コスメを登録しましょう！</span></div>
     <div class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex" v-for="cosme in cosmeAry" :key="cosme.id">
       <input :id="`cosme${cosme.id}`" class="input-checkbox d-none" type="checkbox" v-model="isChecked" :value="cosme.id">
       <label :for="`cosme${cosme.id}`" class="cosme-icon-wrap">

@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <button @click="narrowCheckedItems">絞り込み</button>
+        <button class="filter-btn" @click="narrowCheckedItems">絞り込み</button>
       </section>
 
       <section class="suggest-area container-fluid">
@@ -157,13 +157,29 @@ export default {
   padding: 8px;
 }
 
-/* select-area */
-#main .main-inner .select-area {
+#main .main-inner section {
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f9ecdd;
 }
 
+/* select-area */
+#main .main-inner .select-area {
+  background-color: #f9ecdd;
+}
+#main .main-inner .select-area .filter {
+  margin-top: 44px;
+}
+#main .main-inner .select-area .filter-btn {
+  width: 100%;
+  margin: 8px 0;
+  height: 40px;
+  border-radius: 20px;
+  color: white;
+  background-color: #e86e9b;
+}
+#main .main-inner .suggest-area {
+  background-color: #fffaf3;
+}
 #main .check-button {
   display: inline-block;
   width: auto;

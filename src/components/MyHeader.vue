@@ -70,11 +70,9 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
-
 .header-page#header {
   z-index: 11;
-  background-color: #b97085;
+  background-color: #b97085f5;
 }
 
 #header .link {
@@ -82,8 +80,9 @@ export default {
 }
 
 #header .logo {
-  font-family: 'Courgette', cursive;
-  font-size: 40px;
+  color: rgb(255, 238, 238);
+  font-weight: 800;
+  font-size: 44px;
 }
 #header .logo.main {
   opacity: 0;
@@ -105,7 +104,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  background-color: white;
+  background-color: rgb(249, 222, 222);
   border-radius: 4px;
   transition: all .3s;
 }

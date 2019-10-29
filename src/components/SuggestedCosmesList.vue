@@ -1,16 +1,18 @@
 <template>
-  <div class="suggested-cosmes-list">
-    <div v-if="isSuggested">
-      <div v-for="(item, type) in currentHistory" :key="type">
-        <ul>
+  <div id="suggest" class="suggested-cosmes-list">
+    <div class="container-fluid">
+      <div v-if="isSuggested">
+        <div class="cosme" v-for="(item, type) in currentHistory" :key="type">
           <h3>{{ type }}</h3>
-          <li v-for="(info, infoName) in item" :key="info.id"> {{ infoName }}: {{ info }} </li>
-        </ul>
+          <ul>
+            <li v-for="(info, infoName) in item" :key="info.id"> {{ infoName }}: {{ info }} </li>
+          </ul>
+        </div>
+        <button class="suggest-btn" @click="suggestCosmes()">もう一回やる！</button>
       </div>
-      <button @click="suggestCosmes()">もう一回やる！</button>
-    </div>
-    <div v-else>
-      <button @click="suggestCosmes()">結果を表示する！</button>
+      <div v-else>
+        <button class="suggest-btn" @click="suggestCosmes()">結果を表示する！</button>
+      </div>
     </div>
   </div>
 </template>
@@ -60,3 +62,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+#suggest .suggest-btn {
+  background-color: #e86e9b;
+  width: 100%;
+  border-radius: 20px;
+  color: white;
+  height: 40px;
+  margin: 8px 0;
+}
+#suggest .cosme {
+  margin: 16px 0;
+}
+
+</style>

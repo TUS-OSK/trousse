@@ -34,11 +34,13 @@ export default {
 /* global */
 body {
   font-family: 'Ubuntu', sans-serif;
-
 }
 
 body h2 {
-  font-weight: 1000;
+  font-weight: 900;
+}
+body h3 {
+  font-weight: 800;
 }
 
 body a:hover {
@@ -66,7 +68,7 @@ body input, body button{
   left: 0;
   bottom: 0;
   background-color: rgb(125, 73, 88);
-  z-index: 5;
+  z-index: 200;
   color: beige;
   display: flex;
   align-items: center;
