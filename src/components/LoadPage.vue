@@ -44,7 +44,7 @@ export default {
 }
 
 .load-page#load  {
-  z-index: 5;
+  z-index: 300;
   background-color: rgb(101, 49, 64);
   position: fixed;
   height: 100vh;

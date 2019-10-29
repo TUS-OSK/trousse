@@ -14,9 +14,9 @@
       <div class="cosme-list-wrap">
         <cosme-list @mounted="getElementHeight" :cosmeType=cosmesData.type :cosmeAry="cosmesData.cosmeAry" :listType="listType"></cosme-list>
       </div>
-      <div class="btn-area d-flex justify-content-center" v-if="cosmesData.cosmeAry.length && this.cosmeListHeight > 124">
-        <button class="accordion-btn d-flex justify-content-center" @click="changeCosmesListState(cosmesData.type)"></button>
-      </div>
+    </div>
+    <div class="btn-area d-flex justify-content-center" v-if="cosmesData.cosmeAry.length && this.cosmeListHeight > 124">
+      <button class="accordion-btn d-flex justify-content-center" @click="changeCosmesListState(cosmesData.type)"></button>
     </div>
   </div>
 </template>
@@ -113,11 +113,8 @@ export default {
   }
 }
 .accordion-cosmes-list-component#accordion {
-  margin: 32px 0px;
-}
-
-#accordion .accordion-wrap {
   position: relative;
+  margin: 16px 0px;
 }
 
 #accordion .accordion-wrap .cosme-list-wrap {
@@ -164,6 +161,7 @@ export default {
 
 /* accordion-btn */
 #accordion .btn-area {
+  z-index: 2;
   position: absolute;
   left: 0;
   right: 0;
@@ -171,6 +169,7 @@ export default {
   animation: float .4s infinite;
 }
 #accordion .accordion-btn {
+  background-color: #ea8d61;
   padding: 0;
   margin: auto;
   border-radius: 50%;
@@ -187,7 +186,7 @@ export default {
   height: 12px;
   position: absolute;
   top: 8px;
-  border: 4px solid black;
+  border: 4px solid #861212;
   border-left: none;
   border-top: none;
   transform: rotate(45deg);
