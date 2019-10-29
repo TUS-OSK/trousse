@@ -167,32 +167,6 @@ app.delete("/cosmes", async (req, res) => {
   });
 });
 
-const ALLOWED_METHODS = [
-  "GET",
-  "POST",
-  "PUT",
-  "PATCH",
-  "DELETE",
-  "HEAD",
-  "OPTIONS"
-];
-
-const ALLOWED_ORIGINS = ["http://localhost:8080"];
-
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (ALLOWED_ORIGINS.indexOf(req.headers.origin) > -1) {
-    sess.cookie.secure = true;
-    res.cookie("example", Math.random().toString(), {
-      maxAge: 86400,
-      httpOnly: true
-    });
-    res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Access-Control-Allow-Methods", ALLOWED_METHODS.join(","));
-  }
-  next();
-});
-
 module.exports.api = functions.region(REGION).https.onRequest(app);
 
 process.on("unhandledRejection", console.dir);
