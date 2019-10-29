@@ -1,6 +1,6 @@
 import router from '../../router'
 
-import { fetchCosme, creatPosts, changePatchs, cosmeDeletes } from '../../api'
+import { fetchCosme, creatCosme, changeCosme, deleteCosme } from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
 
@@ -116,7 +116,7 @@ export default {
     async registerCosmeInfo({ commit }, item) {
       auth(async user => {
         const token = await user.getIdToken()
-        const res = await creatPosts.cosme('api/cosmes', { item, token })
+        const res = await creatCosme.cosme('api/cosmes', { item, token })
         item.info.id = res.id
         commit('registerCosmeInformation', item)
       })
@@ -124,7 +124,7 @@ export default {
     async changeCosmeInfo({ commit }, item) {
       auth(async user => {
         const token = await user.getIdToken()
-        const res = await changePatchs.cosme('api/cosmes', { item, token })
+        const res = await changeCosme.cosme('api/cosmes', { item, token })
         res.id = item.info.id
         commit('changeCosmeInformation', item)
       })
@@ -133,7 +133,7 @@ export default {
       commit('deleteCosmeInformation', item)
       auth(async user => {
         const token = await user.getIdToken()
-        const res = await cosmeDeletes.cosme('api/cosmes', { item, token })
+        const res = await deleteCosme.cosme('api/cosmes', { item, token })
         res.id = item.id
       })
     },
