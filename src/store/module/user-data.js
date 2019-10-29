@@ -1,6 +1,6 @@
 import router from '../../router'
 
-import { fetchMain, creatPosts } from '../../api'
+import { fetchCosme, creatCosme, changeCosme, deleteCosme } from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
 
@@ -31,9 +31,11 @@ export default {
     status: state => state.user.status
   },
   mutations: {
-    updateMainData(state, payload) {
+    updateUserData(state, payload) {
       state.user.name = payload.user.name
       state.user.token = payload.user.token
+    },
+    updateCosmeData(state, payload) {
       state.cosmes = payload.cosmes
     },
 
@@ -56,7 +58,9 @@ export default {
     },
     deleteCosmeInformation(state, payload) {
       for (const type of Object.keys(state.cosmes)) {
-        state.cosmes[type] = state.cosmes[type].filter(v => v.id !== payload)
+        state.cosmes[type] = state.cosmes[type].filter(
+          v => v.id !== payload.id
+        )
       }
     },
     dragCosmeIcon(state, payload) {
@@ -68,15 +72,18 @@ export default {
     init: {
       root: true,
       async handler({ commit }) {
-        const mainData = await fetchMain()
         auth(async user => {
           if (user) {
             // console.log('オブザーバーは君のことをみてるよ')
             commit('updateLogin', true)
 
-            mainData.user.name = user.displayName
-            mainData.user.token = await user.getIdToken()
-            commit('updateMainData', mainData)
+            const token = await user.getIdToken()
+            commit('uptadeUserData', {
+              name: user.displayName,
+              token
+            })
+            const cosmeData = await fetchCosme(token)
+            commit('updateCosmeData', cosmeData)
 
             if (router.currentRoute.name === 'login') {
               router.replace({ name: 'main' })
@@ -91,9 +98,7 @@ export default {
         })
       }
     },
-    loadMain() {
-      console.log('データをロードしました')
-    },
+    loadMain() {},
     async login({ state }) {
       if (state.user.status == STATUS.LOGIN) {
         // console.log('ログアウトしてください')
@@ -109,16 +114,28 @@ export default {
       }
     },
     async registerCosmeInfo({ commit }, item) {
-      const res = await creatPosts.cosme('api/cosmes', item)
-      console.log('regiterCosmeInfo', res)
-      item.info.id = res.id
-      commit('registerCosmeInformation', item)
+      auth(async user => {
+        const token = await user.getIdToken()
+        const res = await creatCosme.cosme('api/cosmes', { item, token })
+        item.info.id = res.id
+        commit('registerCosmeInformation', item)
+      })
     },
-    changeCosmeInfo({ commit }, item) {
-      commit('changeCosmeInformation', item)
+    async changeCosmeInfo({ commit }, item) {
+      auth(async user => {
+        const token = await user.getIdToken()
+        const res = await changeCosme.cosme('api/cosmes', { item, token })
+        res.id = item.info.id
+        commit('changeCosmeInformation', item)
+      })
     },
-    deleteCosmeInfo({ commit }, id) {
-      commit('deleteCosmeInformation', id)
+    deleteCosmeInfo({ commit }, item) {
+      commit('deleteCosmeInformation', item)
+      auth(async user => {
+        const token = await user.getIdToken()
+        const res = await deleteCosme.cosme('api/cosmes', { item, token })
+        res.id = item.id
+      })
     },
     dragCosme({ commit }, payload) {
       commit('dragCosmeIcon', payload)

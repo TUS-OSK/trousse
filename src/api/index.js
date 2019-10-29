@@ -4,8 +4,25 @@ function endpoint(path) {
   return url.resolve(process.env.VUE_APP_API_ROOT, path)
 }
 
-export async function fetchMain() {
-  const rp = await fetch(endpoint('api/cosmes'))
+function initOpti(data) {
+  return {
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      Authorization: `Bearer ${data.token}`
+    },
+    body: JSON.stringify(data.item)
+  }
+}
+
+export async function fetchCosme(token) {
+  const rp = await fetch(endpoint('api/cosmes'), {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
   const data = await rp.json()
   return {
     user: {},
@@ -13,20 +30,29 @@ export async function fetchMain() {
   }
 }
 
-export const creatPosts = {
+export const creatCosme = {
   async cosme(ep, data) {
-    const rp = await fetch(endpoint(ep), {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-          'Content-Type': 'application/json; charset=utf-8'
-      },
-      redirect: 'follow',
-      referrer: 'no-referrer',
-      body: JSON.stringify(data)
-    })
+    const optional = initOpti(data)
+    optional.method = 'POST'
+    const rp = await fetch(endpoint(ep), optional)
+    return await rp.json()
+  }
+}
+
+export const changeCosme = {
+  async cosme(ep, data) {
+    const optional = initOpti(data)
+    optional.method = 'PATCH'
+    const rp = await fetch(endpoint(ep), optional)
+    return await rp.json()
+  }
+}
+
+export const deleteCosme = {
+  async cosme(ep, data) {
+    const optional = initOpti(data)
+    optional.method = 'DELETE'
+    const rp = await fetch(endpoint(ep), optional)
     return await rp.json()
   }
 }
