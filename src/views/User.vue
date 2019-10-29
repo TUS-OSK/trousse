@@ -6,7 +6,7 @@
         <h3>ユーザー名</h3>
         <p>{{ userData.name }} </p>
         <p>{{ userData.token }}</p>
-        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" formType="user"></accordion-cosmes-list>
+        <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="user"></accordion-cosmes-list>
       </main>
     </div>
   </div>
