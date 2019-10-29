@@ -1,58 +1,70 @@
 <template>
-  <header class="header-page">
-    <div class="hr-main">
-      <router-link class="" to="/first/main">
-        <div class="hr-main-logo">Trousse</div>
-      </router-link>
+  <header id="header" class="header-page">
+    <load-page pageName="main" :isLoading="transIsActive.main"></load-page>
+    <load-page pageName="user" :isLoading="transIsActive.user"></load-page>
+    <load-page pageName="edit/base" :isLoading="transIsActive['edit/base']"></load-page>
+    <load-page pageName="edit/cheek" :isLoading="transIsActive['edit/cheek']"></load-page>
+    <load-page pageName="edit/lip" :isLoading="transIsActive['edit/lip']"></load-page>
+    <div class="logo-wrap  d-flex align-items-center justify-content-center">
+      <button class="link" @click="navigate('main')">
+        <span class="logo d-inline-block">Trousse</span>
+      </button>
     </div>
-    <button class="hr-btn" v-bind:class='{ active : isActive }' @click="changeSidebarState">
-      <span class="hr-btn-line"></span>
-      <span class="hr-btn-line"></span>
-      <span class="hr-btn-line"></span>
+    <button class="btn-wrap" :class="{ active : sidebarIsActive }" @click="changeSidebarState">
+      <span class="line"></span>
+      <span class="line"></span>
+      <span class="line"></span>
     </button>
-    <transition name="slide" mode="out-in">
-      <aside class="hr-sidebar" v-if="isActive">
-        <transition name="nav-action">
-          <nav class="hr-sb-nav">
-            <router-link class="hr-link" @click.native="navigate" to="/first/user">ユーザー情報</router-link>
-            <router-link class="hr-link" @click.native="navigate" to="/first/edit/base">ベースのコスメを追加</router-link>
-            <router-link class="hr-link" @click.native="navigate" to="/first/edit/cheek">チークのコスメを追加</router-link>
-            <router-link class="hr-link" @click.native="navigate" to="/first/edit/lip">リップのコスメを追加</router-link>
-            <button @click="logout()" class="hr-sb-logout-btn">ログアウト</button>
-          </nav>
-        </transition>
-      </aside>
-    </transition>
+    <div class="navbar d-flex align-items-start" :class="{ active : sidebarIsActive }">
+      <nav class="link-wrap d-flex flex-column">
+        <button class="link" @click="navigate('user')">ユーザー情報</button>
+        <button class="link" @click="navigate('edit/base')">ベースのコスメを追加</button>
+        <button class="link" @click="navigate('edit/cheek')">ベースのコスメを追加</button>
+        <button class="link" @click="navigate('edit/lip')">ベースのコスメを追加</button>
+        <button @click="logout()" class="logout-btn">ログアウト</button>
+      </nav>
+    </div>
   </header>
 </template>
 
 <script>
+import LoadPage from '@/components/LoadPage.vue'
 export default {
   name: 'my-header',
+  components: {
+    LoadPage
+  },
   data() {
     return {
-      isActive: false,
-      // scrolled: false,
-      // lastPosition: 0
-      isLoaded: true
+      sidebarIsActive: false,
+      transIsActive: {
+        'main': false,
+        'user': false,
+        'edit/base': false,
+        'edit/cheek': false,
+        'edit/lip': false
+      }
     }
   },
   methods: {
     changeSidebarState() {
-      this.isActive = !this.isActive
+      this.sidebarIsActive = !this.sidebarIsActive
     },
-    navigate() {
-      this.isActive = false
+    navigate(page) {
+      const path = `/first/${page}`
+      Object.keys(this.transIsActive).forEach(where => {
+        this.transIsActive[where] = false
+      })
+      this.transIsActive[page] = true
+      setTimeout(() => {
+        this.$router.push({ path }).catch()
+      }, 300)
+      this.sidebarIsActive = false
     },
     logout() {
       this.$store.dispatch('userData/logout')
-      this.active01 = !this.active01
+      this.sideBarisActive = false
     }
-  },
-  created() {
-    setTimeout(() => {
-      this.isLoaded = false
-    }, 2000)
   }
 }
 </script>
@@ -60,26 +72,34 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
 
-.header-page {
-  height: 52px;
+.header-page#header {
+  z-index: 11;
+  background-color: #b97085;
 }
 
+#header .link {
+  background-color: transparent;
+}
+
+#header .logo {
+  font-family: 'Courgette', cursive;
+  font-size: 40px;
+}
+#header .logo.main {
+  opacity: 0;
+}
 /* z-index 3 */
-.hr-btn {
-  z-index: 3;
+#header .btn-wrap {
+  z-index: 13;
   width: 32px;
   height: 28px;
-  margin-block-start: 12px;
-  margin-block-end: 12px;
-  padding: 0px 0px 0px;
-  border: none;
+  margin: 12px;
   position: fixed;
   top: 0;
-  right: 16px;
+  right: 0;
   background-color: rgba(255, 255, 255, 0);
 }
-
-.hr-btn-line {
+#header .btn-wrap .line {
   width: 100%;
   height: 4px;
   position: absolute;
@@ -88,93 +108,55 @@ export default {
   background-color: white;
   border-radius: 4px;
   transition: all .3s;
-  box-sizing: border-box;
 }
 
-.hr-btn span:nth-of-type(1) {
+#heaedr .btn-wrap span:nth-of-type(1) {
   top: 0;
 }
-.hr-btn span:nth-of-type(2) {
+#header .btn-wrap span:nth-of-type(2) {
   top: 12px;
 }
-.hr-btn span:nth-of-type(3) {
+#header .btn-wrap span:nth-of-type(3) {
   top: 24px;
 }
 
-.hr-btn.active span:nth-of-type(1) {
+#header .btn-wrap.active span:nth-of-type(1) {
   transform: translateY(12px) rotate(-45deg);
 }
-.hr-btn.active span:nth-of-type(2) {
+#header .btn-wrap.active span:nth-of-type(2) {
   opacity: 0;
 }
-.hr-btn.active span:nth-of-type(3) {
+#header .btn-wrap.active span:nth-of-type(3) {
   transform: translateY(-12px) rotate(45deg);
 }
+
 /* z-index 2 */
-.hr-sidebar {
-  z-index: 2;
-  min-width: 248px;
-  padding: 8px;
-  position: fixed;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  background-color: rgba(62, 58, 57, 0.95);
-}
-
-.slide-enter-active, .slide-leave-active{
-  transition: all .4s ease
-}
-.slide-enter, .slide-leave-to {
-  right: -264px;
-  filter: blur(1px);
-  opacity: 0.2;
-}
-
-.hr-sb-nav {
-  position: absolute;
-  top: 60px;
-  right: 8px;
-  left: 8px;
-  bottom: 8px;;
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
-	text-decoration: none;
-}
-
-.hr-link {
-  padding: 12px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  color: white;
-}
-
-.hr-sb-logout-btn {
-  color: black;
-  font-size: 20px;
-  width: 248px;
-}
-/* z-index-1 */
-.hr-main {
-  z-index: 1;
-  height: 52px;
+#header .navbar {
   width: 100vw;
+  z-index: 12;
+  padding: 60px 8px 8px 8px;
   position: fixed;
   top: 0;
-  right: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  background-color: #B25A74;
+  right: -100vw;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  transition: all .3s ease;
 }
-.hr-main-logo {
-  width: 150px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Courgette', cursive;
-  font-size: 40px;
-  color: rgb(243, 225, 221);
+#header .navbar.active  {
+  right: 0;
+}
+
+#header .link-wrap {
+  width: 100%;
+}
+#header .navbar .link {
+  padding: 12px 24px;
+  border-bottom: 1px solid gray;
+  color: rgba(20, 20, 20, 0.8);
+}
+#header .logout-btn {
+  color: red;
+  font-size: 20px;
+  margin: 20px;
 }
 </style>

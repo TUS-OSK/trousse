@@ -1,8 +1,8 @@
 <template>
   <div>
-    <router-view v-if="viewPage"/>
-    <div class="load-page" v-else>
-      <div class="load-img">ログイン状態を確認中</div>
+    <router-view />
+    <div id="load-auth" class="load-page" v-if="!viewPage">
+      <div class="load-img"><span class="load-txt">Loading...</span></div>
     </div>
   </div>
 </template>
@@ -24,6 +24,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
 #app {
   -webkit-font-smoothing: antialiased;
@@ -31,45 +32,49 @@ export default {
 }
 
 /* global */
+body {
+  font-family: 'Ubuntu', sans-serif;
 
-a {
+}
+
+body h2 {
+  font-weight: 1000;
+}
+
+body a:hover {
   text-decoration: none;
 }
 
-h2 {
-  display: inline-block;
-  margin: 12px;
-}
-button {
+body button, body button:focus {
   border: none;
-  background-color: rgba(255, 255, 255, 0);
-}
-button:active {
-  filter: brightness(80%);
-}
-* {
-  font-family: 'Kosugi Maru', sans-serif;
-  margin: 0;
-  padding: 0;
   outline: none;
 }
-*:focus {
-  outline: none;
+
+body label, body p {
+  margin-bottom: 0;
 }
-.row {
-  display: flex;
-  flex-direction: row
+
+body input, body button{
+  outline: none;
 }
 
 /* load-page */
-.load-page  {
-  z-index: 5;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: beige;
+.load-page#load-auth {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   background-color: rgb(125, 73, 88);
+  z-index: 5;
+  color: beige;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+#load-auth .load-txt {
+  font-size: 32px;
+}
+
 </style>
