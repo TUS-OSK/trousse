@@ -1,22 +1,47 @@
 <template>
-<!-- AccordionCosmesListコンポーネントはcosmesDataを渡すと開閉できるコスメリストを表示してくれるコンポーネント -->
-  <div id="accordion" class="accordion-cosmes-list-component" :class="{ isOpened : isOpened[cosmesData.type] }">
+  <!-- AccordionCosmesListコンポーネントはcosmesDataを渡すと開閉できるコスメリストを表示してくれるコンポーネント -->
+  <div
+    id="accordion"
+    class="accordion-cosmes-list-component"
+    :class="{ isOpened : isOpened[cosmesData.type] }"
+  >
     <div class="accordion-wrap" :class="{ isSelected : isSelected }" v-if="listType === 'main'">
       <div class="list-title d-flex align-items-center">
         <span class="check-btn">
-          <input :id="`type${cosmesData.type}`" class="input-checkbox" type="checkbox" v-model="isChecked" :value="cosmesData.type">
-          <label :for="`type${cosmesData.type}`" class="input-label" @click="isSelected = !isSelected">
+          <input
+            :id="`type${cosmesData.type}`"
+            class="input-checkbox"
+            type="checkbox"
+            v-model="isChecked"
+            :value="cosmesData.type"
+          />
+          <label
+            :for="`type${cosmesData.type}`"
+            class="input-label"
+            @click="isSelected = !isSelected"
+          >
             <span class="checkbox"></span>
             <span class="name">{{ cosmesData.type }}</span>
           </label>
         </span>
       </div>
       <div class="cosme-list-wrap">
-        <cosme-list @mounted="getElementHeight" :cosmeType=cosmesData.type :cosmeAry="cosmesData.cosmeAry" :listType="listType"></cosme-list>
+        <cosme-list
+          @mounted="getElementHeight"
+          :cosmeType="cosmesData.type"
+          :cosmeAry="cosmesData.cosmeAry"
+          :listType="listType"
+        ></cosme-list>
       </div>
     </div>
-    <div class="btn-area d-flex justify-content-center" v-if="cosmesData.cosmeAry.length && this.cosmeListHeight > 124">
-      <button class="accordion-btn d-flex justify-content-center" @click="changeCosmesListState(cosmesData.type)"></button>
+    <div
+      class="btn-area d-flex justify-content-center"
+      v-if="cosmesData.cosmeAry.length && this.cosmeListHeight > 124"
+    >
+      <button
+        class="accordion-btn d-flex justify-content-center"
+        @click="changeCosmesListState(cosmesData.type)"
+      ></button>
     </div>
   </div>
 </template>
@@ -56,10 +81,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('userData', [
-      'cosmeTypes',
-      'cosmes'
-    ]),
+    ...mapGetters('userData', ['cosmeTypes', 'cosmes']),
     ...mapGetters('pages/main', [
       'unCheckedTypes',
       'unCheckedItems',
@@ -67,10 +89,14 @@ export default {
     ]),
     isChecked: {
       get() {
-        return this.cosmeTypes.filter(type => !this.unCheckedTypes.includes(type))
+        return this.cosmeTypes.filter(
+          type => !this.unCheckedTypes.includes(type)
+        )
       },
       set(newCheckedTypes) {
-        const newUnCheckedTypes = this.cosmeTypes.filter(type => !newCheckedTypes.includes(type))
+        const newUnCheckedTypes = this.cosmeTypes.filter(
+          type => !newCheckedTypes.includes(type)
+        )
         this.$store.dispatch('pages/main/loadCheckedTypes', newUnCheckedTypes)
       }
     }
@@ -89,13 +115,13 @@ export default {
 <style>
 @keyframes float {
   0% {
-    transform: translateY(0)
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(4px)
+    transform: translateY(4px);
   }
   100% {
-    transform: translateY(0)
+    transform: translateY(0);
   }
 }
 @keyframes surround {
@@ -133,7 +159,7 @@ export default {
   height: 100%;
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.3);
-  transition: all .4s
+  transition: all 0.4s;
 }
 #accordion .accordion-wrap.isSelected .cosme-list-wrap::before {
   opacity: 0;
@@ -152,11 +178,13 @@ export default {
   width: 20px;
   height: 20px;
   margin: 0 4px;
-  border: 2px solid #f56868;
-  transition: all .4s;
+  border: 2px solid gray;
+  /* #f56868; */
+  transition: all 0.4s;
 }
-#accordion .check-btn .input-checkbox:checked + .input-label .checkbox  {
-  background-color: #f56868f0;
+#accordion .check-btn .input-checkbox:checked + .input-label .checkbox {
+  background-color: #f3aecb;
+  /* #f56868f0; */
 }
 
 /* accordion-btn */
@@ -166,19 +194,19 @@ export default {
   left: 0;
   right: 0;
   bottom: -12px;
-  animation: float .4s infinite;
+  animation: float 0.4s infinite;
 }
 #accordion .accordion-btn {
-  background-color: #ea8d61;
+  background-color: #f3aecb;
   padding: 0;
   margin: auto;
   border-radius: 50%;
   width: 32px;
   height: 32px;
-  transition: all .8s ease;
+  transition: all 0.8s ease;
 }
 #accordion.isOpened .accordion-btn {
-  transform: rotate(540deg)
+  transform: rotate(540deg);
 }
 #accordion .accordion-btn::before {
   content: "";

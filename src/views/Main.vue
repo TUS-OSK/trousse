@@ -7,13 +7,28 @@
       <section class="select-area container-fluid">
         <h2 class="sub-title">SELECT</h2>
         <div class="select">
-          <accordion-cosmes-list v-for="typeCosmesData in allCosmesAry" :key="typeCosmesData.type" :cosmesData="typeCosmesData" listType="main"></accordion-cosmes-list>
+          <accordion-cosmes-list
+            v-for="typeCosmesData in allCosmesAry"
+            :key="typeCosmesData.type"
+            :cosmesData="typeCosmesData"
+            listType="main"
+          ></accordion-cosmes-list>
         </div>
         <div class="filter">
           <h3>FILTER</h3>
           <div class="checkbox-group">
-            <div class="check-button-wrap d-inline-block" v-for="(theme, index) in themes" :key="theme">
-              <input :id="`input-${index}`" class="input-checkbox d-none" v-model="cosmeThemeCheckbox" :value="theme" type="checkbox">
+            <div
+              class="check-button-wrap d-inline-block"
+              v-for="(theme, index) in themes"
+              :key="theme"
+            >
+              <input
+                :id="`input-${index}`"
+                class="input-checkbox d-none"
+                v-model="cosmeThemeCheckbox"
+                :value="theme"
+                type="checkbox"
+              />
               <label class="check-button" :for="`input-${index}`">
                 <span class="checkbox-wrap d-flex align-items-center justify-content-center">
                   <span class="stick"></span>
@@ -58,13 +73,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('userData', [
-      'cosmeTypes',
-      'cosmes'
-    ]),
-    ...mapGetters('pages/main', [
-      'isOpened'
-    ]),
+    ...mapGetters('userData', ['cosmeTypes', 'cosmes']),
+    ...mapGetters('pages/main', ['isOpened']),
     themes() {
       return this.$store.getters['userData/themes']
     },
@@ -82,17 +92,21 @@ export default {
   },
   methods: {
     narrowCheckedItems() {
-      if(this.cosmeThemeCheckbox.length) {
+      if (this.cosmeThemeCheckbox.length) {
         this.cosmeTypes.forEach(type => {
           const data = {
             type
           }
-          data.cosmes = this.cosmes[type].filter(cosme => {
-            //チェックされてるtheme配列をcosmeが持つtheme配列でfilterして長さが小さくなったものはチェックしたい
-            //つまりアンチェックリストに入れたくないのでfalseを返すようにする
-              const dif = this.cosmeThemeCheckbox.filter(type => !cosme.theme.includes(type))
+          data.cosmes = this.cosmes[type]
+            .filter(cosme => {
+              //チェックされてるtheme配列をcosmeが持つtheme配列でfilterして長さが小さくなったものはチェックしたい
+              //つまりアンチェックリストに入れたくないのでfalseを返すようにする
+              const dif = this.cosmeThemeCheckbox.filter(
+                type => !cosme.theme.includes(type)
+              )
               return dif.length >= this.cosmeThemeCheckbox.length
-          }).map(cosme => cosme.id)
+            })
+            .map(cosme => cosme.id)
 
           this.$store.dispatch('pages/main/loadCheckedItems', data)
 
@@ -101,7 +115,7 @@ export default {
       }
     },
     toJapanese(word) {
-      switch(word) {
+      switch (word) {
         case 'spring':
           return '春'
         case 'summer':
@@ -124,14 +138,14 @@ export default {
 
 <style scoped>
 @keyframes shrink {
-  0%  {
-    transform: scale(1)
+  0% {
+    transform: scale(1);
   }
   50% {
-    transform: scale(0.8)
+    transform: scale(0.8);
   }
   100% {
-    transform: scale(1)
+    transform: scale(1);
   }
 }
 
@@ -164,7 +178,7 @@ export default {
 
 /* select-area */
 #main .main-inner .select-area {
-  background-color: #f9ecdd;
+  background-color: #f8f3ed;
 }
 #main .main-inner .select-area .filter {
   margin-top: 44px;
@@ -174,11 +188,11 @@ export default {
   margin: 8px 0;
   height: 40px;
   border-radius: 20px;
-  color: white;
-  background-color: #e86e9b;
+  color: gray;
+  background-color: #f3aecb;
 }
 #main .main-inner .suggest-area {
-  background-color: #fffaf3;
+  background-color: #f8f3ed;
 }
 #main .check-button {
   display: inline-block;
@@ -201,19 +215,21 @@ export default {
 }
 
 #main .check-button .checkbox {
-  content: '';
+  content: "";
   border-radius: 4px;
   width: 20px;
   height: 20px;
-  opacity: .6;
-  border: 2px solid #f56868;
-  transition: all .2s;
+  opacity: 0.6;
+  border: 2px solid gray;
+  /* #f56868; */
+  transition: all 0.2s;
 }
 
 #main .input-checkbox:checked + .check-button .checkbox {
-  animation: shrink .1s;
+  animation: shrink 0.1s;
   opacity: 1;
-  background-color: #f56868e3;
+  background-color: #f3aecb;
+  /* #f56868e3; */
 }
 #main .input-checkbox + .check-button .stick {
   position: absolute;
@@ -221,45 +237,48 @@ export default {
   width: 2px;
   border-radius: 2px;
   background-color: #f56868;
-  transition: all .4s
+  transition: all 0.4s;
 }
 #main .input-checkbox:checked + .check-button .stick {
-  animation: stick .4s;
+  animation: stick 0.4s;
 }
 #main .input-checkbox + .check-button .stick:nth-child(1) {
-  transition: all .4s;
-  transform: translate(-12px,-8px)rotate(-65deg);
+  transition: all 0.4s;
+  transform: translate(-12px, -8px) rotate(-65deg);
 }
 #main .input-checkbox:checked + .check-button .stick:nth-child(1) {
-  transform: translate(-18px,-12px)rotate(-65deg);
+  transform: translate(-18px, -12px) rotate(-65deg);
 }
 #main .input-checkbox + .check-button .stick:nth-child(2) {
-  transform: translate(-8px,-12px)rotate(-25deg)
+  transform: translate(-8px, -12px) rotate(-25deg);
 }
 #main .input-checkbox:checked + .check-button .stick:nth-child(2) {
-  transform: translate(-12px,-18px)rotate(-25deg)
+  transform: translate(-12px, -18px) rotate(-25deg);
 }
 #main .input-checkbox + .check-button .stick:nth-child(4) {
-  transition: all .4s;
-  transform: translate(8px,12px)rotate(-25deg);
+  transition: all 0.4s;
+  transform: translate(8px, 12px) rotate(-25deg);
 }
 #main .input-checkbox:checked + .check-button .stick:nth-child(4) {
-  transform: translate(12px,18px)rotate(-25deg);
+  transform: translate(12px, 18px) rotate(-25deg);
 }
 #main .input-checkbox + .check-button .stick:nth-child(5) {
-  transform: translate(12px,8px)rotate(-65deg);
+  transform: translate(12px, 8px) rotate(-65deg);
 }
 #main .input-checkbox:checked + .check-button .stick:nth-child(5) {
-  transform: translate(18px,12px)rotate(-65deg);
+  transform: translate(18px, 12px) rotate(-65deg);
 }
 
-#main .fade-leave-active, .fade-enter-active {
-  transition: opacity .2s;
+#main .fade-leave-active,
+.fade-enter-active {
+  transition: opacity 0.2s;
 }
-#main .fade-enter-to, .fade-leave {
+#main .fade-enter-to,
+.fade-leave {
   opacity: 1;
 }
-#main .fade-enter, .fade-leave-to {
+#main .fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 
@@ -270,7 +289,7 @@ export default {
   text-align: center;
   padding-bottom: 160px;
 }
-#main .main-inner .hero::after  {
+#main .main-inner .hero::after {
   content: "";
   border: 6px solid white;
   border-left: none;
@@ -280,13 +299,13 @@ export default {
   position: absolute;
   bottom: 32px;
   transform: rotate(45deg);
-  animation: floatArrow .6s infinite
+  animation: floatArrow 0.6s infinite;
 }
 
 #main .main-inner .hero .hero-text {
   padding: 20px 32px;
   opacity: 0;
-  transition: all .4s
+  transition: all 0.4s;
 }
 
 #main .main-inner .hero .hero-text.active {
@@ -295,5 +314,4 @@ export default {
 }
 
 /* result-are */
-
 </style>
