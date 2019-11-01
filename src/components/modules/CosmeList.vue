@@ -12,6 +12,7 @@
   </div>
   <div v-else-if="listType === 'edit'">
     <draggable class="cosme-list edit row" v-model="draggableAry" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
+      <div v-if="!cosmeAry.length"><span>コスメを登録しましょう！</span></div>
       <div class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex align-items-center" v-for="cosme in cosmeAry" :key="cosme.id">
         <div class="cosme-icon-wrap" @click="showEditCosmeModal(cosme.id)">
           <cosme-icon :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
@@ -170,6 +171,7 @@ export default {
   overflow: hidden;
   padding: 8px;
   background-color: #ffb9b9;
+  border-radius: 8px;
   transition: all .4s;
 }
 #list .cosme-list.main {
@@ -186,6 +188,7 @@ export default {
 }
 #list .cosme-icon-wrap {
   position: relative;
+  height: 100%;
   width: 100%;
   font-size: 12px;
   text-align: center;

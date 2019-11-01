@@ -1,17 +1,14 @@
 <template>
   <div id="edit" class="edit-page container-fluid">
-    <main class="ed-main">
-      <h2 class="ed-sub-title">{{ type }}の編集画面</h2>
-      <div class="ed-main-function">
-        <div class="ed-main-list">
-          <div v-if="cosmeNumber">
+    <main class="edit-inner">
+      <h2 class="sub-title">{{ type }}の編集画面</h2>
+      <div class="edit-area">
+        <div class="cosme-list-wrap">
+          <div>
             <cosme-list :cosmeType="this.type" :cosmeAry="cosmeAry" listType="edit"></cosme-list>
           </div>
-          <div v-else>
-            <h3>コスメを登録しましょう！</h3>
-          </div>
         </div>
-        <button class="ed-modal-btn" @click="showAddCosmeModal()" >コスメを追加</button>
+        <button class="modal-btn" @click="showAddCosmeModal()" >コスメを追加</button>
         <cosme-form-modal formId="new" formType="register" :focusingType="type"/>
       </div>
     </main>
@@ -58,9 +55,6 @@ export default {
     },
     fakeCosmes() {
       return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
-    },
-    cosmeNumber() {
-      return this.$store.getters['userData/cosmes'][this.type].length
     }
   }
 }
@@ -78,6 +72,20 @@ export default {
   100% {
     transform: rotate(390deg)
   }
+}
+
+.edit-page#edit {
+  padding-top: 40px;
+  background-color: white;
+  height: calc(100vh - 70px);
+}
+
+.modal-btn {
+  background-color: pink;
+  border-radius: 20px;
+  width: 100%;
+  height: 40px;
+  margin: 8px 0;
 }
 
 /* .ed-modal-btn {
