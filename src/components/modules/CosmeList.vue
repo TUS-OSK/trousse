@@ -1,22 +1,30 @@
 <template>
-<div id="list" class="cosme-list-component container-fluid">
-  <div v-if="listType==='main'" ref="cosmeList" class="cosme-list main row" :class="{ isOpened : isOpened[cosmeType] }" :style="customProperty">
-    <div v-if="!cosmeAry.length"><span>コスメを登録しましょう！</span></div>
-    <div class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex" v-for="cosme in cosmeAry" :key="cosme.id">
-      <input :id="`cosme${cosme.id}`" class="input-checkbox d-none" type="checkbox" v-model="isChecked" :value="cosme.id">
-      <label :for="`cosme${cosme.id}`" class="cosme-icon-wrap">
-        <cosme-icon @mounted="test" :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
-      </label>
-    </div>
-    <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
-  </div>
-  <div v-else-if="listType === 'edit'">
-    <draggable class="cosme-list edit row" v-model="draggableAry" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
-      <div v-if="!cosmeAry.length"><span>コスメを登録しましょう！</span></div>
-      <div class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex align-items-center" v-for="cosme in cosmeAry" :key="cosme.id">
-        <div class="cosme-icon-wrap" @click="showEditCosmeModal(cosme.id)">
-          <cosme-icon :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
-        </div>
+  <div id="list" class="cosme-list-component container-fluid">
+    <div
+      v-if="listType==='main'"
+      ref="cosmeList"
+      class="cosme-list main row"
+      :class="{ isOpened : isOpened[cosmeType] }"
+      :style="customProperty"
+    >
+      <div v-if="!cosmeAry.length">
+        <span>コスメを登録しましょう！</span>
+      </div>
+      <div
+        class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex"
+        v-for="cosme in cosmeAry"
+        :key="cosme.id"
+      >
+        <input
+          :id="`cosme${cosme.id}`"
+          class="input-checkbox d-none"
+          type="checkbox"
+          v-model="isChecked"
+          :value="cosme.id"
+        />
+        <label :for="`cosme${cosme.id}`" class="cosme-icon-wrap">
+          <cosme-icon @mounted="test" :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
+        </label>
       </div>
       <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
     </div>
@@ -28,6 +36,9 @@
         @start="isDragging = true"
         @end="isDragging = false"
       >
+        <div v-if="!cosmeAry.length">
+          <span>コスメを登録しましょう！</span>
+        </div>
         <div
           class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex align-items-center"
           v-for="cosme in cosmeAry"
@@ -39,18 +50,10 @@
         </div>
         <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
       </draggable>
-      <cosme-form-modal
-        v-for="cosme in cosmeAry"
-        :key="cosme.id"
-        :formId="cosme.id"
-        :formType="listType"
-        :focusingType="cosmeType"
-        :focusingCosme="cosme"
-      />
     </div>
-    <ul v-else-if="listType === 'user'">
-      <li v-for="cosme in cosmeAry" :key="cosme.id" class="cosme-list">{{ cosme.name }}</li>
-    </ul>
+    <div class="ul-user row" v-else-if="listType === 'user'">
+      <div v-for="cosme in cosmeAry" :key="cosme.id" class="cosme-user">{{ cosme.name }}</div>
+    </div>
   </div>
 </template>
 
@@ -58,14 +61,12 @@
 import { mapGetters } from 'vuex'
 import CosmeIcon from '@/components/modules/CosmeIcon.vue'
 import draggable from 'vuedraggable'
-import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
 
 export default {
   name: 'cosme-list',
   components: {
     CosmeIcon,
-    draggable,
-    CosmeFormModal
+    draggable
   },
   data() {
     return {
@@ -205,7 +206,7 @@ export default {
   padding: 8px;
   background-color: #f3e3e6;
   border-radius: 8px;
-  transition: all .4s;
+  transition: all 0.4s;
 }
 #list .cosme-list.main {
   height: var(--origin-height);
@@ -213,6 +214,9 @@ export default {
 }
 #list .cosme-list.main.isOpened {
   height: var(--opened-height);
+}
+#list .ul-user {
+  padding-left: 0px;
 }
 #list .cosme-button {
   height: 92px;
@@ -231,6 +235,21 @@ export default {
   word-break: break-all;
   overflow: hidden;
   cursor: pointer;
+}
+#list .cosme-user {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  /* text-align: center; */
+  background-color: rgb(248, 241, 242);
+  /* border: 2px solid #b25a74; */
+  color: #b25a74;
+  border-radius: 2px;
+  word-break: break-all;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0px;
 }
 #list .input-checkbox + .cosme-icon-wrap {
   filter: brightness(80%);

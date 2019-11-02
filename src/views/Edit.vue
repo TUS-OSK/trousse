@@ -8,8 +8,8 @@
             <cosme-list :cosmeType="this.type" :cosmeAry="cosmeAry" listType="edit"></cosme-list>
           </div>
         </div>
-        <button class="modal-btn" @click="showAddCosmeModal()" >コスメを追加</button>
-        <cosme-form-modal formId="new" formType="register" :focusingType="type"/>
+        <button class="modal-btn" @click="showAddCosmeModal()">コスメを追加</button>
+        <cosme-form-modal formId="new" formType="register" :focusingType="type" />
       </div>
     </main>
   </div>
@@ -50,7 +50,7 @@ export default {
     cosmeAry() {
       return this.$store.getters['userData/cosmes'][this.type]
     },
-    cosmeIdcount(){
+    cosmeIdcount() {
       return this.$store.getters['userData/cosmeIdCount']
     },
     fakeCosmes() {
@@ -58,30 +58,29 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>
 @keyframes rotate {
   0% {
-    transform: rotate(30deg)
+    transform: rotate(30deg);
   }
   50% {
-    transform: rotate(210deg)
+    transform: rotate(210deg);
   }
   100% {
-    transform: rotate(390deg)
+    transform: rotate(390deg);
   }
 }
 
 .edit-page#edit {
   padding-top: 40px;
-  background-color: white;
+  background-color: #f8f3ed;
   height: calc(100vh - 70px);
 }
 
 .modal-btn {
-  background-color: pink;
+  background-color: #f3aecb;
   border-radius: 20px;
   width: 100%;
   height: 40px;
