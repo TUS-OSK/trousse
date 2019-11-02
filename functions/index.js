@@ -67,7 +67,7 @@ app.get("/cosmes", async (req, res) => {
     .collection("users")
     .doc(uid)
     .collection("cosmes")
-    .doc("makeupbase")
+    .doc("eyeliner")
     .collection("data");
   const eyelinerdatalist = await eyelinerRef.get();
   const mascaraRef = db

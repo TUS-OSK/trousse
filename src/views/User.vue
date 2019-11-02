@@ -2,7 +2,6 @@
   <div>
     <div>
       <main>
-        <h2>Hello World!</h2>
         <h3>ユーザー名</h3>
         <p>{{ userData.name }}</p>
         <p>{{ userData.token }}</p>
@@ -45,24 +44,11 @@ export default {
     ...mapGetters('pages/main', ['isOpened']),
     allCosmesAry() {
       return this.cosmeTypes.map(type => {
-        const isOpened = this.isOpened[type]
-        const cosmeAry = this.cosmes[type]
-
-        if (isOpened) {
-          return {
-            type,
-            cosmeAry,
-            accordionCosmesList: {
-              isOpened
-            }
-          }
-        } else {
-          return {
-            type,
-            cosmeAry: cosmeAry.slice(0, 1),
-            accordionCosmesList: {
-              isOpened
-            }
+        return {
+          type,
+          cosmeAry: this.cosmes[type],
+          accordionCosmesList: {
+            isOpend: this.isOpened[type]
           }
         }
       })

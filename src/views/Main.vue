@@ -2,7 +2,7 @@
   <div id="main" class="main-page">
     <main class="main-inner">
       <div class="hero d-flex justify-content-center">
-        <p class="hero-text text-center" :class="{ active : isLoaded }">trousueがきっとあなたのコスメを見つけてくれます！</p>
+        <p class="hero-text text-center" :class="{ active : isLoaded }">trousseがきっとあなたのコスメを見つけてくれます！</p>
       </div>
       <section class="select-area container-fluid">
         <h2 class="sub-title">SELECT</h2>

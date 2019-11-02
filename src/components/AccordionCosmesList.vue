@@ -34,6 +34,23 @@
         ></cosme-list>
       </div>
     </div>
+
+    <div class="accordion-wrap" :class="{ isSelected : isSelected }" v-if="listType === 'user'">
+      <div class="list-title d-flex align-items-center">
+        <ul class="check-btn">
+          <li class="name">{{ cosmesData.type }}</li>
+        </ul>
+      </div>
+      <div class="cosme-list-wrap">
+        <cosme-list
+          @mounted="getElementHeight"
+          :cosmeType="cosmesData.type"
+          :cosmeAry="cosmesData.cosmeAry"
+          :listType="listType"
+        ></cosme-list>
+      </div>
+    </div>
+
     <div
       class="btn-area d-flex justify-content-center"
       v-if="cosmesData.cosmeAry.length && this.cosmeListHeight > 124"
@@ -172,12 +189,10 @@ export default {
   height: 20px;
   margin: 0 4px;
   border: 2px solid gray;
-  /* #f56868; */
   transition: all 0.4s;
 }
 #accordion .check-btn .input-checkbox:checked + .input-label .checkbox {
   background-color: #f3aecb;
-  /* #f56868f0; */
 }
 
 /* accordion-btn */
