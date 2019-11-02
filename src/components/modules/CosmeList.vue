@@ -7,12 +7,12 @@
       :class="{ isOpened : isOpened[cosmeType] }"
       :style="customProperty"
     >
-      <div v-if="!cosmeAry.length">
+      <div v-if="!draggableAry.length">
         <span>コスメを登録しましょう！</span>
       </div>
       <div
         class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex"
-        v-for="cosme in cosmeAry"
+        v-for="cosme in draggableAry"
         :key="cosme.id"
       >
         <input
@@ -29,6 +29,9 @@
       <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
     </div>
     <div v-else-if="listType === 'edit'">
+      <div v-if="!draggableAry.length">
+        <span>コスメを登録しましょう！</span>
+      </div>
       <draggable
         class="cosme-list edit row"
         v-model="draggableAry"
@@ -36,12 +39,9 @@
         @start="isDragging = true"
         @end="isDragging = false"
       >
-        <div v-if="!cosmeAry.length">
-          <span>コスメを登録しましょう！</span>
-        </div>
         <div
           class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex align-items-center"
-          v-for="cosme in cosmeAry"
+          v-for="cosme in draggableAry"
           :key="cosme.id"
         >
           <div class="cosme-icon-wrap" @click="showEditCosmeModal(cosme.id)">
@@ -51,7 +51,7 @@
         <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
       </draggable>
       <cosme-form-modal
-        v-for="cosme in cosmeAry"
+        v-for="cosme in draggableAry"
         :key="cosme.id"
         :formId="cosme.id"
         :formType="listType"
@@ -60,7 +60,7 @@
       />
     </div>
     <div class="ul-user row" v-else-if="listType === 'user'">
-      <div v-for="cosme in cosmeAry" :key="cosme.id" class="cosme-user">{{ cosme.name }}</div>
+      <div v-for="cosme in draggableAry" :key="cosme.id" class="cosme-user">{{ cosme.name }}</div>
     </div>
   </div>
 </template>
@@ -81,7 +81,8 @@ export default {
     return {
       mounted: false,
       renderedIconNumber: 0,
-      elmentHeight: null
+      elmentHeight: null,
+      isDragging: false
     }
   },
   props: {
@@ -89,10 +90,10 @@ export default {
       type: String,
       required: true
     },
-    cosmeAry: {
-      type: Array,
-      required: true
-    },
+    // draggableAry: {
+    //   type: Array,
+    //   required: true
+    // },
     listType: {
       type: String,
       required: true,
@@ -108,19 +109,22 @@ export default {
     ]),
     draggableAry: {
       get() {
+        console.log(this.$store.getters['userData/cosmes'][this.cosmeType])
         return this.$store.getters['userData/cosmes'][this.cosmeType]
       },
       set(array) {
-        this.$store.dispatch('userData/dragCosme', {
-          array,
+        console.log(array)
+        const newDragCosme = {
+          array: array.filter(v => v !== undefined),
           type: this.cosmeType
-        })
+        }
+        this.$store.dispatch('userData/dragCosme', newDragCosme)
       }
     },
     dragOptions() {
       return {
-        animation: 200,
-        disabled: false
+        // animation: 200,
+        // disabled: false
       }
     },
     fakeCosmes() {
@@ -172,7 +176,7 @@ export default {
       this.$modal.show(`form-modal-${id}`)
     },
     test() {
-      if (this.cosmeAry.length === ++this.renderedIconNumber) {
+      if (this.draggableAry.length === ++this.renderedIconNumber) {
         this.elmentHeight = this.$refs.cosmeList.clientHeight
         this.$emit('mounted', this.elmentHeight)
         this.mounted = true

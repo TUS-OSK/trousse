@@ -48,6 +48,15 @@ export const changeCosme = {
   }
 }
 
+export const dragCosme = {
+  async cosme(ep, data) {
+    const optional = initOpti(data)
+    optional.method = 'PATCH'
+    const rp = await fetch(endpoint(ep), optional)
+    return await rp.json()
+  }
+}
+
 export const deleteCosme = {
   async cosme(ep, data) {
     const optional = initOpti(data)

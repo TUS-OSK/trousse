@@ -1,6 +1,12 @@
 import router from '../../router'
 
-import { fetchCosme, creatCosme, changeCosme, deleteCosme } from '../../api'
+import {
+  fetchCosme,
+  creatCosme,
+  changeCosme,
+  deleteCosme,
+  dragCosme
+} from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
 
@@ -71,6 +77,7 @@ export default {
       }
     },
     dragCosmeIcon(state, payload) {
+      console.log(payload.array.map(v => v.name))
       state.cosmes[payload.type] = payload.array
     }
   },
@@ -144,8 +151,17 @@ export default {
         res.id = item.id
       })
     },
-    dragCosme({ commit }, payload) {
-      commit('dragCosmeIcon', payload)
+    dragCosme({ commit }, item) {
+      console.log(item.array)
+      auth(async user => {
+        const token = await user.getIdToken()
+        await dragCosme.cosme('api/cosmes/order', {
+          item: { type: item.type, array: item.array.map(v => v.id) },
+          token
+        })
+      })
+      console.log(item)
+      commit('dragCosmeIcon', item)
     }
   }
 }
