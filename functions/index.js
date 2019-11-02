@@ -149,7 +149,6 @@ app.get("/cosmes", async (req, res) => {
   });
   res.json(cosmes);
 });
-
 app.post("/cosmes", async (req, res) => {
   const decodedToken = await isAuthenticated(req.token);
   if (decodedToken === null) {
@@ -224,6 +223,20 @@ app.patch("/cosmes", async (req, res) => {
   res.json({
     status: "ok!",
     id: changeRef.id
+  });
+});
+
+app.patch("/cosmes/order", async (req, res) => {
+  const decodedToken = await isAuthenticated(req.token);
+  const uid = decodedToken.uid;
+  const orderRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc(req.body.type);
+  await orderRef.set({ order: req.body.array });
+  res.json({
+    status: "ok!"
   });
 });
 

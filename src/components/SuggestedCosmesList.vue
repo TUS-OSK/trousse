@@ -4,8 +4,9 @@
       <div v-if="isSuggested">
         <div class="cosme" v-for="(item, type) in currentHistory" :key="type">
           <h3>{{ type }}</h3>
-          <ul>
-            <li v-for="(info, infoName) in item" :key="info.id">{{ infoName }}: {{ info }}</li>
+          <ul v-for="(info, infoName) in item" :key="infoName">
+            <li v-if="infoName==='name'">{{ infoName }}: {{ info }}</li>
+            <li v-if="infoName==='brand'">{{ infoName }}: {{ info }}</li>
           </ul>
         </div>
         <button class="suggest-btn" @click="suggestCosmes()">もう一回やる！</button>
