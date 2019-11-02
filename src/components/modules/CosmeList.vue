@@ -1,30 +1,22 @@
 <template>
-  <div id="list" class="cosme-list-component container-fluid">
-    <div
-      v-if="listType==='main'"
-      ref="cosmeList"
-      class="cosme-list main row"
-      :class="{ isOpened : isOpened[cosmeType] }"
-      :style="customProperty"
-    >
-      <div v-if="!cosmeAry.length">
-        <span>コスメを登録しましょう！</span>
-      </div>
-      <div
-        class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex"
-        v-for="cosme in cosmeAry"
-        :key="cosme.id"
-      >
-        <input
-          :id="`cosme${cosme.id}`"
-          class="input-checkbox d-none"
-          type="checkbox"
-          v-model="isChecked"
-          :value="cosme.id"
-        />
-        <label :for="`cosme${cosme.id}`" class="cosme-icon-wrap">
-          <cosme-icon @mounted="test" :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
-        </label>
+<div id="list" class="cosme-list-component container-fluid">
+  <div v-if="listType==='main'" ref="cosmeList" class="cosme-list main row" :class="{ isOpened : isOpened[cosmeType] }" :style="customProperty">
+    <div v-if="!cosmeAry.length"><span>コスメを登録しましょう！</span></div>
+    <div class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex" v-for="cosme in cosmeAry" :key="cosme.id">
+      <input :id="`cosme${cosme.id}`" class="input-checkbox d-none" type="checkbox" v-model="isChecked" :value="cosme.id">
+      <label :for="`cosme${cosme.id}`" class="cosme-icon-wrap">
+        <cosme-icon @mounted="test" :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
+      </label>
+    </div>
+    <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
+  </div>
+  <div v-else-if="listType === 'edit'">
+    <draggable class="cosme-list edit row" v-model="draggableAry" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
+      <div v-if="!cosmeAry.length"><span>コスメを登録しましょう！</span></div>
+      <div class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex align-items-center" v-for="cosme in cosmeAry" :key="cosme.id">
+        <div class="cosme-icon-wrap" @click="showEditCosmeModal(cosme.id)">
+          <cosme-icon :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
+        </div>
       </div>
       <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
     </div>
@@ -212,7 +204,8 @@ export default {
   overflow: hidden;
   padding: 8px;
   background-color: #f3e3e6;
-  transition: all 0.4s;
+  border-radius: 8px;
+  transition: all .4s;
 }
 #list .cosme-list.main {
   height: var(--origin-height);
@@ -228,6 +221,7 @@ export default {
 }
 #list .cosme-icon-wrap {
   position: relative;
+  height: 100%;
   width: 100%;
   font-size: 12px;
   text-align: center;

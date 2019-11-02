@@ -11,10 +11,8 @@
   </div>
   <div v-else class="cosme-icon edit">
     <div class="info" :class="cosme.color">
-      <div class="info">
-        <div class="name">{{ cosme.name }}</div>
-        <div class="brand">{{ cosme.brand }}</div>
-      </div>
+      <div class="name">{{ cosme.name }}</div>
+      <div class="brand">{{ cosme.brand }}</div>
     </div>
   </div>
 </div>

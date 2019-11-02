@@ -41,6 +41,10 @@ export default {
   background-color: #b97085;
 }
 
+.first-page .contents {
+  min-height: 100vh;
+}
+
 .first-page .header-page {
   position: sticky;
   top: 0;
