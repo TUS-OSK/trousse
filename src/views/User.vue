@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <main>
+      <main class="user-page">
         <h3>ユーザー名</h3>
         <p>{{ userData.name }}</p>
         <p>{{ userData.token }}</p>
@@ -61,6 +61,9 @@ export default {
 </script>
 
 <style scoped>
+.user-page {
+  background-color: #f8f3ed;
+}
 .row {
   display: flex;
   flex-direction: row;

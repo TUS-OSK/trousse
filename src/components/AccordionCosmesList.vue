@@ -36,19 +36,17 @@
     </div>
 
     <div class="accordion-wrap" :class="{ isSelected : isSelected }" v-if="listType === 'user'">
-      <div class="list-title d-flex align-items-center">
-        <ul class="check-btn">
-          <li class="name">{{ cosmesData.type }}</li>
-        </ul>
-      </div>
-      <div class="cosme-list-wrap">
-        <cosme-list
-          @mounted="getElementHeight"
-          :cosmeType="cosmesData.type"
-          :cosmeAry="cosmesData.cosmeAry"
-          :listType="listType"
-        ></cosme-list>
-      </div>
+      <ul class="check-btn">
+        <li class="name">
+          <div>{{ cosmesData.type }}</div>
+          <cosme-list
+            @mounted="getElementHeight"
+            :cosmeType="cosmesData.type"
+            :cosmeAry="cosmesData.cosmeAry"
+            :listType="listType"
+          />
+        </li>
+      </ul>
     </div>
 
     <div
