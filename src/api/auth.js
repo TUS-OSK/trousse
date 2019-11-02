@@ -15,17 +15,20 @@ const USER = {
 const DEFAULT_USER = USER
 let authCb = null
 export const auth =
-  process.env.NODE_ENV === 'production' || process.env.VUE_APP_AUTHENTICATION === 'production'
+  process.env.NODE_ENV === 'production' ||
+  process.env.VUE_APP_AUTHENTICATION === 'production'
     ? cd => firebase.auth().onAuthStateChanged(cd)
     : cb => {
-      authCb = cb
-      setTimeout(() => {
-        authCb(DEFAULT_USER)
-      }, 500)
-    }
+        authCb = cb
+        setTimeout(() => {
+          authCb(DEFAULT_USER)
+        }, 500)
+      }
 export const login = async() => {
-  console.log(process.env.VUE_APP_AUTHENTICATION)
-  if (process.env.NODE_ENV === 'production' || process.env.VUE_APP_AUTHENTICATION === 'production') {
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.VUE_APP_AUTHENTICATION === 'production'
+  ) {
     const provider = await new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithRedirect(provider)
   } else {
@@ -36,7 +39,10 @@ export const login = async() => {
   }
 }
 export const logout = async() => {
-  if (process.env.NODE_ENV === 'production' || process.env.VUE_APP_AUTHENTICATION === 'production') {
+  if (
+    process.env.NODE_ENV === 'production' ||
+    process.env.VUE_APP_AUTHENTICATION === 'production'
+  ) {
     await firebase.auth().signOut()
   } else {
     setTimeout(() => {
