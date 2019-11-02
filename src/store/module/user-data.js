@@ -77,7 +77,6 @@ export default {
       }
     },
     dragCosmeIcon(state, payload) {
-      console.log(payload.array.map(v => v.name))
       state.cosmes[payload.type] = payload.array
     }
   },
@@ -152,7 +151,6 @@ export default {
       })
     },
     dragCosme({ commit }, item) {
-      console.log(item.array)
       auth(async user => {
         const token = await user.getIdToken()
         await dragCosme.cosme('api/cosmes/order', {
@@ -160,7 +158,6 @@ export default {
           token
         })
       })
-      console.log(item)
       commit('dragCosmeIcon', item)
     }
   }

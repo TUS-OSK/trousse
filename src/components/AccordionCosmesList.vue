@@ -26,12 +26,7 @@
         </span>
       </div>
       <div class="cosme-list-wrap">
-        <cosme-list
-          @mounted="getElementHeight"
-          :cosmeType="cosmesData.type"
-          :cosmeAry="cosmesData.cosmeAry"
-          :listType="listType"
-        ></cosme-list>
+        <cosme-list @mounted="getElementHeight" :cosmeType="cosmesData.type" :listType="listType"></cosme-list>
       </div>
     </div>
 
@@ -42,7 +37,6 @@
           <cosme-list
             @mounted="getElementHeight"
             :cosmeType="cosmesData.type"
-            :cosmeAry="cosmesData.cosmeAry"
             :listType="listType"
           />
         </li>

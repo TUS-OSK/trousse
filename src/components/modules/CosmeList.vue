@@ -90,10 +90,6 @@ export default {
       type: String,
       required: true
     },
-    // draggableAry: {
-    //   type: Array,
-    //   required: true
-    // },
     listType: {
       type: String,
       required: true,
@@ -109,11 +105,9 @@ export default {
     ]),
     draggableAry: {
       get() {
-        console.log(this.$store.getters['userData/cosmes'][this.cosmeType])
         return this.$store.getters['userData/cosmes'][this.cosmeType]
       },
       set(array) {
-        console.log(array)
         const newDragCosme = {
           array: array.filter(v => v !== undefined),
           type: this.cosmeType
@@ -123,8 +117,8 @@ export default {
     },
     dragOptions() {
       return {
-        // animation: 200,
-        // disabled: false
+        animation: 200,
+        disabled: false
       }
     },
     fakeCosmes() {

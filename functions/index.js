@@ -234,7 +234,7 @@ app.patch("/cosmes/order", async (req, res) => {
     .doc(uid)
     .collection("cosmes")
     .doc(req.body.type);
-  const changeRef = await orderRef.set({ order: req.body.array });
+  await orderRef.set({ order: req.body.array });
   res.json({
     status: "ok!"
   });
