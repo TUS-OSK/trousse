@@ -5,7 +5,7 @@
       <div class="edit-area">
         <div class="cosme-list-wrap">
           <div>
-            <cosme-list :cosmeType="this.type" :cosmeAry="cosmeAry" listType="edit"></cosme-list>
+            <cosme-list :cosmeType="this.type" listType="edit"></cosme-list>
           </div>
         </div>
         <button class="modal-btn" @click="showAddCosmeModal()">コスメを追加</button>
