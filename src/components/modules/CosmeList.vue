@@ -19,14 +19,39 @@
         </div>
       </div>
       <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
-    </draggable>
-    <cosme-form-modal v-for="cosme in cosmeAry" :key="cosme.id" :formId="cosme.id" :formType="listType" :focusingType="cosmeType" :focusingCosme="cosme"/>
+    </div>
+    <div v-else-if="listType === 'edit'">
+      <draggable
+        class="cosme-list edit row"
+        v-model="draggableAry"
+        v-bind="dragOptions"
+        @start="isDragging = true"
+        @end="isDragging = false"
+      >
+        <div
+          class="cosme-button col-xl-2 col-md-3 col-sm-4 col-6 d-flex align-items-center"
+          v-for="cosme in cosmeAry"
+          :key="cosme.id"
+        >
+          <div class="cosme-icon-wrap" @click="showEditCosmeModal(cosme.id)">
+            <cosme-icon :type="cosmeType" :cosme="cosme" :iconType="listType"></cosme-icon>
+          </div>
+        </div>
+        <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
+      </draggable>
+      <cosme-form-modal
+        v-for="cosme in cosmeAry"
+        :key="cosme.id"
+        :formId="cosme.id"
+        :formType="listType"
+        :focusingType="cosmeType"
+        :focusingCosme="cosme"
+      />
+    </div>
+    <ul v-else-if="listType === 'user'">
+      <li v-for="cosme in cosmeAry" :key="cosme.id" class="cosme-list">{{ cosme.name }}</li>
+    </ul>
   </div>
-  <ul v-else-if="listType === 'user'">
-    <li v-for="cosme in cosmeAry" :key="cosme.id" class="cosme-list">{{ cosme.name }}
-    </li>
-  </ul>
-</div>
 </template>
 
 <script>
@@ -65,20 +90,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('userData', [
-      'allCosmeIds'
-    ]),
+    ...mapGetters('userData', ['allCosmeIds']),
     ...mapGetters('pages/main', [
       'unCheckedItems',
       'unCheckedTypes',
       'isOpened'
     ]),
     draggableAry: {
-      get(){
+      get() {
         return this.$store.getters['userData/cosmes'][this.cosmeType]
       },
-      set(array){
-        this.$store.dispatch('userData/dragCosme', { array, type: this.cosmeType })
+      set(array) {
+        this.$store.dispatch('userData/dragCosme', {
+          array,
+          type: this.cosmeType
+        })
       }
     },
     dragOptions() {
@@ -91,8 +117,8 @@ export default {
       return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
     },
     customProperty() {
-      if(this.mounted) {
-        if(this.isOpened[this.cosmeType]) {
+      if (this.mounted) {
+        if (this.isOpened[this.cosmeType]) {
           return {
             '--origin-height': '124px',
             '--opened-height': `${this.elmentHeight}px`
@@ -109,28 +135,35 @@ export default {
     },
     isChecked: {
       get() {
-        return this.allCosmeIds[this.cosmeType].filter(id => !this.unCheckedItems[this.cosmeType].includes(id))
+        return this.allCosmeIds[this.cosmeType].filter(
+          id => !this.unCheckedItems[this.cosmeType].includes(id)
+        )
       },
       set(value) {
         const listData = {
           type: this.cosmeType,
-          cosmes: this.allCosmeIds[this.cosmeType].filter(id => !value.includes(id))
+          cosmes: this.allCosmeIds[this.cosmeType].filter(
+            id => !value.includes(id)
+          )
         }
         this.$store.dispatch('pages/main/loadCheckedItems', listData)
 
         const unCheckedTypes = [...this.unCheckedTypes]
-        if(unCheckedTypes.includes(listData.type)) {
-          this.$store.dispatch('pages/main/loadCheckedTypes', unCheckedTypes.filter(() => !unCheckedTypes.includes(listData.type)))
+        if (unCheckedTypes.includes(listData.type)) {
+          this.$store.dispatch(
+            'pages/main/loadCheckedTypes',
+            unCheckedTypes.filter(() => !unCheckedTypes.includes(listData.type))
+          )
         }
       }
     }
   },
   methods: {
-    showEditCosmeModal(id){
+    showEditCosmeModal(id) {
       this.$modal.show(`form-modal-${id}`)
     },
     test() {
-      if(this.cosmeAry.length === ++this.renderedIconNumber) {
+      if (this.cosmeAry.length === ++this.renderedIconNumber) {
         this.elmentHeight = this.$refs.cosmeList.clientHeight
         this.$emit('mounted', this.elmentHeight)
         this.mounted = true
@@ -155,7 +188,7 @@ export default {
     transform: scale(0.96);
   }
   100% {
-    transform: scale(1.0);
+    transform: scale(1);
   }
 }
 @keyframes collapse {
@@ -170,13 +203,13 @@ export default {
 #list .cosme-list {
   overflow: hidden;
   padding: 8px;
-  background-color: #ffb9b9;
+  background-color: #f3e3e6;
   border-radius: 8px;
   transition: all .4s;
 }
 #list .cosme-list.main {
   height: var(--origin-height);
-  transition: height .3s;
+  transition: height 0.3s;
 }
 #list .cosme-list.main.isOpened {
   height: var(--opened-height);
@@ -193,19 +226,19 @@ export default {
   font-size: 12px;
   text-align: center;
   background-color: rgb(248, 241, 242);
-  border: 4px solid #B25A74;
+  border: 4px solid #b25a74;
   border-radius: 12px;
   word-break: break-all;
   overflow: hidden;
-  cursor:pointer;
+  cursor: pointer;
 }
 #list .input-checkbox + .cosme-icon-wrap {
   filter: brightness(80%);
-  transition: all .4s
+  transition: all 0.4s;
 }
 #list .input-checkbox:checked + .cosme-icon-wrap {
   filter: none;
-  animation: spring .3s;
+  animation: spring 0.3s;
 }
 #list .input-checkbox:checked + .cosme-icon-wrap::after {
   content: "";
