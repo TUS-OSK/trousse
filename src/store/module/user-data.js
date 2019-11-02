@@ -6,7 +6,8 @@ import {
   changeCosme,
   deleteCosme,
   // dragCosme,
-  fetchMain
+  fetchMain,
+  postImage
 } from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
@@ -169,6 +170,11 @@ export default {
         .map(id => state.cosmes[type].find(cosme => cosme.id === id))
         .filter(cosme => cosme !== undefined)
       commit('updateCosmes', { type, cosmes })
+    },
+    async uploadImage({ commit }, image) {
+      const res = await postImage(image)
+      console.log(res)
+      commit
     }
   }
 }
