@@ -50,6 +50,14 @@
         </div>
         <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
       </draggable>
+      <cosme-form-modal
+        v-for="cosme in cosmeAry"
+        :key="cosme.id"
+        :formId="cosme.id"
+        :formType="listType"
+        :focusingType="cosmeType"
+        :focusingCosme="cosme"
+      />
     </div>
     <div class="ul-user row" v-else-if="listType === 'user'">
       <div v-for="cosme in cosmeAry" :key="cosme.id" class="cosme-user">{{ cosme.name }}</div>
@@ -61,12 +69,13 @@
 import { mapGetters } from 'vuex'
 import CosmeIcon from '@/components/modules/CosmeIcon.vue'
 import draggable from 'vuedraggable'
-
+import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
 export default {
   name: 'cosme-list',
   components: {
     CosmeIcon,
-    draggable
+    draggable,
+    CosmeFormModal
   },
   data() {
     return {
@@ -148,7 +157,6 @@ export default {
           )
         }
         this.$store.dispatch('pages/main/loadCheckedItems', listData)
-
         const unCheckedTypes = [...this.unCheckedTypes]
         if (unCheckedTypes.includes(listData.type)) {
           this.$store.dispatch(
@@ -197,7 +205,6 @@ export default {
     height: 124px;
   }
 }
-
 #list .fake-icon {
   height: 0;
 }
