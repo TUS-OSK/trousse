@@ -35,6 +35,58 @@ app.get("/cosmes", async (req, res) => {
     return;
   }
   const uid = decodedToken.uid;
+  const cosmes = {
+    makeupbase: [],
+    foundation: [],
+    facepowder: [],
+    eyeshadow: [],
+    eyeliner: [],
+    mascara: [],
+    eyebrow: [],
+    cheek: [],
+    lipstick: [],
+    lipgloss: []
+  };
+
+  const querySnapshot = await db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .get();
+
+  // querySnapshot.forEach(doc => console.log(doc));
+
+  // // for (const doc of querySnapshot) {
+  // //   const list = await doc.collection("data").get();
+  // //   const cosmes = list.docs.map(v => v.data());
+  // //   console.log(cosmes);
+  // // }
+
+  // // const baseRef = DataRef.doc("makeupbase").collection("data");
+  // // const list = await baseRef.get();
+  // // list.forEach(v => {
+  // //   console.log(v.data());
+  // // });
+
+  // DataRef.get()
+  //   .then(snapshot => {
+  //     console.log(snapshot);
+  //     // snapshot.forEach(doc => {
+  //     //   doc
+  //     //     .collection("data")
+  //     //     .get()
+  //     //     .then(list => {
+  //     //       console.log(list);
+  //     //       list.forEach(v => {
+  //     //         cosmes[doc.id].push({ id: v.id, ...v.data() });
+  //     //       });
+  //     //     });
+  //     // });
+  //   })
+  //   .catch(console.error);
+
+  // // console.log("cosmes", cosmes);
+
   const makeupbaseRef = db
     .collection("users")
     .doc(uid)
@@ -105,18 +157,6 @@ app.get("/cosmes", async (req, res) => {
     .doc("lipgloss")
     .collection("data");
   const lipglossdatalist = await lipglossRef.get();
-  const cosmes = {
-    makeupbase: [],
-    foundation: [],
-    facepowder: [],
-    eyeshadow: [],
-    eyeliner: [],
-    mascara: [],
-    eyebrow: [],
-    cheek: [],
-    lipstick: [],
-    lipgloss: []
-  };
   makeupbasedatalist.forEach(v => {
     cosmes.makeupbase.push({ id: v.id, ...v.data() });
   });
