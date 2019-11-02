@@ -75,7 +75,7 @@ direnv edit .
 エディタ(たぶん vim)が立ち上がるので、 i を押した後に
 
 ```
-export GOOGLE_APPLICATION_CREDENTIALS='$HOME/service-account-file.json'
+export GOOGLE_APPLICATION_CREDENTIALS="$HOME/service-account-file.json"
 ```
 
 と書いて ESC キーを押して :wq で保存
