@@ -35,13 +35,55 @@ app.get("/cosmes", async (req, res) => {
     return;
   }
   const uid = decodedToken.uid;
-  const baseRef = db
+  const makeupbaseRef = db
     .collection("users")
     .doc(uid)
     .collection("cosmes")
-    .doc("base")
+    .doc("makeupbase")
     .collection("data");
-  const basedatalist = await baseRef.get();
+  const makeupbasedatalist = await makeupbaseRef.get();
+  const foundationRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc("foundation")
+    .collection("data");
+  const foundationdatalist = await foundationRef.get();
+  const facepowderRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc("facepowder")
+    .collection("data");
+  const facepowderdatalist = await facepowderRef.get();
+  const eyeshadowRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc("eyeshadow")
+    .collection("data");
+  const eyeshadowdatalist = await eyeshadowRef.get();
+  const eyelinerRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc("makeupbase")
+    .collection("data");
+  const eyelinerdatalist = await eyelinerRef.get();
+  const mascaraRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc("mascara")
+    .collection("data");
+  const mascaradatalist = await mascaraRef.get();
+  const eyebrowRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc("eyebrow")
+    .collection("data");
+  const eyebrowdatalist = await eyebrowRef.get();
   const cheekRef = db
     .collection("users")
     .doc(uid)
@@ -49,26 +91,61 @@ app.get("/cosmes", async (req, res) => {
     .doc("cheek")
     .collection("data");
   const cheekdatalist = await cheekRef.get();
-  const lipRef = db
+  const lipstickRef = db
     .collection("users")
     .doc(uid)
     .collection("cosmes")
-    .doc("lip")
+    .doc("lipstick")
     .collection("data");
-  const lipdatalist = await lipRef.get();
+  const lipstickdatalist = await lipstickRef.get();
+  const lipglossRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc("lipgloss")
+    .collection("data");
+  const lipglossdatalist = await lipglossRef.get();
   const cosmes = {
-    base: [],
+    makeupbase: [],
+    foundation: [],
+    facepowder: [],
+    eyeshadow: [],
+    eyeliner: [],
+    mascara: [],
+    eyebrow: [],
     cheek: [],
-    lip: []
+    lipstick: [],
+    lipgloss: []
   };
-  basedatalist.forEach(v => {
-    cosmes.base.push({ id: v.id, ...v.data() });
+  makeupbasedatalist.forEach(v => {
+    cosmes.makeupbase.push({ id: v.id, ...v.data() });
+  });
+  foundationdatalist.forEach(v => {
+    cosmes.foundation.push({ id: v.id, ...v.data() });
+  });
+  facepowderdatalist.forEach(v => {
+    cosmes.facepowder.push({ id: v.id, ...v.data() });
+  });
+  eyeshadowdatalist.forEach(v => {
+    cosmes.eyeshadow.push({ id: v.id, ...v.data() });
+  });
+  eyelinerdatalist.forEach(v => {
+    cosmes.eyeliner.push({ id: v.id, ...v.data() });
+  });
+  mascaradatalist.forEach(v => {
+    cosmes.mascara.push({ id: v.id, ...v.data() });
+  });
+  eyebrowdatalist.forEach(v => {
+    cosmes.eyebrow.push({ id: v.id, ...v.data() });
   });
   cheekdatalist.forEach(v => {
     cosmes.cheek.push({ id: v.id, ...v.data() });
   });
-  lipdatalist.forEach(v => {
-    cosmes.lip.push({ id: v.id, ...v.data() });
+  lipstickdatalist.forEach(v => {
+    cosmes.lipstick.push({ id: v.id, ...v.data() });
+  });
+  lipglossdatalist.forEach(v => {
+    cosmes.lipgloss.push({ id: v.id, ...v.data() });
   });
   res.json(cosmes);
 });
@@ -83,9 +160,16 @@ app.post("/cosmes", async (req, res) => {
   }
   const uid = decodedToken.uid;
   if (
-    req.body.type !== "base" &&
+    req.body.type !== "makeupbase" &&
+    req.body.type !== "foundation" &&
+    req.body.type !== "facepowder" &&
+    req.body.type !== "eyeshadow" &&
+    req.body.type !== "eyeliner" &&
+    req.body.type !== "mascara" &&
+    req.body.type !== "eyebrow" &&
     req.body.type !== "cheek" &&
-    req.body.type !== "lip"
+    req.body.type !== "lipstick" &&
+    req.body.type !== "lipgloss"
   ) {
     res.json({
       error: "コスメのTYPEが見つかりませんでした"
@@ -114,9 +198,16 @@ app.patch("/cosmes", async (req, res) => {
   }
   const uid = decodedToken.uid;
   if (
-    req.body.type !== "base" &&
+    req.body.type !== "makeupbase" &&
+    req.body.type !== "foundation" &&
+    req.body.type !== "facepowder" &&
+    req.body.type !== "eyeshadow" &&
+    req.body.type !== "eyeliner" &&
+    req.body.type !== "mascara" &&
+    req.body.type !== "eyebrow" &&
     req.body.type !== "cheek" &&
-    req.body.type !== "lip"
+    req.body.type !== "lipstick" &&
+    req.body.type !== "lipgloss"
   ) {
     res.json({
       error: "コスメのTYPEが見つかりませんでした"
@@ -146,9 +237,16 @@ app.delete("/cosmes", async (req, res) => {
   }
   const uid = decodedToken.uid;
   if (
-    req.body.type !== "base" &&
+    req.body.type !== "makeupbase" &&
+    req.body.type !== "foundation" &&
+    req.body.type !== "facepowder" &&
+    req.body.type !== "eyeshadow" &&
+    req.body.type !== "eyeliner" &&
+    req.body.type !== "mascara" &&
+    req.body.type !== "eyebrow" &&
     req.body.type !== "cheek" &&
-    req.body.type !== "lip"
+    req.body.type !== "lipstick" &&
+    req.body.type !== "lipgloss"
   ) {
     res.json({
       error: "コスメのTYPEが見つかりませんでした"

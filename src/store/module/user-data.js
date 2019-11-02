@@ -10,9 +10,16 @@ export default {
       status: STATUS.UNCHECKED
     },
     cosmes: {
-      base: [],
+      makeupbase: [],
+      foundation: [],
+      facepowder: [],
+      eyeshadow: [],
+      eyeliner: [],
+      mascara: [],
+      eyebrow: [],
       cheek: [],
-      lip: []
+      lipstick: [],
+      lipgloss: []
     },
     themes: ['spring', 'summer', 'autumn', 'winter', 'cute']
   },

@@ -63,13 +63,6 @@ export default {
     }
   },
   props: {
-    // cosmesData =  {
-    //   type: ...,
-    //   cosmeAry: ...,
-    //   accordionCosmesList: {
-    //     isOpened: ...
-    //   }
-    // }
     cosmesData: {
       type: Object,
       required: true

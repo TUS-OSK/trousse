@@ -68,10 +68,10 @@ export default {
 
 <style scoped>
 #suggest .suggest-btn {
-  background-color: #e86e9b;
+  background-color: #f3aecb;
   width: 100%;
   border-radius: 20px;
-  color: white;
+  color: gray;
   height: 40px;
   margin: 8px 0;
 }
