@@ -3,39 +3,28 @@
     <modal :name="`form-modal-${formId}`" width="100%" height="70%" :pivotY="1.0">
       <div class="cosme-form-modal container-fluid">
         <div class="form-wrap container-fluid">
-          <h3 class="title">コスメの名前</h3>
-          <div class="row">
-            <div class="col-12">
-              <input class="input-text col-12" v-model="cosmeNameText" type="text" name="name" />
-            </div>
-          </div>
-          <h3 class="title">コスメのブランド</h3>
-          <div class="row">
-            <div class="col-12">
+          <section>
+            <h3 class="title">NAME</h3>
+            <input class="input-text" v-model="cosmeNameText" type="text" name="name" />
+          </section>
+          <section>
+          <h3 class="title">BRAND</h3>
               <input class="input-text col-12" v-model="cosmeBrandText" type="text" name="name" />
-            </div>
-          </div>
-          <h3 class="title">コスメの色味</h3>
-          <div class="row">
-            <div class="col-12">
+          </section>
+          <section>
+          <h3 class="title">COLOR</h3>
               <input class="input-text col-12" v-model="cosmeColorText" type="text" name="name" />
-            </div>
-          </div>
-          <h3 class="title">コスメのテーマ</h3>
-          <div class="checkbox-group row">
-            <div class="col-3" v-for="theme in themes" :key="theme">
-              <label class="check-btn">
-                <input
-                  class="input-checkbox"
-                  v-model="cosmeThemeCheckbox"
-                  :value="theme"
-                  type="checkbox"
-                />
-                {{ toJapanese(theme) }}
-              </label>
-            </div>
-          </div>
-        </div>
+          </section>
+          <section>
+          <h3 class="title">THEME</h3>
+            <input
+              class="input-checkbox"
+              v-model="cosmeThemeCheckbox"
+              :value="theme"
+              type="checkbox"
+            />
+            <label class="check-btn">{{ toJapanese(theme) }}</label>
+          </section>
         <div class="button-group">
           <div class="update-btn" v-if="formType === 'edit'">
             <button class="modal-btn delete-btn col-6" v-on:click="showConfirmModal()">コスメを削除</button>
@@ -176,21 +165,20 @@ export default {
 }
 /* for form-modal */
 
-#modal .check-btn {
-  background-color: rgb(243, 234, 183);
-  border: 2px solid rgb(196, 183, 114);
-}
-#modal .input-text title {
-  font-size: 16px;
+#modal .title {
+  font-size: 24px;
 }
 #modal .input-text {
-  border: 2px solid rgb(196, 183, 114);
-  border-radius: 12px;
+  border: 2px solid rgb(235, 197, 164);
+  border-radius: 8px;
   font-size: 16px;
-  background-color: rgb(243, 234, 183);
+  background-color: rgb(255, 234, 210);
+  transition: border 0.1s linear;
 }
-#modal .input-text:focus,
-.input-checkbox:focus {
+#modal .check-btn {
+  border: 2px solid rgb(196, 183, 114);
+}
+#modal .input-text:focus {
   border: 2px solid rgb(182, 55, 86);
 }
 /* for btns */
