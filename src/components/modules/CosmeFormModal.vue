@@ -1,6 +1,6 @@
 <template>
   <div id="modal" class="cosme-form-modal-component">
-    <modal :name="`form-modal-${formId}`" width="100%" height="70%" :pivotY="1.0">
+    <modal :name="`form-modal-${formId}`" :scrollable="true" width="95%" height="auto">
       <div class="cosme-form-modal container-fluid">
         <div class="form-wrap container-fluid">
           <h3 class="title">コスメの名前</h3>
@@ -22,8 +22,8 @@
             </div>
           </div>
           <h3 class="title">コスメのテーマ</h3>
-          <div class="checkbox-group row">
-            <div class="col-3" v-for="theme in themes" :key="theme">
+          <div class="checkbox-group">
+            <div class="d-inline-block" v-for="theme in themes" :key="theme">
               <label class="check-btn">
                 <input
                   class="input-checkbox"

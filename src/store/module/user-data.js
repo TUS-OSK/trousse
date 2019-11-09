@@ -45,8 +45,8 @@ export default {
   },
   mutations: {
     updateUserData(state, payload) {
-      state.user.name = payload.user.name
-      state.user.token = payload.user.token
+      state.user.name = payload.name
+      state.user.token = payload.token
     },
     updateCosmeData(state, payload) {
       state.cosmes = payload.cosmes
@@ -91,7 +91,7 @@ export default {
             commit('updateLogin', true)
 
             const token = await user.getIdToken()
-            commit('uptadeUserData', {
+            commit('updateUserData', {
               name: user.displayName,
               token
             })
@@ -111,7 +111,7 @@ export default {
         })
       }
     },
-    loadMain() {},
+    loadMain() { },
     async login({ state }) {
       if (state.user.status == STATUS.LOGIN) {
         // console.log('ログアウトしてください')

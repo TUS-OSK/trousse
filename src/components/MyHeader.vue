@@ -58,7 +58,7 @@ export default {
         'edit/makeupbase': false,
         'edit/foundation': false,
         'edit/facepowder': false,
-        editeyeshadow: false,
+        'edit/eyeshadow': false,
         'edit/eyeliner': false,
         'edit/mascara': false,
         'edit/eyebrow': false,

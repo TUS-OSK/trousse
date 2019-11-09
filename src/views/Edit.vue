@@ -76,7 +76,7 @@ export default {
 .edit-page#edit {
   padding-top: 40px;
   background-color: #f8f3ed;
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
 }
 
 .modal-btn {
