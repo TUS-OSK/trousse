@@ -1,13 +1,12 @@
 <template>
   <div id="modal" class="cosme-form-modal-component">
-    <modal :name="`form-modal-${formId}`" scrollable="true" width="95%" height="auto">
+    <modal :name="`form-modal-${formId}`" :scrollable="true" width="95%" height="auto">
       <div class="cosme-form-modal container-fluid">
         <div class="form-wrap container-fluid">
           <h3 class="title">コスメの名前</h3>
           <div class="row">
             <div class="col-12">
               <input class="input-text col-12" v-model="cosmeNameText" type="text" name="name" />
-              <span class="far fa-times-circle"></span>
             </div>
           </div>
           <h3 class="title">コスメのブランド</h3>
