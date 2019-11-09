@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="root">
     <router-view />
     <div id="load-auth" class="load-page" v-if="!viewPage">
       <div class="load-img"><span class="load-txt">Loading...</span></div>
@@ -14,7 +14,7 @@ export default {
   computed: {
     viewPage() {
       return this.$store.getters['userData/status'] !== STATUS.UNCHECKED
-      //このAPPはユーザーのログイン状態がチェックされるまでは画面を表示しません
+      //このrootはユーザーのログイン状態がチェックされるまでは画面を表示しません
       //ユーザーのログイン状態はinitアクションのauthenticatinのオブザーバーによってチェックされます
       //initアクションはuserDataストアに存在し、Vueインスタンス作成時に呼び出されます
     }
@@ -24,41 +24,39 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700|Ubuntu:500&display=swap');
 
-#app {
+#root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'Ubuntu', 'M PLUS Rounded 1c', sans-serif
 }
 
-/* global */
-body {
-  font-family: 'Ubuntu', sans-serif;
-}
-
-body h2 {
+#root h2 {
   font-weight: 900;
 }
-body h3 {
+#root h3 {
   font-weight: 800;
 }
 
-body a:hover {
+#root a:hover {
   text-decoration: none;
 }
 
-body button, body button:focus {
+#root button, #root button:focus {
   border: none;
   outline: none;
 }
 
-body label, body p {
+#root label, #root p {
   margin-bottom: 0;
 }
 
-body input, body button{
+#root input, #root button{
   outline: none;
 }
+
+/* global */
 
 /* load-page */
 .load-page#load-auth {

@@ -1,30 +1,49 @@
 <template>
   <div id="modal" class="cosme-form-modal-component">
-    <modal :name="`form-modal-${formId}`" width="100%" height="70%" :pivotY="1.0">
+    <modal :name="`form-modal-${formId}`" :scrollable="true" width="95%" height="auto">
       <div class="cosme-form-modal container-fluid">
         <div class="form-wrap container-fluid">
-          <section>
-            <h3 class="title">NAME</h3>
-            <input class="input-text" v-model="cosmeNameText" type="text" name="name" />
+          <section class="input-form">
+            <label class="title">NAME</label>
+            <input class="input-text" v-model="cosmeNameText" type="text" name="name" :placeholder="`xxx-${focusingType}`"/>
           </section>
-          <section>
-          <h3 class="title">BRAND</h3>
-              <input class="input-text col-12" v-model="cosmeBrandText" type="text" name="name" />
+          <section class="input-form">
+            <label class="title">BRAND</label>
+            <input class="input-text" v-model="cosmeBrandText" type="text" name="name" placeholder="xxx-brand"/>
           </section>
-          <section>
-          <h3 class="title">COLOR</h3>
-              <input class="input-text col-12" v-model="cosmeColorText" type="text" name="name" />
+          <section class="input-form">
+            <label class="title">COLOR</label>
+            <input class="input-text" v-model="cosmeColorText" type="text" name="name" placeholder="beige"/>
           </section>
-          <section>
-          <h3 class="title">THEME</h3>
-            <input
-              class="input-checkbox"
-              v-model="cosmeThemeCheckbox"
-              :value="theme"
-              type="checkbox"
-            />
-            <label class="check-btn">{{ toJapanese(theme) }}</label>
+          <section class="input-form">
+            <label class="title">THEME</label>
+            <div class="checkbox-group">
+              <div
+                class="check-button-wrap d-inline-block"
+                v-for="(theme, index) in themes"
+                :key="theme"
+              >
+                <input
+                  :id="`input-${index}`"
+                  class="input-checkbox d-none"
+                  v-model="cosmeThemeCheckbox"
+                  :value="theme"
+                  type="checkbox"
+                />
+                <label class="check-btn" :for="`input-${index}`">
+                  <span class="checkbox-wrap d-flex align-items-center justify-content-center">
+                    <span class="stick"></span>
+                    <span class="stick"></span>
+                    <span class="checkbox"></span>
+                    <span class="stick"></span>
+                    <span class="stick"></span>
+                  </span>
+                  <span class="checkvalue d-flex align-items-center">{{ toJapanese(theme) }}</span>
+                </label>
+              </div>
+            </div>
           </section>
+        </div>
         <div class="button-group">
           <div class="update-btn" v-if="formType === 'edit'">
             <button class="modal-btn delete-btn col-6" v-on:click="showConfirmModal()">コスメを削除</button>
@@ -34,7 +53,7 @@
             <button class="modal-btn register-btn" v-on:click="updateCosmeInfo()">コスメを登録</button>
           </div>
         </div>
-        <modal :name="`delete-modal-${formId}`" width="100%" height="30%" :pivotY="1.0">
+        <modal :name="`delete-modal-${formId}`" width="95%" height="30%">
           <div class="cosme-delete-modal container-fluid">
             <div class="warning">
               <h3 class="title">Warning!</h3>
@@ -156,28 +175,112 @@ export default {
 #modal .cosme-form-modal {
   position: relative;
   height: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 32px 16px;
 }
 #modal .cosme-delete-modal {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 32px 16px;
 }
 /* for form-modal */
 
-#modal .title {
-  font-size: 24px;
+#modal .input-form {
+  margin-bottom: 16px;
 }
-#modal .input-text {
-  border: 2px solid rgb(235, 197, 164);
-  border-radius: 8px;
+
+#modal .input-form .title {
+  color: rgb(55, 26, 26);
+  font-size: 20px;
+  font-weight: 500;
+}
+#modal .input-form .input-text {
+  color: black;
   font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid rgb(235, 197, 164);
+  border-radius: 4px;
   background-color: rgb(255, 234, 210);
   transition: border 0.1s linear;
 }
-#modal .check-btn {
-  border: 2px solid rgb(196, 183, 114);
+#modal .input-form .input-text::placeholder {
+  color: rgba(210, 138, 138, 0.762);
 }
+
+#modal .check-btn {
+  display: inline-block;
+  width: auto;
+}
+#modal .check-btn {
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+}
+#modal .check-btn .checkvalue > * {
+  margin-right: 4px;
+}
+#modal .check-btn .checkbox-wrap {
+  width: 40px;
+  height: 40px;
+}
+#modal .check-btn .checkvalue {
+  font-size: 16px;
+}
+
+#modal .check-btn .checkbox {
+  content: "";
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+  border: 2px solid gray;
+  /* #f56868; */
+  transition: all 0.2s;
+}
+
+#modal .input-checkbox:checked + .check-btn .checkbox {
+  animation: shrink 0.1s;
+  opacity: 1;
+  background-color: #f3aecb;
+  /* #f56868e3; */
+}
+#modal .input-checkbox + .check-btn .stick {
+  position: absolute;
+  height: 0px;
+  width: 2px;
+  border-radius: 2px;
+  background-color: #f56868;
+  transition: all 0.4s;
+}
+#modal .input-checkbox:checked + .check-btn .stick {
+  animation: stick 0.4s;
+}
+#modal .input-checkbox + .check-btn .stick:nth-child(1) {
+  transition: all 0.4s;
+  transform: translate(-12px, -8px) rotate(-65deg);
+}
+#modal .input-checkbox:checked + .check-btn .stick:nth-child(1) {
+  transform: translate(-18px, -12px) rotate(-65deg);
+}
+#modal .input-checkbox + .check-btn .stick:nth-child(2) {
+  transform: translate(-8px, -12px) rotate(-25deg);
+}
+#modal .input-checkbox:checked + .check-btn .stick:nth-child(2) {
+  transform: translate(-12px, -18px) rotate(-25deg);
+}
+#modal .input-checkbox + .check-btn .stick:nth-child(4) {
+  transition: all 0.4s;
+  transform: translate(8px, 12px) rotate(-25deg);
+}
+#modal .input-checkbox:checked + .check-btn .stick:nth-child(4) {
+  transform: translate(12px, 18px) rotate(-25deg);
+}
+#modal .input-checkbox + .check-btn .stick:nth-child(5) {
+  transform: translate(12px, 8px) rotate(-65deg);
+}
+#modal .input-checkbox:checked + .check-btn .stick:nth-child(5) {
+  transform: translate(18px, 12px) rotate(-65deg);
+}
+
 #modal .input-text:focus {
   border: 2px solid rgb(182, 55, 86);
 }
