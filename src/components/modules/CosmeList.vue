@@ -29,9 +29,6 @@
       <div class="fake-icon col-xl-2 col-md-3 col-4" v-for="i in fakeCosmes" :key="i"></div>
     </div>
     <div v-else-if="listType === 'edit'">
-      <div v-if="!draggableAry.length">
-        <span>コスメを登録しましょう！</span>
-      </div>
       <draggable
         class="cosme-list edit row"
         v-model="draggableAry"
@@ -205,6 +202,9 @@ export default {
 }
 #list .fake-icon {
   height: 0;
+}
+#list .cosme-list-error-wrap {
+  background-color: #f3e3e6;
 }
 #list .cosme-list {
   overflow: hidden;
