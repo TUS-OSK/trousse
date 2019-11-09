@@ -45,8 +45,8 @@ export default {
   },
   mutations: {
     updateUserData(state, payload) {
-      state.user.name = payload.user.name
-      state.user.token = payload.user.token
+      state.user.name = payload.name
+      state.user.token = payload.token
     },
     updateCosmeData(state, payload) {
       state.cosmes = payload.cosmes
