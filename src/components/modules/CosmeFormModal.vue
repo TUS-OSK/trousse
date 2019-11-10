@@ -1,6 +1,6 @@
 <template>
   <div id="modal" class="cosme-form-modal-component">
-    <modal :name="`form-modal-${formId}`" :scrollable="true" width="95%" height="auto">
+    <modal :name="`form-modal-${formId}`" :scrollable="true" width="95%" height="auto" :plotY="1.0">
       <div class="cosme-form-modal container-fluid">
         <div class="form-wrap container-fluid">
           <section class="input-form">
@@ -90,7 +90,8 @@ export default {
       required: true
     },
     focusingCosme: {
-      type: Object
+      type: Object,
+      required: true
     }
   },
   data() {

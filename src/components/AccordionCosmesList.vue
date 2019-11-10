@@ -56,14 +56,14 @@
 </template>
 
 <script>
-import CosmeList from '@/components/modules/CosmeList.vue'
+// import CosmeList from '@/components/templates/CosmeList.vue'
 
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'accordion-cosmes-list',
   components: {
-    CosmeList
+    // CosmeList
   },
   data() {
     return {

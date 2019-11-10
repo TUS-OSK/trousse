@@ -5,7 +5,8 @@ import {
   creatCosme,
   changeCosme,
   deleteCosme,
-  dragCosme
+  // dragCosme,
+  fetchMain
 } from '../../api'
 import { STATUS } from '@/constant'
 import { auth, login, logout } from '@/api/auth'
@@ -13,6 +14,8 @@ import { auth, login, logout } from '@/api/auth'
 export default {
   state: {
     user: {
+      name: null,
+      token: null,
       status: STATUS.UNCHECKED
     },
     cosmes: {
@@ -51,7 +54,9 @@ export default {
     updateCosmeData(state, payload) {
       state.cosmes = payload.cosmes
     },
-
+    updateCosmes(state, payload) {
+      state.cosmes[payload.type] = payload.cosmes
+    },
     updateLogin(state, payload) {
       state.user.status = payload ? STATUS.LOGIN : STATUS.LOGOUT
     },
@@ -75,9 +80,6 @@ export default {
           v => v.id !== payload.id
         )
       }
-    },
-    dragCosmeIcon(state, payload) {
-      state.cosmes[payload.type] = payload.array
     }
   },
 
@@ -89,13 +91,14 @@ export default {
           if (user) {
             // console.log('オブザーバーは君のことをみてるよ')
             commit('updateLogin', true)
+            console.log(user)
 
             const token = await user.getIdToken()
             commit('updateUserData', {
               name: user.displayName,
               token
             })
-            const cosmeData = await fetchCosme(token)
+            const cosmeData = process.env.NODE_ENV === 'productin' ? await fetchCosme(token) : await fetchMain()
             commit('updateCosmeData', cosmeData)
 
             if (router.currentRoute.name === 'login') {
@@ -111,7 +114,6 @@ export default {
         })
       }
     },
-    loadMain() { },
     async login({ state }) {
       if (state.user.status == STATUS.LOGIN) {
         // console.log('ログアウトしてください')
@@ -126,39 +128,32 @@ export default {
         logout()
       }
     },
-    async registerCosmeInfo({ commit }, item) {
-      auth(async user => {
-        const token = await user.getIdToken()
-        const res = await creatCosme.cosme('api/cosmes', { item, token })
-        item.info.id = res.id
-        commit('registerCosmeInformation', item)
-      })
+    async registerCosmeInfo({ commit, state }, item) {
+      const { token } = state.user
+      const res = await creatCosme.cosme('api/cosmes', { item, token })
+      item.info.id = res.id
+      commit('registerCosmeInformation', item)
     },
-    async changeCosmeInfo({ commit }, item) {
-      auth(async user => {
-        const token = await user.getIdToken()
-        const res = await changeCosme.cosme('api/cosmes', { item, token })
-        res.id = item.info.id
-        commit('changeCosmeInformation', item)
-      })
+    async changeCosmeInfo({ commit, state }, item) {
+      const { token } = state.user
+      commit('changeCosmeInformation', item)
+      await changeCosme.cosme('api/cosmes', { item, token })
     },
-    deleteCosmeInfo({ commit }, item) {
+    async deleteCosmeInfo({ commit, state }, item) {
+      const { token } = state.user
       commit('deleteCosmeInformation', item)
-      auth(async user => {
-        const token = await user.getIdToken()
-        const res = await deleteCosme.cosme('api/cosmes', { item, token })
-        res.id = item.id
-      })
+      await deleteCosme.cosme('api/cosmes', { item, token })
     },
-    dragCosme({ commit }, item) {
-      auth(async user => {
-        const token = await user.getIdToken()
-        await dragCosme.cosme('api/cosmes/order', {
-          item: { type: item.type, array: item.array.map(v => v.id) },
-          token
-        })
-      })
-      commit('dragCosmeIcon', item)
+    async reorderCosmeInfo({ commit, state }, { cosmeIds, type }) {
+      // const { token } = state.user
+      // await dragCosme.cosme('api/cosmes/order', {
+      //   item: { type, array: cosmeIds },
+      //   token
+      // })
+      const cosmes = cosmeIds
+        .map(id => state.cosmes[type].find(cosme => cosme.id === id))
+        .filter(cosme => cosme !== undefined)
+      commit('updateCosmes', { type, cosmes })
     }
   }
 }

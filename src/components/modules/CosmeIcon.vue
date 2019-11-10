@@ -1,70 +1,89 @@
 <template>
-<div id="icon" class="cosme-icon-component">
-  <div v-if="iconType === 'main'" class="cosme-icon main" :class="cosme.color">
-    <div class="info">
-      <div class="name">{{ cosme.name }}</div>
-      <div class="brand">{{ cosme.brand }}</div>
-      <div class="theme">
-        <span v-for="(theme, index) in cosme.theme" :key="`$theme-${cosme.id}-${index}`">{{ theme }}</span>
+  <div id="icon" class="cosme-icon-component">
+    <button class="cosme-icon" @click="onClick()">
+      <div class="info">
+        <span class="name">{{ cosme.name }}</span>
+        <span class="brand">{{ cosme.brand }}</span>
+        <div class="theme-group">
+          <span class="theme d-inline-block" v-for="(theme, index) in cosme.theme" :key="`$theme-${cosme.id}-${index}`">{{ toJapanese(theme) }}</span>
+        </div>
       </div>
-    </div>
+    </button>
   </div>
-  <div v-else class="cosme-icon edit">
-    <div class="info" :class="cosme.color">
-      <div class="name">{{ cosme.name }}</div>
-      <div class="brand">{{ cosme.brand }}</div>
-    </div>
-  </div>
-</div>
 </template>
 
 <script>
-
 export default {
   name: 'cosme-icon',
+  data() {
+    return {
+      acitve: true
+    }
+  },
   props: {
     iconType: {
       type: String,
       required: true,
       validator: value => ['main', 'edit'].includes(value)
     },
-    type: {
-      type: String,
-      required: true
-    },
     cosme: {
       type: Object,
       required: true
+    },
+    onClick: {
+      type: Function
     }
   },
-   computed: {
-    themes() {
-      return this.$store.getters['userData/themes']
+  methods: {
+    toJapanese(word) {
+      switch (word) {
+        case 'spring':
+          return '春'
+        case 'summer':
+          return '夏'
+        case 'autumn':
+          return '秋'
+        case 'winter':
+          return '冬'
+      }
+      return word
     }
-  },
-  mounted() {
-    this.$emit('mounted')
   }
 }
 </script>
 
 <style scoped>
+.cosme-icon-component#icon {
+  width: 100%;
+  height: 100px;
+}
 #icon .cosme-icon {
-  position: absolute;
-  top: 20%;
-  right: 0;
-  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background-color: white;
+  border: 4px solid #b25a74;
+  text-align: center;
+  background-color: rgb(248, 241, 242);
+  word-break: break-all;
+  overflow: scroll;
+  cursor: pointer;
 }
 
-#icon .cosme-icon-component.sortable-ghost {
-  opacity: 0;
+#icon .cosme-icon .info {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  justify-content: center;
 }
 
-#icon .show-modal-button {
-  border-radius: 10px;
-  font-family: "serif";
-  max-height: 100%;
-  margin-bottom: 8px;
+#icon .cosme-icon .info .theme {
+  background-color: rgba(221, 105, 149, 0.762);
+  border-radius: 4px;
+  margin: 2px;
+  padding: 1px 3px;
+  color: #fff3f3dd
 }
 
 .pink {

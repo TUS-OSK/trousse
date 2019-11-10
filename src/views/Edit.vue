@@ -1,29 +1,41 @@
 <template>
   <div id="edit" class="edit-page container-fluid">
+    {{modalStatus}}
+    <h2 class="sub-title">EDIT</h2>
     <main class="edit-inner">
-      <h2 class="sub-title">{{ type }}の編集画面</h2>
+      <h3 class="sub-sub-title">{{ type }}</h3>
       <div class="edit-area">
         <div class="cosme-list-wrap">
           <div>
-            <cosme-list :cosmeType="this.type" listType="edit"></cosme-list>
+            <draggable-list v-model="cosmeIds">
+              <template #default="draggableListProps">
+                <cosme-icon v-bind="cosmeIconProps(draggableListProps.cosmeId)" :onClick="onOpen"></cosme-icon>
+              </template>
+            </draggable-list>
           </div>
         </div>
-        <button class="modal-btn" @click="showAddCosmeModal()">コスメを追加</button>
-        <cosme-form-modal formId="new" formType="register" :focusingType="type" />
       </div>
     </main>
+    <modal :active="modal.status" :onClose="onClose">
+      <update-form formType="edit" :focusingType="this.type" :focusingId="modal.focusingId"></update-form>
+    </modal>
   </div>
 </template>
 
 <script>
-import CosmeList from '@/components/modules/CosmeList.vue'
-import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
+import DraggableList from '@/components/templates/DraggableList.vue'
+import CosmeIcon from '@/components/modules/CosmeIcon.vue'
+import Modal from '@/components/templates/Modal.vue'
+import UpdateForm from '@/components/UpdateForm.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'edit',
   components: {
-    CosmeList,
-    CosmeFormModal
+    DraggableList,
+    CosmeIcon,
+    Modal,
+    UpdateForm
   },
   props: {
     type: {
@@ -33,28 +45,47 @@ export default {
   },
   data() {
     return {
-      addCosmeValue: 'コスメを追加',
-      isDragging: false,
-      cosmesData: {
-        type: this.type,
-        cosmeAry: this.$store.getters['userData/cosmes'][this.type]
+      modal: {
+        status: false,
+        focusingId: null
       }
     }
   },
-  methods: {
-    showAddCosmeModal() {
-      this.$modal.show('form-modal-new')
-    }
-  },
   computed: {
+    ...mapGetters('userData', ['cosmes']),
     cosmeAry() {
-      return this.$store.getters['userData/cosmes'][this.type]
+      console.log(this.cosmes)
+      return this.cosmes[this.type]
     },
-    cosmeIdcount() {
-      return this.$store.getters['userData/cosmeIdCount']
+    cosmeIds: {
+      get() {
+        console.log(this.cosmeAry)
+        return this.cosmeAry.map(cosme => cosme.id)
+      },
+      set(array) {
+        this.$store.dispatch(
+          'userData/reorderCosmeInfo',
+          {type: this.type, cosmeIds: array}
+        )
+      }
     },
     fakeCosmes() {
       return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
+    }
+  },
+  methods: {
+    cosmeIconProps(cosmeId) {
+      return {
+        iconType: 'edit',
+        cosme: this.cosmes[this.type].find(cosme => cosme.id === cosmeId)
+      }
+    },
+    onOpen(id) {
+      this.modal.focusingId = id
+      this.modal.status = true
+    },
+    onClose() {
+      this.modal.status = false
     }
   }
 }
