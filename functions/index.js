@@ -35,6 +35,7 @@ app.get("/cosmes", async (req, res) => {
     return;
   }
   const uid = decodedToken.uid;
+  const cosmeOrder = [];
   const cosmes = {
     makeupbase: [],
     foundation: [],
@@ -48,45 +49,6 @@ app.get("/cosmes", async (req, res) => {
     lipgloss: []
   };
 
-  const querySnapshot = await db
-    .collection("users")
-    .doc(uid)
-    .collection("cosmes")
-    .get();
-
-  // querySnapshot.forEach(doc => console.log(doc));
-
-  // // for (const doc of querySnapshot) {
-  // //   const list = await doc.collection("data").get();
-  // //   const cosmes = list.docs.map(v => v.data());
-  // //   console.log(cosmes);
-  // // }
-
-  // // const baseRef = DataRef.doc("makeupbase").collection("data");
-  // // const list = await baseRef.get();
-  // // list.forEach(v => {
-  // //   console.log(v.data());
-  // // });
-
-  // DataRef.get()
-  //   .then(snapshot => {
-  //     console.log(snapshot);
-  //     // snapshot.forEach(doc => {
-  //     //   doc
-  //     //     .collection("data")
-  //     //     .get()
-  //     //     .then(list => {
-  //     //       console.log(list);
-  //     //       list.forEach(v => {
-  //     //         cosmes[doc.id].push({ id: v.id, ...v.data() });
-  //     //       });
-  //     //     });
-  //     // });
-  //   })
-  //   .catch(console.error);
-
-  // // console.log("cosmes", cosmes);
-
   const makeupbaseRef = db
     .collection("users")
     .doc(uid)
@@ -94,6 +56,13 @@ app.get("/cosmes", async (req, res) => {
     .doc("makeupbase")
     .collection("data");
   const makeupbasedatalist = await makeupbaseRef.get();
+
+  const makeupRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes");
+  const makeupdatalist = await makeupRef.get();
+
   const foundationRef = db
     .collection("users")
     .doc(uid)
@@ -157,9 +126,33 @@ app.get("/cosmes", async (req, res) => {
     .doc("lipgloss")
     .collection("data");
   const lipglossdatalist = await lipglossRef.get();
-  makeupbasedatalist.forEach(v => {
-    cosmes.makeupbase.push({ id: v.id, ...v.data() });
+
+  makeupdatalist.forEach(v => {
+    cosmeOrder.push(v.data().order);
   });
+  console.log(cosmeOrder);
+
+  for (var t = 0; t < cosmeOrder.length; t++) {
+    for (var j = 0; j <= cosmeOrder[t].length; j++) {
+      makeupbasedatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.makeupbase.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
+      lipglossdatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.lipgloss.push({ id: i, ...v.data() });
+        }
+      });
+    }
+  }
+  console.log(cosmes.makeupbase);
+  console.log(cosmes.lipgloss);
+
   foundationdatalist.forEach(v => {
     cosmes.foundation.push({ id: v.id, ...v.data() });
   });
@@ -184,11 +177,12 @@ app.get("/cosmes", async (req, res) => {
   lipstickdatalist.forEach(v => {
     cosmes.lipstick.push({ id: v.id, ...v.data() });
   });
-  lipglossdatalist.forEach(v => {
-    cosmes.lipgloss.push({ id: v.id, ...v.data() });
-  });
+  // lipglossdatalist.forEach(v => {
+  //   cosmes.lipgloss.push({ id: v.id, ...v.data() });
+  // });
   res.json(cosmes);
 });
+
 app.post("/cosmes", async (req, res) => {
   const decodedToken = await isAuthenticated(req.token);
   if (decodedToken === null) {
