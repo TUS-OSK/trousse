@@ -127,6 +127,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    makeupbasedatalist.forEach(v => {
+      cosmes.makeupbase.push({ id: v.id, ...v.data() });
+    });
   }
   if (foundationOrderList.data() !== undefined) {
     for (i = 0; i <= foundationOrderList.data().order.length; i++) {
@@ -136,6 +140,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    foundationdatalist.forEach(v => {
+      cosmes.foundation.push({ id: v.id, ...v.data() });
+    });
   }
   if (facepowderOrderList.data() !== undefined) {
     for (i = 0; i <= facepowderOrderList.data().order.length; i++) {
@@ -145,6 +153,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    facepowderdatalist.forEach(v => {
+      cosmes.facepowder.push({ id: v.id, ...v.data() });
+    });
   }
   if (eyeshadowOrderList.data() !== undefined) {
     for (i = 0; i <= eyeshadowOrderList.data().order.length; i++) {
@@ -154,6 +166,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    eyeshadowdatalist.forEach(v => {
+      cosmes.eyeshadow.push({ id: v.id, ...v.data() });
+    });
   }
   if (eyelinerOrderList.data() !== undefined) {
     for (i = 0; i <= eyelinerOrderList.data().order.length; i++) {
@@ -163,6 +179,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    eyelinerdatalist.forEach(v => {
+      cosmes.eyeliner.push({ id: v.id, ...v.data() });
+    });
   }
   if (mascaraOrderList.data() !== undefined) {
     for (i = 0; i <= mascaraOrderList.data().order.length; i++) {
@@ -172,6 +192,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    mascaradatalist.forEach(v => {
+      cosmes.mascara.push({ id: v.id, ...v.data() });
+    });
   }
   if (eyebrowOrderList.data() !== undefined) {
     for (i = 0; i <= eyebrowOrderList.data().order.length; i++) {
@@ -181,6 +205,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    eyebrowdatalist.forEach(v => {
+      cosmes.eyebrow.push({ id: v.id, ...v.data() });
+    });
   }
   if (cheekOrderList.data() !== undefined) {
     for (i = 0; i <= cheekOrderList.data().order.length; i++) {
@@ -190,6 +218,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    cheekdatalist.forEach(v => {
+      cosmes.cheek.push({ id: v.id, ...v.data() });
+    });
   }
   if (lipstickOrderList.data() !== undefined) {
     for (i = 0; i <= lipstickOrderList.data().order.length; i++) {
@@ -199,6 +231,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    lipstickdatalist.forEach(v => {
+      cosmes.lipstick.push({ id: v.id, ...v.data() });
+    });
   }
   if (lipglossOrderList.data() !== undefined) {
     for (i = 0; i <= lipglossOrderList.data().order.length; i++) {
@@ -208,6 +244,10 @@ app.get("/cosmes", async (req, res) => {
         }
       });
     }
+  } else {
+    lipglossdatalist.forEach(v => {
+      cosmes.lipgloss.push({ id: v.id, ...v.data() });
+    });
   }
 
   res.json(cosmes);
@@ -244,10 +284,10 @@ app.post("/cosmes", async (req, res) => {
     .collection("cosmes")
     .doc(req.body.type)
     .collection("data");
-  const addReq = await usersRef.add(req.body.info);
+  const addRef = await usersRef.add(req.body.info);
   res.json({
     status: "ok!",
-    id: addReq.id
+    id: addRef.id
   });
 });
 
