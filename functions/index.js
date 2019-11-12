@@ -49,6 +49,12 @@ app.get("/cosmes", async (req, res) => {
     lipgloss: []
   };
 
+  const makeupRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes");
+  const makeupdatalist = await makeupRef.get();
+
   const makeupbaseRef = db
     .collection("users")
     .doc(uid)
@@ -56,13 +62,6 @@ app.get("/cosmes", async (req, res) => {
     .doc("makeupbase")
     .collection("data");
   const makeupbasedatalist = await makeupbaseRef.get();
-
-  const makeupRef = db
-    .collection("users")
-    .doc(uid)
-    .collection("cosmes");
-  const makeupdatalist = await makeupRef.get();
-
   const foundationRef = db
     .collection("users")
     .doc(uid)
@@ -142,6 +141,70 @@ app.get("/cosmes", async (req, res) => {
       });
     }
     for (j = 0; j <= cosmeOrder[t].length; j++) {
+      foundationdatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.foundation.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
+      facepowderdatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.facepowder.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
+      eyeshadowdatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.eyeshadow.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
+      eyelinerdatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.eyeliner.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
+      mascaradatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.mascara.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
+      eyebrowdatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.eyebrow.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
+      cheekdatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.cheek.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
+      lipstickdatalist.forEach(v => {
+        const i = v.id;
+        if (cosmeOrder[t][j] === i) {
+          cosmes.lipstick.push({ id: i, ...v.data() });
+        }
+      });
+    }
+    for (j = 0; j <= cosmeOrder[t].length; j++) {
       lipglossdatalist.forEach(v => {
         const i = v.id;
         if (cosmeOrder[t][j] === i) {
@@ -153,33 +216,37 @@ app.get("/cosmes", async (req, res) => {
   console.log(cosmes.makeupbase);
   console.log(cosmes.lipgloss);
 
-  foundationdatalist.forEach(v => {
-    cosmes.foundation.push({ id: v.id, ...v.data() });
-  });
-  facepowderdatalist.forEach(v => {
-    cosmes.facepowder.push({ id: v.id, ...v.data() });
-  });
-  eyeshadowdatalist.forEach(v => {
-    cosmes.eyeshadow.push({ id: v.id, ...v.data() });
-  });
-  eyelinerdatalist.forEach(v => {
-    cosmes.eyeliner.push({ id: v.id, ...v.data() });
-  });
-  mascaradatalist.forEach(v => {
-    cosmes.mascara.push({ id: v.id, ...v.data() });
-  });
-  eyebrowdatalist.forEach(v => {
-    cosmes.eyebrow.push({ id: v.id, ...v.data() });
-  });
-  cheekdatalist.forEach(v => {
-    cosmes.cheek.push({ id: v.id, ...v.data() });
-  });
-  lipstickdatalist.forEach(v => {
-    cosmes.lipstick.push({ id: v.id, ...v.data() });
-  });
+  // makeupbasedatalist.forEach(v => {
+  //   cosmes.makeupbase.push({ id: v.id, ...v.data() });
+  // });
+  // foundationdatalist.forEach(v => {
+  //   cosmes.foundation.push({ id: v.id, ...v.data() });
+  // });
+  // facepowderdatalist.forEach(v => {
+  //   cosmes.facepowder.push({ id: v.id, ...v.data() });
+  // });
+  // eyeshadowdatalist.forEach(v => {
+  //   cosmes.eyeshadow.push({ id: v.id, ...v.data() });
+  // });
+  // eyelinerdatalist.forEach(v => {
+  //   cosmes.eyeliner.push({ id: v.id, ...v.data() });
+  // });
+  // mascaradatalist.forEach(v => {
+  //   cosmes.mascara.push({ id: v.id, ...v.data() });
+  // });
+  // eyebrowdatalist.forEach(v => {
+  //   cosmes.eyebrow.push({ id: v.id, ...v.data() });
+  // });
+  // cheekdatalist.forEach(v => {
+  //   cosmes.cheek.push({ id: v.id, ...v.data() });
+  // });
+  // lipstickdatalist.forEach(v => {
+  //   cosmes.lipstick.push({ id: v.id, ...v.data() });
+  // });
   // lipglossdatalist.forEach(v => {
   //   cosmes.lipgloss.push({ id: v.id, ...v.data() });
   // });
+
   res.json(cosmes);
 });
 
