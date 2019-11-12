@@ -3,15 +3,15 @@
     <div class="form-wrap container-fluid">
       <section class="input-form">
         <label class="title">NAME</label>
-        <input class="input-text" v-model="cosmeNameText" type="text" name="name" :placeholder="`xxx-${focusingType}`"/>
+        <input class="input-text" v-model="info.name" type="text" name="name" :placeholder="`xxx-item`"/>
       </section>
       <section class="input-form">
         <label class="title">BRAND</label>
-        <input class="input-text" v-model="cosmeBrandText" type="text" name="name" placeholder="xxx-brand"/>
+        <input class="input-text" v-model="info.brand" type="text" name="name" placeholder="xxx-brand"/>
       </section>
       <section class="input-form">
         <label class="title">COLOR</label>
-        <input class="input-text" v-model="cosmeColorText" type="text" name="name" placeholder="beige"/>
+        <input class="input-text" v-model="info.color" type="text" name="name" placeholder="beige"/>
       </section>
       <section class="input-form">
         <label class="title">THEME</label>
@@ -24,7 +24,7 @@
             <input
               :id="`input-${index}`"
               class="input-checkbox d-none"
-              v-model="cosmeThemeCheckbox"
+              v-model="info.themes"
               :value="theme"
               type="checkbox"
             />
@@ -42,19 +42,20 @@
         </div>
       </section>
     </div>
-    <div class="button-group container-fluid">
-      <div class="update-btn row" v-if="formType === 'edit'">
-        <button class="update-btn delete-btn col-6" >コスメを削除</button>
-        <button class="update-btn change-btn col-6" >コスメを更新</button>
+    <div class="container-fluid">
+      <div class="d-block btn-group row" v-if="focusingCosme === null">
+        <button class="update-btn register-btn col-12" @click="onSubmit('register', info)">コスメを登録</button>
       </div>
-      <div class="update-btn row" v-else>
-        <button class="update-btn register-btn col-12" v-on:click="updateCosmeInfo()">コスメを登録</button>
+      <div class="d-block btn-group row" v-else>
+        <button class="update-btn delete-btn col-6" @click="onSubmit('delete', info)">コスメを削除</button>
+        <button class="update-btn change-btn col-6" @click="onSubmit('change', info)">コスメを更新</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'update-form',
   props: {
@@ -63,61 +64,42 @@ export default {
       required: true,
       validator: value => ['edit', 'register'].includes(value)
     },
-    focusingType: {
-      type: String,
+    focusingCosme: {
+      type: Object,
       required: true
     },
-    focusingId: {
-      type: String,
+    onSubmit: {
+      type: Function,
       required: true
     }
   },
   data() {
-    if (this.formType === 'edit') {
+    if (this.focusingCosme === undefined) {
       return {
-        cosmeBrandText: this.focusingCosme.brand,
-        cosmeNameText: this.focusingCosme.name,
-        cosmeColorText: this.focusingCosme.color,
-        cosmeThemeCheckbox: this.focusingCosme.theme
+        info: {
+          brand: '',
+          name: '',
+          color: '',
+          themes: []
+        }
       }
-    } else if (this.formType === 'register') {
+    } else {
+      const cosme = {...this.focusingCosme}
       return {
-        cosmeBrandText: '',
-        cosmeNameText: '',
-        cosmeColorText: '',
-        cosmeThemeCheckbox: []
+        info: {
+          id: cosme.id,
+          brand: cosme.brand,
+          name: cosme.name,
+          color: cosme.color,
+          themes: cosme.themes
+        }
       }
     }
   },
+  computed: {
+    ...mapGetters('userData', ['themes'])
+  },
   methods: {
-    updateCosmeInfo() {
-      const newCosme = {
-        type: this.focusingType,
-        info: {
-          brand: this.cosmeBrandText,
-          name: this.cosmeNameText,
-          color: this.cosmeColorText,
-          theme: this.cosmeThemeCheckbox
-        }
-      }
-      if (this.formType === 'edit') {
-        newCosme.info.id = this.focusingCosme.id
-        this.$store.dispatch('userData/changeCosmeInfo', newCosme)
-      } else if (this.formType === 'register') {
-        this.$store.dispatch('userData/registerCosmeInfo', newCosme)
-        this.cosmeBrandText = ''
-        this.cosmeNameText = ''
-        this.cosmeColorText = ''
-        this.cosmeThemeCheckbox = []
-      }
-    },
-    deleteCosmeInfo() {
-      const newCosme = {
-        type: this.focusingType,
-        id: this.focusingCosme.id
-      }
-      this.$store.dispatch('userData/deleteCosmeInfo', newCosme)
-    },
     toJapanese(word) {
       switch (word) {
         case 'spring':
@@ -130,11 +112,6 @@ export default {
           return '冬'
       }
       return word
-    }
-  },
-  computed: {
-    themes() {
-      return this.$store.getters['userData/themes']
     }
   }
 }
@@ -196,8 +173,18 @@ export default {
   color: rgba(210, 138, 138, 0.762);
 }
 /* update-btn */
-#ud-form  .btn-group .update-btn {
+#ud-form .btn-group {
+  border-radius: 4px;
+  overflow: hidden;
+}
+#ud-form .btn-group .update-btn {
+  padding: 12px;
+  background-color: rgb(255, 213, 213);
+}
 
+#ud-form .btn-group .delete-btn {
+  background-color: #f56868;
+  color: white;
 }
 
 /* check-btn */

@@ -1,12 +1,13 @@
 <template>
   <div id="modal" class="modal-template">
-    <div v-if="active" class="root">
-      <div  class="modal-bg" @click="onClose()">
-      </div>
+    <transition name="fade">
+      <div v-if="active" class="root">
+        <div  class="modal-bg" @click="onClose()"></div>
         <div class="modal-inner">
-          <slot></slot>
+          <slot :onClose="onClose"></slot>
         </div>
       </div>
+    </transition>
   </div>
 </template>
 
@@ -52,6 +53,12 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s linear;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

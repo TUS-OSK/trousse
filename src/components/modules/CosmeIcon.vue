@@ -1,6 +1,6 @@
 <template>
   <div id="icon" class="cosme-icon-component">
-    <button class="cosme-icon" @click="onClick()">
+    <button class="cosme-icon" @click="onClick(cosme.id)">
       <div class="info">
         <span class="name">{{ cosme.name }}</span>
         <span class="brand">{{ cosme.brand }}</span>

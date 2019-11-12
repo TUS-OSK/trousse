@@ -30,7 +30,8 @@ export default {
       lipstick: [],
       lipgloss: []
     },
-    themes: ['spring', 'summer', 'autumn', 'winter', 'cute']
+    themes: ['spring', 'summer', 'autumn', 'winter', 'cute'],
+    cosmesStatus: false
   },
   getters: {
     user: state => state.user,
@@ -44,7 +45,8 @@ export default {
     },
     cosmes: state => state.cosmes,
     themes: state => state.themes,
-    status: state => state.user.status
+    status: state => state.user.status,
+    cosmesStatus: state => state.cosmesStatus
   },
   mutations: {
     updateUserData(state, payload) {
@@ -80,6 +82,9 @@ export default {
           v => v.id !== payload.id
         )
       }
+    },
+    updateCosmesStatus(state) {
+      state.cosmesStatus = true
     }
   },
 
@@ -91,15 +96,16 @@ export default {
           if (user) {
             // console.log('オブザーバーは君のことをみてるよ')
             commit('updateLogin', true)
-            console.log(user)
 
             const token = await user.getIdToken()
             commit('updateUserData', {
               name: user.displayName,
               token
             })
-            const cosmeData = process.env.NODE_ENV === 'productin' ? await fetchCosme(token) : await fetchMain()
+            const cosmeData = process.env.VUE_APP_AUTHENTICATION === 'production' ? await fetchCosme(token) : await fetchMain()
             commit('updateCosmeData', cosmeData)
+            // コスメがロードし終わったかのstatus
+            commit('updateCosmesStatus')
 
             if (router.currentRoute.name === 'login') {
               router.replace({ name: 'main' })
@@ -135,6 +141,7 @@ export default {
       commit('registerCosmeInformation', item)
     },
     async changeCosmeInfo({ commit, state }, item) {
+      console.log(item)
       const { token } = state.user
       commit('changeCosmeInformation', item)
       await changeCosme.cosme('api/cosmes', { item, token })

@@ -1,23 +1,20 @@
 <template>
   <div id="edit" class="edit-page container-fluid">
-    {{modalStatus}}
     <h2 class="sub-title">EDIT</h2>
     <main class="edit-inner">
       <h3 class="sub-sub-title">{{ type }}</h3>
       <div class="edit-area">
         <div class="cosme-list-wrap">
-          <div>
-            <draggable-list v-model="cosmeIds">
-              <template #default="draggableListProps">
-                <cosme-icon v-bind="cosmeIconProps(draggableListProps.cosmeId)" :onClick="onOpen"></cosme-icon>
-              </template>
-            </draggable-list>
-          </div>
+          <draggable-list v-model="cosmeIds">
+            <template #default="draggableListProps">
+              <cosme-icon v-bind="cosmeIconProps(draggableListProps.cosmeId)" :onClick="onOpen"></cosme-icon>
+            </template>
+          </draggable-list>
         </div>
       </div>
     </main>
     <modal :active="modal.status" :onClose="onClose">
-      <update-form formType="edit" :focusingType="this.type" :focusingId="modal.focusingId"></update-form>
+      <update-form formType="edit" :focusingCosme="cosme(this.form.focusingId)" :onSubmit="onSubmit"></update-form>
     </modal>
   </div>
 </template>
@@ -46,7 +43,9 @@ export default {
   data() {
     return {
       modal: {
-        status: false,
+        status: false
+      },
+      form: {
         focusingId: null
       }
     }
@@ -54,37 +53,58 @@ export default {
   computed: {
     ...mapGetters('userData', ['cosmes']),
     cosmeAry() {
-      console.log(this.cosmes)
       return this.cosmes[this.type]
     },
     cosmeIds: {
       get() {
-        console.log(this.cosmeAry)
         return this.cosmeAry.map(cosme => cosme.id)
       },
-      set(array) {
+      set(newCosmeIds) {
         this.$store.dispatch(
           'userData/reorderCosmeInfo',
-          {type: this.type, cosmeIds: array}
+          {type: this.type, cosmeIds: newCosmeIds}
         )
       }
-    },
-    fakeCosmes() {
-      return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
     }
   },
   methods: {
+    cosme(id) {
+      return this.cosmeAry.find(cosme => cosme.id === id)
+    },
     cosmeIconProps(cosmeId) {
       return {
         iconType: 'edit',
-        cosme: this.cosmes[this.type].find(cosme => cosme.id === cosmeId)
+        cosme: this.cosme(cosmeId)
       }
     },
-    onOpen(id) {
-      this.modal.focusingId = id
+    onOpen(cosmeId) {
+      this.form.focusingId = cosmeId
       this.modal.status = true
     },
     onClose() {
+      this.form.focusingId = null
+      this.modal.status = false
+    },
+    onSubmit(request, info) {
+      switch(request) {
+        case 'register':
+          this.$store.dispatch(
+            'userData/registerCosmeInfo',
+            {type: this.type, info}
+          )
+          return
+        case 'change':
+          this.$store.dispatch(
+            'userData/changeCosmeInfo',
+            {type: this.type, info}
+          )
+          break
+        case 'delete':
+          this.$store.dispatch(
+            'userData/deleteCosmeInfo',
+            {type: this.type, id: info.id}
+          )
+      }
       this.modal.status = false
     }
   }
@@ -106,8 +126,9 @@ export default {
 
 .edit-page#edit {
   padding-top: 40px;
+  padding-bottom: 40px;
   background-color: #f8f3ed;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 69px);
 }
 
 .modal-btn {
@@ -117,44 +138,4 @@ export default {
   height: 40px;
   margin: 8px 0;
 }
-
-/* .ed-modal-btn {
-  color: white;
-  cursor:pointer;
-  width: 100%;
-  margin: 12px 0;
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  white-space: normal;
-  background-color: #B25A74;
-  font-size: 20px;
-}
-.fake-icon {
-  width: 118px;
-}
-.ed-main {
-  height: 100%;
-}
-.ed-main-list {
-  padding: 8px;
-  background-color: rgb(243, 234, 183);
-}
-.ed-main-li-draggable {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.ed-main-function {
-  padding: 8px;
-}
-
-.fade-leave-active, .fade-enter-active {
-  transition: opacity .2s;
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-} */
 </style>
