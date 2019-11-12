@@ -24,7 +24,7 @@
             <input
               :id="`input-${index}`"
               class="input-checkbox d-none"
-              v-model="info.themes"
+              v-model="info.theme"
               :value="theme"
               type="checkbox"
             />
@@ -80,7 +80,7 @@ export default {
           brand: '',
           name: '',
           color: '',
-          themes: []
+          theme: []
         }
       }
     } else {
@@ -91,7 +91,7 @@ export default {
           brand: cosme.brand,
           name: cosme.name,
           color: cosme.color,
-          themes: cosme.themes
+          theme: cosme.theme
         }
       }
     }
