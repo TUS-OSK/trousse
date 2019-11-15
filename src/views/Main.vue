@@ -116,22 +116,21 @@ export default {
     narrowCheckedItems() {
       if (this.cosmeThemeCheckbox.length) {
         this.cosmeTypes.forEach(type => {
-          const data = {
-            type
-          }
-          data.cosmes = this.cosmes[type]
+          const data = {}
+          data.type = type
+          data.uncheckedIds = this.cosmes[type]
             .filter(cosme => {
               //チェックされてるtheme配列をcosmeが持つtheme配列でfilterして長さが小さくなったものはチェックしたい
               //つまりアンチェックリストに入れたくないのでfalseを返すようにする
-              const dif = this.cosmeThemeCheckbox.filter(
-                type => !cosme.theme.includes(type)
-              )
+              const dif = cosme.theme ? this.cosmeThemeCheckbox.filter(
+                checkedTheme => !cosme.theme.includes(checkedTheme)
+              ) : null
               return dif.length >= this.cosmeThemeCheckbox.length
             })
             .map(cosme => cosme.id)
           this.$store.dispatch('pages/main/loadCheckedItems', data)
-          this.cosmeThemeCheckbox = []
         })
+        this.cosmeThemeCheckbox = []
       }
     }
   },
