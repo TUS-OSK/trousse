@@ -29,7 +29,7 @@ export default {
 #root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Ubuntu', 'M PLUS Rounded 1c', sans-serif
+  font-family: 'Ubuntu', 'M PLUS Rounded 1c', sans-serif;
 }
 
 #root h2 {

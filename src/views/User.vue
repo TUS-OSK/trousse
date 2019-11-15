@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
+import AccordionCosmesList from '@/components/templates/AccordionCosmesList.vue'
 
 import { mapGetters } from 'vuex'
 

@@ -13,7 +13,18 @@ export default {
         lipstick: false,
         lipgloss: false
       },
-      unCheckedTypes: [],
+      unCheckedTypes: [
+        'makeupbase',
+        'foundation',
+        'facepowder',
+        'eyeshadow',
+        'eyeliner',
+        'mascara',
+        'eyebrow',
+        'cheek',
+        'lipstick',
+        'lipgloss'
+      ],
       unCheckedItems: {
         makeupbase: [],
         foundation: [],

@@ -8,12 +8,18 @@
         <h2 class="sub-title">SELECT</h2>
         <div class="select">
           <accordion-cosmes-list
-            v-for="typeCosmesData in allCosmesAry"
-            :key="typeCosmesData.type"
-            :cosmesData="typeCosmesData"
-            listType="main"
-          ></accordion-cosmes-list>
+            v-for="cosmeType in cosmeTypes"
+            :key="`m-${cosmeType}`"
+            v-bind="accordionCosmesListProps(cosmeType)"
+          >
+            <cosme-display :cosmeIds="cosmeIds(cosmeType)">
+              <template #default="cosmeDisplayProps">
+                <cosme-checkbox v-bind="cosmeCheckboxProps(cosmeDisplayProps.cosmeId, cosmeType)" v-model="checkedCosmeIds"/>
+              </template>
+            </cosme-display>
+          </accordion-cosmes-list>
         </div>
+
         <div class="filter">
           <h3>FILTER</h3>
           <div class="checkbox-group">
@@ -55,7 +61,9 @@
 </template>
 
 <script>
-import AccordionCosmesList from '@/components/AccordionCosmesList.vue'
+import AccordionCosmesList from '@/components/templates/AccordionCosmesList.vue'
+import CosmeDisplay from '@/components/templates/CosmeDisplay.vue'
+import CosmeCheckbox from '@/components/modules/CosmeCheckbox.vue'
 import SuggestedCosmesList from '@/components/SuggestedCosmesList.vue'
 
 import { mapGetters } from 'vuex'
@@ -64,7 +72,9 @@ export default {
   name: 'main-page',
   components: {
     AccordionCosmesList,
-    SuggestedCosmesList
+    SuggestedCosmesList,
+    CosmeDisplay,
+    CosmeCheckbox
   },
   data() {
     return {
@@ -88,9 +98,31 @@ export default {
           }
         }
       })
+    },
+    checkedCosmeIds: {
+      get() {
+        return this.cosmeIds()
+      },
+      set() {
+
+      }
     }
   },
   methods: {
+    accordionCosmesListProps(cosmeType) {
+      return {
+        cosmeType: cosmeType,
+        listType: 'main'
+      }
+    },
+    cosmeCheckboxProps(cosmeId, type) {
+      return {
+        cosme: this.cosmes[type].find(cosme => cosme.id === cosmeId)
+      }
+    },
+    cosmeIds(type) {
+      return this.cosmes[type].map(cosme => cosme.id)
+    },
     narrowCheckedItems() {
       if (this.cosmeThemeCheckbox.length) {
         this.cosmeTypes.forEach(type => {

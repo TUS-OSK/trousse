@@ -31,7 +31,10 @@ export default {
       lipgloss: []
     },
     themes: ['spring', 'summer', 'autumn', 'winter', 'cute'],
-    cosmesStatus: false
+    cosmesStatus: {
+      allLoaded: false,
+      changeLoaded: true
+    }
   },
   getters: {
     user: state => state.user,
@@ -83,8 +86,11 @@ export default {
         )
       }
     },
-    updateCosmesStatus(state) {
-      state.cosmesStatus = true
+    updateCosmesLoadStatus(state) {
+      state.cosmesStatus.allLoaded = true
+    },
+    updateCosmeStatus(state, payload) {
+      state.cosmesStatus.changeLoaded = payload
     }
   },
 
@@ -105,7 +111,7 @@ export default {
             const cosmeData = process.env.VUE_APP_AUTHENTICATION === 'production' ? await fetchCosme(token) : await fetchMain()
             commit('updateCosmeData', cosmeData)
             // コスメがロードし終わったかのstatus
-            commit('updateCosmesStatus')
+            commit('updateCosmesLoadStatus')
 
             if (router.currentRoute.name === 'login') {
               router.replace({ name: 'main' })
@@ -136,12 +142,13 @@ export default {
     },
     async registerCosmeInfo({ commit, state }, item) {
       const { token } = state.user
+      commit('updateCosmeStatus', false)
       const res = await creatCosme.cosme('api/cosmes', { item, token })
       item.info.id = res.id
       commit('registerCosmeInformation', item)
+      commit('updateCosmeStatus', true)
     },
     async changeCosmeInfo({ commit, state }, item) {
-      console.log(item)
       const { token } = state.user
       commit('changeCosmeInformation', item)
       await changeCosme.cosme('api/cosmes', { item, token })

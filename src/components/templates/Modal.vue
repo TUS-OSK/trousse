@@ -4,7 +4,8 @@
       <div v-if="active" class="root">
         <div  class="modal-bg" @click="onClose()"></div>
         <div class="modal-inner">
-          <slot :onClose="onClose"></slot>
+          <button class="close-btn" @click="onClose()">閉じる</button>
+          <slot></slot>
         </div>
       </div>
     </transition>
@@ -35,6 +36,7 @@ export default {
   right: 0;
   bottom: 0;
   z-index: 100;
+  overflow-y: auto;
 }
 
 #modal .modal-bg {
@@ -50,9 +52,19 @@ export default {
 
 #modal .modal-inner {
   position: absolute;
+  top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+}
+
+#modal .modal-inner .close-btn{
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px;
+  font-size: 12px;
+  background-color: rgb(255, 109, 160);
+  color: rgb(255, 248, 242);
 }
 
 .fade-enter-active, .fade-leave-active {

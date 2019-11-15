@@ -1,7 +1,7 @@
 <template>
   <div id="dg-list" class="draggable-list-template">
     <div class="draggable-list-wrap container-fluid text-center">
-      <div v-if="!cosmesStatus" class="spinner-border text-light my-3" role="status">
+      <div v-if="!cosmesStatus.allLoaded" class="spinner-border text-light my-3" role="status">
         <span class="sr-only">Loading...</span>
       </div>
       <div v-else>
@@ -19,7 +19,12 @@
           v-for="cosmeId in cosmeIds"
           :key="cosmeId"
         >
-        <slot :cosmeId="cosmeId"></slot>
+        <slot :cosmeId="cosmeId" />
+        </div>
+        <div v-if="!cosmesStatus.changeLoaded" class="spinner-wrap col-xl-2 col-md-3 col-sm-4 col-6 d-flex justify-content-center align-items-center">
+          <div class="spinner-border text-light" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
       </draggable>
     </div>
@@ -30,7 +35,7 @@
 import draggable from 'vuedraggable'
 import { mapGetters } from 'vuex'
 export default {
-  name: 'cosme-list',
+  name: 'draggable-list',
   components: {
     draggable
   },
@@ -58,28 +63,6 @@ export default {
 </script>
 
 <style scoped>
-@keyframes spring {
-  0% {
-    transform: none;
-  }
-  30% {
-    transform: scale(0.94);
-  }
-  60% {
-    transform: scale(1.04);
-  }
-  80% {
-    transform: scale(0.96);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-@keyframes collapse {
-  0% {
-    height: 124px
-  }
-}
 .draggable-list-template#dg-list {
   overflow: hidden;
   padding: 8px;
@@ -93,48 +76,7 @@ export default {
 #dg-list .fake-icon {
   height: 0;
 }
-/* #dg-list #dg-list.main {
-
-  height: 0;
-  transition: height 0.3s;
-} */
-/* #dg-list .draggable-list.main.isOpened {
-  height: 300px;
-} */
-/* #dg-list .ul-user {
-  padding-left: 0px;
+#dg-list .spinner-wrap {
+  height: 100px;
 }
-
-#dg-list .cosme-user {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  font-size: 16px;
-  background-color: rgb(248, 241, 242);
-  color: #b25a74;
-  border-radius: 2px;
-  word-break: break-all;
-  overflow: hidden;
-  cursor: pointer;
-  padding: 0px;
-} */
-/* #dg-list .input-checkbox + .cosme-icon-wrap {
-  filter: brightness(80%);
-  transition: all 0.4s;
-}
-#dg-list .input-checkbox:checked + .cosme-icon-wrap {
-  filter: none;
-  animation: spring 0.3s;
-}
-#dg-list .input-checkbox:checked + .cosme-icon-wrap::after {
-  content: "";
-  position: absolute;
-  top: 4%;
-  right: 8%;
-  width: 8px;
-  height: 16px;
-  border-bottom: 4px solid pink;
-  border-right: 4px solid pink;
-  transform: rotate(45deg);
-} */
 </style>

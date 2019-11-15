@@ -7,21 +7,22 @@
         <div class="cosme-list-wrap">
           <draggable-list v-model="cosmeIds">
             <template #default="draggableListProps">
-              <cosme-icon v-bind="cosmeIconProps(draggableListProps.cosmeId)" :onClick="onOpen"></cosme-icon>
+              <cosme-btn v-bind="cosmeBtnProps(draggableListProps.cosmeId)" />
             </template>
           </draggable-list>
         </div>
       </div>
+      <button class="register-btn" @click="onOpen()">コスメを追加</button>
     </main>
     <modal :active="modal.status" :onClose="onClose">
-      <update-form formType="edit" :focusingCosme="cosme(this.form.focusingId)" :onSubmit="onSubmit"></update-form>
+      <update-form :focusingCosme="cosme(this.form.focusingId)" :onSubmit="onSubmit"></update-form>
     </modal>
   </div>
 </template>
 
 <script>
 import DraggableList from '@/components/templates/DraggableList.vue'
-import CosmeIcon from '@/components/modules/CosmeIcon.vue'
+import CosmeBtn from '@/components/modules/CosmeBtn.vue'
 import Modal from '@/components/templates/Modal.vue'
 import UpdateForm from '@/components/UpdateForm.vue'
 import { mapGetters } from 'vuex'
@@ -30,7 +31,7 @@ export default {
   name: 'edit',
   components: {
     DraggableList,
-    CosmeIcon,
+    CosmeBtn,
     Modal,
     UpdateForm
   },
@@ -71,10 +72,10 @@ export default {
     cosme(id) {
       return this.cosmeAry.find(cosme => cosme.id === id)
     },
-    cosmeIconProps(cosmeId) {
+    cosmeBtnProps(cosmeId) {
       return {
-        iconType: 'edit',
-        cosme: this.cosme(cosmeId)
+        cosmeData: this.cosme(cosmeId),
+        onClick: this.onOpen
       }
     },
     onOpen(cosmeId) {
@@ -92,7 +93,7 @@ export default {
             'userData/registerCosmeInfo',
             {type: this.type, info}
           )
-          return
+          break
         case 'change':
           this.$store.dispatch(
             'userData/changeCosmeInfo',
@@ -137,5 +138,14 @@ export default {
   width: 100%;
   height: 40px;
   margin: 8px 0;
+}
+
+.register-btn {
+  width: 100%;
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: rgba(221, 105, 149, 0.762);
+  color: #fff2f8;
 }
 </style>

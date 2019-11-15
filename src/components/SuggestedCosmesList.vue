@@ -3,11 +3,13 @@
     <div class="container-fluid">
       <div v-if="isSuggested">
         <div class="cosme" v-for="(item, type) in currentHistory" :key="type">
-          <h3>{{ type }}</h3>
-          <ul v-for="(info, infoName) in item" :key="infoName">
-            <li v-if="infoName==='name'">{{ infoName }}: {{ info }}</li>
-            <li v-if="infoName==='brand'">{{ infoName }}: {{ info }}</li>
-          </ul>
+          <div v-if="item">
+            <h3>{{ type }}</h3>
+            <ul v-for="(info, infoName) in item" :key="infoName">
+              <li v-if="infoName==='name'">{{ infoName }}: {{ info }}</li>
+              <li v-if="infoName==='brand'">{{ infoName }}: {{ info }}</li>
+            </ul>
+          </div>
         </div>
         <button class="suggest-btn" @click="suggestCosmes()">もう一回やる！</button>
       </div>
@@ -68,6 +70,9 @@ export default {
 </script>
 
 <style scoped>
+#suggest h3 {
+  font-size: 20px;
+}
 #suggest .suggest-btn {
   background-color: #f3aecb;
   width: 100%;

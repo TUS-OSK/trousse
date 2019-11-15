@@ -43,7 +43,7 @@
       </section>
     </div>
     <div class="container-fluid">
-      <div class="d-block btn-group row" v-if="focusingCosme === null">
+      <div class="d-block btn-group row" v-if="focusingCosme === undefined">
         <button class="update-btn register-btn col-12" @click="onSubmit('register', info)">コスメを登録</button>
       </div>
       <div class="d-block btn-group row" v-else>
@@ -59,13 +59,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'update-form',
   props: {
-    formType: {
-      type: String,
-      required: true,
-      validator: value => ['edit', 'register'].includes(value)
-    },
     focusingCosme: {
-      type: Object,
       required: true
     },
     onSubmit: {
@@ -144,7 +138,7 @@ export default {
   height: 100%;
   width: 100%;
   background-color: white;
-  padding: 32px 16px;
+  padding: 36px 16px 16px;
 }
 
 #ud-form .input-form {
