@@ -24,7 +24,7 @@
         </span>
       </div>
 
-      <div class="cosme-display-wrap" v-if="listType ==='main'">
+      <div class="cosme-display-wrap">
         <slot />
       </div>
     </div>
@@ -45,11 +45,6 @@ export default {
     cosmeType: {
       type: String,
       required: true
-    },
-    listType: {
-      type: String,
-      required: true,
-      validator: value => ['main', 'user'].includes(value)
     }
   },
   computed: {
@@ -141,7 +136,7 @@ export default {
   display: none;
 }
 
-#accordion .input-label .name {
+#accordion .name {
   font-size: 24px;
   font-weight: 800;
 }

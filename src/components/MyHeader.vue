@@ -78,10 +78,10 @@ export default {
         this.transIsActive[where] = false
       })
       this.transIsActive[page] = true
+      this.sidebarIsActive = false
       setTimeout(() => {
         this.$router.push({ path }).catch()
       }, 300)
-      this.sidebarIsActive = false
     },
     logout() {
       this.$store.dispatch('userData/logout')

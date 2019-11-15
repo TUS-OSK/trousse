@@ -1,62 +1,14 @@
 <template>
-  <div>
-    <div>
-      <main class="user-page">
-        <h3>ユーザー名</h3>
-        <p>{{ userData.name }}</p>
-        <p>{{ userData.token }}</p>
-        <accordion-cosmes-list
-          v-for="typeCosmesData in allCosmesAry"
-          :key="typeCosmesData.type"
-          :cosmesData="typeCosmesData"
-          listType="user"
-        ></accordion-cosmes-list>
-      </main>
-    </div>
+  <div id="user" class="user-page container-fluid">
+    <h2 class="sub-title">USER</h2>
+    <main class="user-inner">
+    </main>
   </div>
 </template>
 
 <script>
-import AccordionCosmesList from '@/components/templates/AccordionCosmesList.vue'
-
-import { mapGetters } from 'vuex'
-
 export default {
-  name: 'user',
-  components: {
-    AccordionCosmesList
-  },
-  data() {
-    return {
-      cosmeitem: false
-    }
-  },
-  methods: {
-    cosmeDisplay() {
-      this.cosmeitem = !this.cosmeitem
-    }
-  },
-  computed: {
-    userData() {
-      return this.$store.getters['userData/user']
-    },
-    ...mapGetters('userData', ['cosmeTypes', 'cosmes']),
-    ...mapGetters('pages/main', ['isOpened']),
-    allCosmesAry() {
-      return this.cosmeTypes.map(type => {
-        return {
-          type,
-          cosmeAry: this.cosmes[type],
-          accordionCosmesList: {
-            isOpend: this.isOpened[type]
-          }
-        }
-      })
-    }
-  },
-  created() {
-    this.$store.dispatch('userData/loadMain')
-  }
+  name: 'user'
 }
 </script>
 

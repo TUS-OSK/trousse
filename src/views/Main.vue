@@ -100,8 +100,7 @@ export default {
   methods: {
     accordionCosmesListProps(cosmeType) {
       return {
-        cosmeType: cosmeType,
-        listType: 'main'
+        cosmeType: cosmeType
       }
     },
     cosmeCheckboxProps(cosmeId, type) {
