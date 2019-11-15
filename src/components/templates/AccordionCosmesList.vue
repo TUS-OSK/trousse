@@ -55,20 +55,20 @@ export default {
   computed: {
     ...mapGetters('userData', ['cosmeTypes', 'cosmes']),
     ...mapGetters('pages/main', [
-      'unCheckedTypes',
+      'uncheckedTypes',
       'isOpened'
     ]),
     isChecked: {
       get() {
         return this.cosmeTypes.filter(
-          type => !this.unCheckedTypes.includes(type)
+          type => !this.uncheckedTypes.includes(type)
         )
       },
       set(newCheckedTypes) {
-        const newUnCheckedTypes = this.cosmeTypes.filter(
+        const newuncheckedTypes = this.cosmeTypes.filter(
           type => !newCheckedTypes.includes(type)
         )
-        this.$store.dispatch('pages/main/loadCheckedTypes', newUnCheckedTypes)
+        this.$store.dispatch('pages/main/loadCheckedTypes', newuncheckedTypes)
       }
     }
   },
@@ -83,7 +83,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @keyframes float {
   0% {
     transform: translateY(0px);

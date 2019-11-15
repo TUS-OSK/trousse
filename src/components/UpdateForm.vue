@@ -18,26 +18,10 @@
         <div class="checkbox-group">
           <div
             class="check-btn-wrap d-inline-block"
-            v-for="(theme, index) in themes"
+            v-for="theme in themes"
             :key="theme"
           >
-            <input
-              :id="`input-${index}`"
-              class="input-checkbox d-none"
-              v-model="info.theme"
-              :value="theme"
-              type="checkbox"
-            />
-            <label class="check-btn" :for="`input-${index}`">
-              <span class="checkbox-wrap d-flex align-items-center justify-content-center">
-                <span class="stick"></span>
-                <span class="stick"></span>
-                <span class="checkbox"></span>
-                <span class="stick"></span>
-                <span class="stick"></span>
-              </span>
-              <span class="checkvalue d-flex align-items-center">{{ toJapanese(theme) }}</span>
-            </label>
+            <theme-checkbox v-model="info.theme" :theme="theme" />
           </div>
         </div>
       </section>
@@ -56,8 +40,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import ThemeCheckbox from '@/components/modules/ThemeCheckbox.vue'
+
 export default {
   name: 'update-form',
+  components: {
+    ThemeCheckbox
+  },
   props: {
     focusingCosme: {
       required: true
@@ -182,78 +171,6 @@ export default {
 }
 
 /* check-btn */
-#ud-form .check-btn {
-  display: inline-block;
-  width: auto;
-}
-#ud-form .check-btn {
-  padding: 4px;
-  display: flex;
-  flex-direction: row;
-}
-#ud-form .check-btn .checkvalue > * {
-  margin-right: 4px;
-}
-#ud-form .check-btn .checkbox-wrap {
-  width: 40px;
-  height: 40px;
-}
-#ud-form .check-btn .checkvalue {
-  font-size: 16px;
-}
-#ud-form .check-btn .checkbox {
-  content: "";
-  border-radius: 4px;
-  width: 20px;
-  height: 20px;
-  opacity: 0.6;
-  border: 2px solid gray;
-  /* #f56868; */
-  transition: all 0.2s;
-}
-#ud-form .input-checkbox:checked + .check-btn .checkbox {
-  animation: shrink 0.1s;
-  opacity: 1;
-  background-color: #f3aecb;
-  /* #f56868e3; */
-}
-#ud-form .input-checkbox + .check-btn .stick {
-  position: absolute;
-  height: 0px;
-  width: 2px;
-  border-radius: 2px;
-  background-color: #f56868;
-  transition: all 0.4s;
-}
-#ud-form .input-checkbox:checked + .check-btn .stick {
-  animation: stick 0.4s;
-}
-#ud-form .input-checkbox + .check-btn .stick:nth-child(1) {
-  transition: all 0.4s;
-  transform: translate(-12px, -8px) rotate(-65deg);
-}
-#ud-form .input-checkbox:checked + .check-btn .stick:nth-child(1) {
-  transform: translate(-18px, -12px) rotate(-65deg);
-}
-#ud-form .input-checkbox + .check-btn .stick:nth-child(2) {
-  transform: translate(-8px, -12px) rotate(-25deg);
-}
-#ud-form .input-checkbox:checked + .check-btn .stick:nth-child(2) {
-  transform: translate(-12px, -18px) rotate(-25deg);
-}
-#ud-form .input-checkbox + .check-btn .stick:nth-child(4) {
-  transition: all 0.4s;
-  transform: translate(8px, 12px) rotate(-25deg);
-}
-#ud-form .input-checkbox:checked + .check-btn .stick:nth-child(4) {
-  transform: translate(12px, 18px) rotate(-25deg);
-}
-#ud-form .input-checkbox + .check-btn .stick:nth-child(5) {
-  transform: translate(12px, 8px) rotate(-65deg);
-}
-#ud-form .input-checkbox:checked + .check-btn .stick:nth-child(5) {
-  transform: translate(18px, 12px) rotate(-65deg);
-}
 
 #ud-form .input-text:focus {
   border: 2px solid rgb(182, 55, 86);

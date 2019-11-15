@@ -29,8 +29,8 @@ export default {
     ...mapGetters('userData', ['cosmeTypes', 'cosmes', 'allCosmeIds']),
     ...mapGetters('pages/main', [
       'isOpened',
-      'unCheckedTypes',
-      'unCheckedItems',
+      'uncheckedTypes',
+      'uncheckedItems',
       'history'
     ]),
     currentHistory() {
@@ -41,13 +41,13 @@ export default {
     suggestCosmes() {
       const suggestedCosmes = {}
       const checkedTypes = this.cosmeTypes.filter(
-        type => !this.unCheckedTypes.includes(type)
+        type => !this.uncheckedTypes.includes(type)
       )
 
       checkedTypes.forEach(type => {
         const checkedCosmes = {}
         checkedCosmes[type] = this.cosmes[type].filter(
-          item => !this.unCheckedItems[type].includes(item.id)
+          item => !this.uncheckedItems[type].includes(item.id)
         )
         suggestedCosmes[type] =
           checkedCosmes[type][
