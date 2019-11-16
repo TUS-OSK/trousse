@@ -61,7 +61,6 @@ app.get("/cosmes", async (req, res) => {
           .order.map(id => databasedatalist.docs.find(doc => doc.id === id))
           .filter(doc => doc !== undefined)
           .map(doc => ({ id: doc.id, ...doc.data() }));
-        console.log(cosmes, databaseOrderList.data().order);
         return [currentCosmeType, cosmes];
       } else {
         const cosmes = databasedatalist.docs.map(doc => ({
