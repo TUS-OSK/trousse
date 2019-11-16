@@ -35,16 +35,13 @@ app.get("/cosmes", async (req, res) => {
     return;
   }
   const uid = decodedToken.uid;
-  const cosmeType = [];
 
   const cosmeTypeRef = db
     .collection("users")
     .doc(uid)
     .collection("cosmes");
   const cosmeTypeList = await cosmeTypeRef.get();
-  cosmeTypeList.forEach(doc => {
-    cosmeType.push(doc.id);
-  });
+  const cosmeType = cosmeTypeList.docs.map(doc => doc.id);
 
   const ret = await Promise.all(
     cosmeType.map(async currentCosmeType => {
