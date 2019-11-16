@@ -92,7 +92,7 @@ function putImage(url, data) {
     const xhr = new XMLHttpRequest()
     xhr.open('PUT', url, true)
     // xhr.setRequestHeader('Sec-Fetch-Mode', 'no-cors')
-    xhr.setRequestHeader('Content-Type', 'multipart/form-data')
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.onload = resolve
     xhr.onerror = reject
     xhr.send(data)

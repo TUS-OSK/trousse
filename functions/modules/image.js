@@ -8,6 +8,7 @@ module.exports = {
     const filename = `image_${Number(new Date())}`
     const url = await bucket.file(filename).getSignedUrl({
       action: "write",
+      contentType: 'application/x-www-form-urlencoded',
       expires: moment().utc().add(10, "minutes").format(),
     })
     if(url[0] === undefined) {
