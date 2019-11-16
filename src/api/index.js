@@ -93,6 +93,18 @@ function initOpti(data) {
   }
 }
 
+function putImage(url, data) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.open('PUT', url, true)
+    // xhr.setRequestHeader('Sec-Fetch-Mode', 'no-cors')
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    xhr.onload = resolve
+    xhr.onerror = reject
+    xhr.send(data)
+  })
+}
+
 export async function fetchCosme(token) {
   const rp = await fetch(endpoint('api/cosmes'), {
     headers: {
@@ -140,4 +152,17 @@ export const deleteCosme = {
     const rp = await fetch(endpoint(ep), optional)
     return await rp.json()
   }
+}
+
+export const postImage = async(data) => {
+  if (!(data instanceof File)) {
+    /* eslint-disable no-console */
+    console.error('data must be an instance of File.', data)
+    return
+  }
+  const res = await (await fetch(endpoint('api/geturl'))).json()
+  // console.log(res.signedURL)
+  // console.log(res.downloadURL)
+  await putImage(res.signedURL, data)
+  return res.downloadURL || null
 }
