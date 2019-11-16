@@ -7,6 +7,8 @@ const bearerToken = require("express-bearer-token");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
+const ImageUploader = require("./modules/image");
+
 const REGION = "asia-northeast1";
 
 const app = express();
@@ -244,6 +246,8 @@ app.delete("/cosmes", async (req, res) => {
     status: "ok!"
   });
 });
+
+app.get("/geturl", ImageUploader.getSignedURL);
 
 module.exports.api = functions.region(REGION).https.onRequest(app);
 
