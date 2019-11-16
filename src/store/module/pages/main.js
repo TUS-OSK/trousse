@@ -56,7 +56,7 @@ export default {
       state.cosmesListStates.uncheckedTypes = payload
     },
     updateCheckedItems(state, payload) {
-      state.cosmesListStates.uncheckedItems[payload.type] = payload.uncheckedIds
+      state.cosmesListStates.uncheckedItems[payload.type] = payload.cosmes
     },
     filterChecked(state, payload) {
       payload.newuncheckedTypes.forEach(type => {
