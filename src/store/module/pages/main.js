@@ -13,8 +13,19 @@ export default {
         lipstick: false,
         lipgloss: false
       },
-      unCheckedTypes: [],
-      unCheckedItems: {
+      uncheckedTypes: [
+        'makeupbase',
+        'foundation',
+        'facepowder',
+        'eyeshadow',
+        'eyeliner',
+        'mascara',
+        'eyebrow',
+        'cheek',
+        'lipstick',
+        'lipgloss'
+      ],
+      uncheckedItems: {
         makeupbase: [],
         foundation: [],
         facepowder: [],
@@ -31,8 +42,8 @@ export default {
   },
   getters: {
     cosmesListStates: state => state.cosmesListStates,
-    unCheckedTypes: state => state.cosmesListStates.unCheckedTypes,
-    unCheckedItems: state => state.cosmesListStates.unCheckedItems,
+    uncheckedTypes: state => state.cosmesListStates.uncheckedTypes,
+    uncheckedItems: state => state.cosmesListStates.uncheckedItems,
     isOpened: state => state.cosmesListStates.isOpened,
     history: state => state.history
   },
@@ -42,26 +53,26 @@ export default {
         .isOpened[payload]
     },
     updateCheckedTypes(state, payload) {
-      state.cosmesListStates.unCheckedTypes = payload
+      state.cosmesListStates.uncheckedTypes = payload
     },
     updateCheckedItems(state, payload) {
-      state.cosmesListStates.unCheckedItems[payload.type] = payload.cosmes
+      state.cosmesListStates.uncheckedItems[payload.type] = payload.uncheckedIds
     },
     filterChecked(state, payload) {
-      payload.newUnCheckedTypes.forEach(type => {
-        state.cosmesListStates.unCheckedItems[type] = payload.cosmes[type].map(
+      payload.newuncheckedTypes.forEach(type => {
+        state.cosmesListStates.uncheckedItems[type] = payload.cosmes[type].map(
           cosme => cosme.id
         )
       })
     },
     addChecked(state, payload) {
       const oldCheckedTypes = payload.cosmeTypes.filter(
-        type => !state.cosmesListStates.unCheckedTypes.includes(type)
+        type => !state.cosmesListStates.uncheckedTypes.includes(type)
       )
       const dif = payload.newCheckedTypes.filter(
         type => !oldCheckedTypes.includes(type)
       )
-      dif.forEach(type => (state.cosmesListStates.unCheckedItems[type] = []))
+      dif.forEach(type => (state.cosmesListStates.uncheckedItems[type] = []))
     },
     updateHistory(state, payload) {
       state.history.push(payload)

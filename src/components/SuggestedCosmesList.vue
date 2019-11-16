@@ -3,11 +3,13 @@
     <div class="container-fluid">
       <div v-if="isSuggested">
         <div class="cosme" v-for="(item, type) in currentHistory" :key="type">
-          <h3>{{ type }}</h3>
-          <ul v-for="(info, infoName) in item" :key="infoName">
-            <li v-if="infoName==='name'">{{ infoName }}: {{ info }}</li>
-            <li v-if="infoName==='brand'">{{ infoName }}: {{ info }}</li>
-          </ul>
+          <div v-if="item">
+            <h3>{{ type }}</h3>
+            <ul v-for="(info, infoName) in item" :key="infoName">
+              <li v-if="infoName==='name'">{{ infoName }}: {{ info }}</li>
+              <li v-if="infoName==='brand'">{{ infoName }}: {{ info }}</li>
+            </ul>
+          </div>
         </div>
         <button class="suggest-btn" @click="suggestCosmes()">もう一回やる！</button>
       </div>
@@ -27,8 +29,8 @@ export default {
     ...mapGetters('userData', ['cosmeTypes', 'cosmes', 'allCosmeIds']),
     ...mapGetters('pages/main', [
       'isOpened',
-      'unCheckedTypes',
-      'unCheckedItems',
+      'uncheckedTypes',
+      'uncheckedItems',
       'history'
     ]),
     currentHistory() {
@@ -39,13 +41,13 @@ export default {
     suggestCosmes() {
       const suggestedCosmes = {}
       const checkedTypes = this.cosmeTypes.filter(
-        type => !this.unCheckedTypes.includes(type)
+        type => !this.uncheckedTypes.includes(type)
       )
 
       checkedTypes.forEach(type => {
         const checkedCosmes = {}
         checkedCosmes[type] = this.cosmes[type].filter(
-          item => !this.unCheckedItems[type].includes(item.id)
+          item => !this.uncheckedItems[type].includes(item.id)
         )
         suggestedCosmes[type] =
           checkedCosmes[type][
@@ -68,6 +70,9 @@ export default {
 </script>
 
 <style scoped>
+#suggest h3 {
+  font-size: 20px;
+}
 #suggest .suggest-btn {
   background-color: #f3aecb;
   width: 100%;

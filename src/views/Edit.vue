@@ -1,29 +1,39 @@
 <template>
   <div id="edit" class="edit-page container-fluid">
+    <h2 class="sub-title">EDIT</h2>
     <main class="edit-inner">
-      <h2 class="sub-title">{{ type }}の編集画面</h2>
+      <h3 class="sub-sub-title">{{ type }}</h3>
       <div class="edit-area">
         <div class="cosme-list-wrap">
-          <div>
-            <cosme-list :cosmeType="this.type" listType="edit"></cosme-list>
-          </div>
+          <draggable-list v-model="cosmeIds">
+            <template #default="draggableListProps">
+              <cosme-btn v-bind="cosmeBtnProps(draggableListProps.cosmeId)" />
+            </template>
+          </draggable-list>
         </div>
-        <button class="modal-btn" @click="showAddCosmeModal()">コスメを追加</button>
-        <cosme-form-modal formId="new" formType="register" :focusingType="type" />
       </div>
+      <button class="register-btn" @click="onOpen()">コスメを追加</button>
     </main>
+    <modal :active="modal.status" :onClose="onClose">
+      <update-form :focusingCosme="cosme(this.form.focusingId)" :onSubmit="onSubmit"></update-form>
+    </modal>
   </div>
 </template>
 
 <script>
-import CosmeList from '@/components/modules/CosmeList.vue'
-import CosmeFormModal from '@/components/modules/CosmeFormModal.vue'
+import DraggableList from '@/components/templates/DraggableList.vue'
+import CosmeBtn from '@/components/modules/CosmeBtn.vue'
+import Modal from '@/components/templates/Modal.vue'
+import UpdateForm from '@/components/UpdateForm.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'edit',
   components: {
-    CosmeList,
-    CosmeFormModal
+    DraggableList,
+    CosmeBtn,
+    Modal,
+    UpdateForm
   },
   props: {
     type: {
@@ -33,28 +43,70 @@ export default {
   },
   data() {
     return {
-      addCosmeValue: 'コスメを追加',
-      isDragging: false,
-      cosmesData: {
-        type: this.type,
-        cosmeAry: this.$store.getters['userData/cosmes'][this.type]
+      modal: {
+        status: false
+      },
+      form: {
+        focusingId: null
+      }
+    }
+  },
+  computed: {
+    ...mapGetters('userData', ['cosmes']),
+    cosmeAry() {
+      return this.cosmes[this.type]
+    },
+    cosmeIds: {
+      get() {
+        return this.cosmeAry.map(cosme => cosme.id)
+      },
+      set(newCosmeIds) {
+        this.$store.dispatch(
+          'userData/reorderCosmeInfo',
+          {type: this.type, cosmeIds: newCosmeIds}
+        )
       }
     }
   },
   methods: {
-    showAddCosmeModal() {
-      this.$modal.show('form-modal-new')
-    }
-  },
-  computed: {
-    cosmeAry() {
-      return this.$store.getters['userData/cosmes'][this.type]
+    cosme(id) {
+      return this.cosmeAry.find(cosme => cosme.id === id)
     },
-    cosmeIdcount() {
-      return this.$store.getters['userData/cosmeIdCount']
+    cosmeBtnProps(cosmeId) {
+      return {
+        cosmeData: this.cosme(cosmeId),
+        onClick: this.onOpen
+      }
     },
-    fakeCosmes() {
-      return [...new Array(10).keys()].map(num => `fakeCosme${num}`)
+    onOpen(cosmeId) {
+      this.form.focusingId = cosmeId
+      this.modal.status = true
+    },
+    onClose() {
+      this.form.focusingId = null
+      this.modal.status = false
+    },
+    onSubmit(request, info) {
+      switch(request) {
+        case 'register':
+          this.$store.dispatch(
+            'userData/registerCosmeInfo',
+            {type: this.type, info}
+          )
+          break
+        case 'change':
+          this.$store.dispatch(
+            'userData/changeCosmeInfo',
+            {type: this.type, info}
+          )
+          break
+        case 'delete':
+          this.$store.dispatch(
+            'userData/deleteCosmeInfo',
+            {type: this.type, id: info.id}
+          )
+      }
+      this.modal.status = false
     }
   }
 }
@@ -75,8 +127,9 @@ export default {
 
 .edit-page#edit {
   padding-top: 40px;
+  padding-bottom: 40px;
   background-color: #f8f3ed;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 69px);
 }
 
 .modal-btn {
@@ -87,43 +140,12 @@ export default {
   margin: 8px 0;
 }
 
-/* .ed-modal-btn {
-  color: white;
-  cursor:pointer;
+.register-btn {
   width: 100%;
-  margin: 12px 0;
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  white-space: normal;
-  background-color: #B25A74;
-  font-size: 20px;
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: rgba(221, 105, 149, 0.762);
+  color: #fff2f8;
 }
-.fake-icon {
-  width: 118px;
-}
-.ed-main {
-  height: 100%;
-}
-.ed-main-list {
-  padding: 8px;
-  background-color: rgb(243, 234, 183);
-}
-.ed-main-li-draggable {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.ed-main-function {
-  padding: 8px;
-}
-
-.fade-leave-active, .fade-enter-active {
-  transition: opacity .2s;
-}
-
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-} */
 </style>
