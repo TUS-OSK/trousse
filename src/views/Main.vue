@@ -4,7 +4,7 @@
       <div class="hero d-flex justify-content-center">
         <p class="hero-text text-center" :class="{ active : isLoaded }">trousseがきっとあなたのコスメを見つけてくれます！</p>
       </div>
-      <section id="select" class="select-area container-fluid">
+      <section class="select-area container-fluid">
         <h2 class="sub-title">SELECT</h2>
         <div class="select">
           <accordion-cosmes-list
