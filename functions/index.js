@@ -50,10 +50,10 @@ app.get("/cosmes", async (req, res) => {
         .doc(uid)
         .collection("cosmes")
         .doc(currentCosmeType);
-      const databaseOederList = await databaseRef.get();
+      const databaseOrderList = await databaseRef.get();
       const databasedatalist = await databaseRef.collection("data").get();
-      if (databaseOederList.data() !== undefined) {
-        const cosmes = databaseOederList
+      if (databaseOrderList.data() !== undefined) {
+        const cosmes = databaseOrderList
           .data()
           .order.map(id => databasedatalist.docs.find(doc => doc.id === id))
           .filter(doc => doc.id !== undefined)
