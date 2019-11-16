@@ -164,7 +164,7 @@ export default {
     },
     async reorderCosmeInfo({ commit, state }, { cosmeIds, type }) {
       const { token } = state.user
-      await dragCosme.cosme('api/cosmes/order', {
+      void dragCosme.cosme('api/cosmes/order', {
         item: { type, array: cosmeIds },
         token
       })

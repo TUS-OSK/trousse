@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="accordion"
-    class="accordion-cosmes-list-component"
-  >
+  <div id="accordion" class="accordion-cosmes-list-component">
     <div class="accordion-wrap" :class="{ 'close-list' : !isOpened[this.cosmeType] }">
       <div class="list-title">
         <span class="check-btn d-inline-block">
@@ -49,10 +46,7 @@ export default {
   },
   computed: {
     ...mapGetters('userData', ['cosmeTypes', 'cosmes']),
-    ...mapGetters('pages/main', [
-      'uncheckedTypes',
-      'isOpened'
-    ]),
+    ...mapGetters('pages/main', ['uncheckedTypes', 'isOpened']),
     isChecked: {
       get() {
         return this.cosmeTypes.filter(
@@ -69,7 +63,7 @@ export default {
   },
   methods: {
     changeCosmesListState(mode) {
-      if(mode === 'check') {
+      if (mode === 'check') {
         this.isSelected = !this.isSelected
       }
       this.$store.dispatch('pages/main/loadCosmesListState', this.cosmeType)
@@ -90,7 +84,7 @@ export default {
     transform: translateY(0px);
   }
   75% {
-    transform: translateY(-2px)
+    transform: translateY(-2px);
   }
   100% {
     transform: translateY(0);
@@ -125,7 +119,7 @@ export default {
   border-radius: 8px;
   overflow: hidden;
   opacity: 1;
-  transition: all .4s
+  transition: all 0.4s;
 }
 #accordion .accordion-wrap.close-list .cosme-display-wrap {
   opacity: 0;
@@ -146,9 +140,9 @@ export default {
   height: 20px;
   border-radius: 50%;
   background-color: #ffebf4;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 #accordion .input-checkbox:checked + .input-label .checkbox {
-  background-color: #b55980
+  background-color: #b55980;
 }
 </style>
