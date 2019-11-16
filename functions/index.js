@@ -180,7 +180,12 @@ app.patch("/cosmes", async (req, res) => {
     .doc(req.body.type)
     .collection("data")
     .doc(req.body.info.id);
-  const changeRef = await usersRef.set(req.body.info);
+  const changeRef = await usersRef.set({
+    name: req.body.info.name,
+    brand: req.body.info.brand,
+    color: req.body.info.color,
+    theme: req.body.info.theme
+  });
   res.json({
     status: "ok!",
     id: changeRef.id
