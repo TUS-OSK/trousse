@@ -118,7 +118,7 @@ export default {
         this.cosmeTypes.forEach(type => {
           const data = {}
           data.type = type
-          data.uncheckedIds = this.cosmes[type]
+          data.cosmes = this.cosmes[type]
             .filter(cosme => {
               //チェックされてるtheme配列をcosmeが持つtheme配列でfilterして長さが小さくなったものはチェックしたい
               //つまりアンチェックリストに入れたくないのでfalseを返すようにする
