@@ -18,7 +18,7 @@
         <span class="logo d-inline-block">Trousse</span>
       </button>
     </div>
-    <button class="btn-wrap" :class="{ active : sidebarIsActive }" @click="changeSidebarState">
+    <button class="nav-btn" :class="{ active : sidebarIsActive }" @click="changeSidebarState">
       <span class="line"></span>
       <span class="line"></span>
       <span class="line"></span>
@@ -110,17 +110,17 @@ export default {
   opacity: 0;
 }
 /* z-index 3 */
-#header .btn-wrap {
+#header .nav-btn {
   z-index: 13;
   width: 32px;
   height: 28px;
-  margin: 12px;
+  margin: 20px;
   position: fixed;
   top: 0;
   right: 0;
   background-color: rgba(255, 255, 255, 0);
 }
-#header .btn-wrap .line {
+#header .nav-btn .line {
   width: 100%;
   height: 4px;
   position: absolute;
@@ -131,23 +131,27 @@ export default {
   transition: all 0.3s;
 }
 
-#heaedr .btn-wrap span:nth-of-type(1) {
+#heaedr .nav-btn span:nth-of-type(1) {
   top: 0;
 }
-#header .btn-wrap span:nth-of-type(2) {
+#header .nav-btn span:nth-of-type(2) {
   top: 12px;
 }
-#header .btn-wrap span:nth-of-type(3) {
+#header .nav-btn span:nth-of-type(3) {
   top: 24px;
 }
 
-#header .btn-wrap.active span:nth-of-type(1) {
+#header .nav-btn.active .line {
+  background-color: rgb(85, 32, 32);
+}
+
+#header .nav-btn.active span:nth-of-type(1) {
   transform: translateY(12px) rotate(-45deg);
 }
-#header .btn-wrap.active span:nth-of-type(2) {
+#header .nav-btn.active span:nth-of-type(2) {
   opacity: 0;
 }
-#header .btn-wrap.active span:nth-of-type(3) {
+#header .nav-btn.active span:nth-of-type(3) {
   transform: translateY(-12px) rotate(45deg);
 }
 
@@ -162,6 +166,7 @@ export default {
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.95);
   transition: all 0.3s ease;
+  overflow-y: auto;
 }
 #header .navbar.active {
   right: 0;
@@ -172,7 +177,6 @@ export default {
 }
 #header .navbar .link {
   padding: 12px 24px;
-  border-bottom: 1px solid gray;
   color: rgba(20, 20, 20, 0.8);
 }
 #header .logout-btn {
