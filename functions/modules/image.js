@@ -4,21 +4,27 @@ const moment = require("moment")
 
 module.exports = {
   getSignedURL: async (req, res) => {
-    const bucket = admin.storage().bucket()
+    const storage = admin.storage()
+    const bucket = storage.bucket()
     const filename = `image_${Number(new Date())}`
-    const url = await bucket.file(filename).getSignedUrl({
+    const signedURL = await bucket.file(filename).getSignedUrl({
       action: "write",
-      contentType: 'application/x-www-form-urlencoded',
+      contentType: "application/x-www-form-urlencoded",
       expires: moment().utc().add(10, "minutes").format(),
     })
-    if(url[0] === undefined) {
+    if(signedURL[0] === undefined) {
       res.json({
         error: "failed"
       })
       return
     }
+    const downloadURL = await bucket.file(filename).getSignedUrl({
+      action: "read",
+      expires: "03-09-2491"
+    })
     res.json({
-      url: url[0]
+      signedURL: signedURL[0],
+      downloadURL: downloadURL[0]
     })
   }
 }

@@ -151,20 +151,11 @@ export const deleteCosme = {
 export const postImage = async(data) => {
   if (!(data instanceof File)) {
     console.error('data must be an instance of File.', data)
-    // return
+    return
   }
   const res = await (await fetch(endpoint('api/geturl'))).json()
-  const signedURL = res.url
-  console.log(signedURL)
-
-  // const res = await fetch(signedURL, {
-  //   mode: 'no-cors',
-  //   headers: {
-  //     'Content-Type': 'multipart/form-data'
-  //   },
-  //   method: 'PUT',
-  //   body: data
-  // })
-  await putImage(signedURL, data)
-  return res
+  // console.log(res.signedURL)
+  // console.log(res.downloadURL)
+  await putImage(res.signedURL, data)
+  return res.downloadURL || null
 }
