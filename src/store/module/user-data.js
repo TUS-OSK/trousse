@@ -108,7 +108,8 @@ export default {
               name: user.displayName,
               token
             })
-            const cosmeData = process.env.VUE_APP_AUTHENTICATION === 'production' ? await fetchCosme(token) : await fetchMain()
+            const cosmeData =
+              process.env.NODE_ENV === 'production' || process.env.VUE_APP_AUTHENTICATION === 'production' ? await fetchCosme(token) : await fetchMain()
             commit('updateCosmeData', cosmeData)
             // コスメがロードし終わったかのstatus
             commit('updateCosmesLoadStatus')
