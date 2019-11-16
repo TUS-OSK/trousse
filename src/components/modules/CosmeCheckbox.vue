@@ -41,7 +41,7 @@ export default {
         const listData = {
           type: this.cosmeType,
           cosmes: this.allCosmeIds[this.cosmeType].filter(
-            id => !newIds.includes(id)
+            id => newIds === undefined ? true : !newIds.includes(id)
           )
         }
         this.$emit('input', listData)
