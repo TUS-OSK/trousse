@@ -5,7 +5,7 @@ import {
   creatCosme,
   changeCosme,
   deleteCosme,
-  // dragCosme,
+  dragCosme,
   fetchMain
 } from '../../api'
 import { STATUS } from '@/constant'
@@ -109,7 +109,10 @@ export default {
               token
             })
             const cosmeData =
-              process.env.NODE_ENV === 'production' || process.env.VUE_APP_AUTHENTICATION === 'production' ? await fetchCosme(token) : await fetchMain()
+              process.env.NODE_ENV === 'production' ||
+              process.env.VUE_APP_AUTHENTICATION === 'production'
+                ? await fetchCosme(token)
+                : await fetchMain()
             commit('updateCosmeData', cosmeData)
             // コスメがロードし終わったかのstatus
             commit('updateCosmesLoadStatus')
@@ -160,11 +163,11 @@ export default {
       await deleteCosme.cosme('api/cosmes', { item, token })
     },
     async reorderCosmeInfo({ commit, state }, { cosmeIds, type }) {
-      // const { token } = state.user
-      // await dragCosme.cosme('api/cosmes/order', {
-      //   item: { type, array: cosmeIds },
-      //   token
-      // })
+      const { token } = state.user
+      await dragCosme.cosme('api/cosmes/order', {
+        item: { type, array: cosmeIds },
+        token
+      })
       const cosmes = cosmeIds
         .map(id => state.cosmes[type].find(cosme => cosme.id === id))
         .filter(cosme => cosme !== undefined)
