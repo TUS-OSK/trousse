@@ -58,7 +58,10 @@ export default {
       state.user.token = payload.token
     },
     updateCosmeData(state, payload) {
-      state.cosmes = payload.cosmes
+      state.cosmes = {
+        ...state.cosmes,
+        ...payload.cosmes
+      }
     },
     updateCosmes(state, payload) {
       state.cosmes[payload.type] = payload.cosmes
