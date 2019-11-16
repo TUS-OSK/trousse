@@ -179,7 +179,7 @@ export default {
     },
     async uploadImage({ commit }, image) {
       const res = await postImage(image)
-      console.log(res)
+      res
       commit
     }
   }

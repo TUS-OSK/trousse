@@ -136,6 +136,7 @@ export default {
     post(event) {
       const image = event.target.files[0]
       if(!image) {
+        /* eslint-disable no-console */
         console.error('empty file input')
         return
       }
