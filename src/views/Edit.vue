@@ -129,7 +129,7 @@ export default {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f8f3ed;
-  min-height: calc(100vh - 69px);
+  min-height: calc(100vh - 68px);
 }
 
 .modal-btn {

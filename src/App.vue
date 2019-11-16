@@ -26,6 +26,10 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Courgette|Kosugi+Maru&display=swap');
 @import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700|Ubuntu:500&display=swap');
 
+html {
+  background-color: #b97085;
+}
+
 #root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
