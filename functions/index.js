@@ -35,18 +35,18 @@ app.get("/cosmes", async (req, res) => {
     return;
   }
   const uid = decodedToken.uid;
-  const cosmes = {
-    makeupbase: [],
-    foundation: [],
-    facepowder: [],
-    eyeshadow: [],
-    eyeliner: [],
-    mascara: [],
-    eyebrow: [],
-    cheek: [],
-    lipstick: [],
-    lipgloss: []
-  };
+  // const cosmes = {
+  //   makeupbase: [],
+  //   foundation: [],
+  //   facepowder: [],
+  //   eyeshadow: [],
+  //   eyeliner: [],
+  //   mascara: [],
+  //   eyebrow: [],
+  //   cheek: [],
+  //   lipstick: [],
+  //   lipgloss: []
+  // };
   const cosmeType = [];
 
   const cosmeTypeRef = db
@@ -58,7 +58,7 @@ app.get("/cosmes", async (req, res) => {
     cosmeType.push(doc.id);
   });
 
-  await Promise.all(
+  const ret = await Promise.all(
     cosmeType.map(async currentCosmeType => {
       const databaseRef = db
         .collection("users")
@@ -68,20 +68,26 @@ app.get("/cosmes", async (req, res) => {
       const databaseOederList = await databaseRef.get();
       const databasedatalist = await databaseRef.collection("data").get();
       if (databaseOederList.data() !== undefined) {
-        for (var i = 0; i <= databaseOederList.data().order.length; i++) {
-          databasedatalist.forEach(v => {
-            if (databaseOederList.data().order[i] === v.id) {
-              cosmes[currentCosmeType].push({ id: v.id, ...v.data() });
-            }
-          });
-        }
+        const cosmes = databaseOederList
+          .data()
+          .order.map(id => databasedatalist.docs.find(doc => doc.id === id))
+          .filter(doc => doc.id !== undefined)
+          .map(doc => doc.data());
+        return [currentCosmeType, cosmes];
       } else {
-        databaseOederList.forEach(v => {
-          cosmes[currentCosmeType].push({ id: v.id, ...v.data() });
-        });
+        const cosmes = databasedatalist.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        return [currentCosmeType, cosmes];
       }
     })
   );
+  const cosmes = {};
+  console.log(ret);
+  for (const [key, value] of ret) {
+    cosmes[key] = value;
+  }
 
   res.json(cosmes);
 });
