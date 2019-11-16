@@ -54,12 +54,15 @@ app.get("/cosmes", async (req, res) => {
         .doc(currentCosmeType);
       const databaseOrderList = await databaseRef.get();
       const databasedatalist = await databaseRef.collection("data").get();
-      if (databaseOrderList.data() !== undefined) {
+      if (
+        databaseOrderList.data() !== undefined &&
+        databaseOrderList.data().order !== undefined
+      ) {
         const cosmes = databaseOrderList
           .data()
           .order.map(id => databasedatalist.docs.find(doc => doc.id === id))
           .filter(doc => doc !== undefined)
-          .map(doc => doc.data());
+          .map(doc => ({ id: doc.id, ...doc.data() }));
         return [currentCosmeType, cosmes];
       } else {
         const cosmes = databasedatalist.docs.map(doc => ({
@@ -120,7 +123,12 @@ app.post("/cosmes", async (req, res) => {
     .collection("cosmes")
     .doc(req.body.type)
     .collection("data");
-  const addRef = await usersRef.add(req.body.info);
+  const addRef = await usersRef.add({
+    name: req.body.info.name,
+    brand: req.body.info.brand,
+    color: req.body.info.color,
+    theme: req.body.info.theme
+  });
 
   const orderRef = db
     .collection("users")
@@ -128,7 +136,7 @@ app.post("/cosmes", async (req, res) => {
     .collection("cosmes")
     .doc(req.body.type);
   const OrderList = await orderRef.get();
-  if (OrderList.data() !== undefined) {
+  if (OrderList.data() !== undefined && OrderList.data().order !== undefined) {
     const beforeOrderList = OrderList.data().order;
     await beforeOrderList.push(addRef.id);
     await orderRef.set({ order: beforeOrderList });
@@ -173,7 +181,12 @@ app.patch("/cosmes", async (req, res) => {
     .doc(req.body.type)
     .collection("data")
     .doc(req.body.info.id);
-  const changeRef = await usersRef.set(req.body.info);
+  const changeRef = await usersRef.set({
+    name: req.body.info.name,
+    brand: req.body.info.brand,
+    color: req.body.info.color,
+    theme: req.body.info.theme
+  });
   res.json({
     status: "ok!",
     id: changeRef.id
@@ -235,7 +248,7 @@ app.delete("/cosmes", async (req, res) => {
     .doc(req.body.type);
   const OrderList = await orderRef.get();
 
-  if (OrderList.data() !== undefined) {
+  if (OrderList.data() !== undefined && OrderList.data().order !== undefined) {
     const beforeOrderList = OrderList.data().order.filter(
       doc => doc !== req.body.id
     );
