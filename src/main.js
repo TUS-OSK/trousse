@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import VModal from 'vue-js-modal'
 
 //firebase
 
@@ -19,10 +18,6 @@ const firebaseConfig = {
   appId: '1:180108532162:web:efd452b8adebccd4659e5b'
 }
 firebase.initializeApp(firebaseConfig)
-
-//VModal
-
-// Vue.use(VModal)
 
 //Bootstrap
 
