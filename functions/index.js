@@ -35,18 +35,6 @@ app.get("/cosmes", async (req, res) => {
     return;
   }
   const uid = decodedToken.uid;
-  // const cosmes = {
-  //   makeupbase: [],
-  //   foundation: [],
-  //   facepowder: [],
-  //   eyeshadow: [],
-  //   eyeliner: [],
-  //   mascara: [],
-  //   eyebrow: [],
-  //   cheek: [],
-  //   lipstick: [],
-  //   lipgloss: []
-  // };
   const cosmeType = [];
 
   const cosmeTypeRef = db
@@ -84,7 +72,6 @@ app.get("/cosmes", async (req, res) => {
     })
   );
   const cosmes = {};
-  console.log(ret);
   for (const [key, value] of ret) {
     cosmes[key] = value;
   }
