@@ -1,8 +1,10 @@
 <template>
-  <div class="login-page">
-    <div class="lg-area">
-      <div class="lg-logo">Trousse</div>
-      <button class="lg-login-btn" @click="login"><img class="lg-btn-img" src="@/assets/btn_google_signin_light_normal_web@2x.png"></button>
+  <div id="login" class="login-page">
+    <div class="login-inner">
+      <div class="logo">Trousse</div>
+      <button class="login-btn" @click="login">
+        <img class="google-img" src="@/assets/btn_google_signin_light_normal_web@2x.png">
+      </button>
     </div>
   </div>
 </template>
@@ -20,7 +22,7 @@ export default {
 
 <style scoped>
 
-.login-page {
+.login-page#login {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,13 +30,13 @@ export default {
   height: 100vh;
   background-color: rgb(125, 73, 88);
 }
-.lg-area {
+#login .login-inner {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.lg-logo {
+#login .logo {
   width: 200px;
   height: 56px;
   display: flex;
@@ -44,12 +46,12 @@ export default {
   font-size: 60px;
   color: rgb(243, 225, 221);
 }
-.lg-btn-img {
-  width: 200px;
-  margin: 20px;
+#login .login-btn {
+  background-color: transparent;
 }
 
-img {
+#login .login-btn .google-img {
   width: 200px;
+  margin: 20px;
 }
 </style>

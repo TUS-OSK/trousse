@@ -118,7 +118,7 @@ export default {
   position: fixed;
   top: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: transparent;
 }
 #header .nav-btn .line {
   width: 100%;
@@ -183,5 +183,6 @@ export default {
   color: red;
   font-size: 20px;
   margin: 20px;
+  background-color: transparent;
 }
 </style>
