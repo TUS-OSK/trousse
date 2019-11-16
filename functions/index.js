@@ -56,7 +56,7 @@ app.get("/cosmes", async (req, res) => {
         const cosmes = databaseOrderList
           .data()
           .order.map(id => databasedatalist.docs.find(doc => doc.id === id))
-          .filter(doc => doc.id !== undefined)
+          .filter(doc => doc !== undefined)
           .map(doc => doc.data());
         return [currentCosmeType, cosmes];
       } else {
@@ -131,7 +131,7 @@ app.post("/cosmes", async (req, res) => {
     await beforeOrderList.push(addRef.id);
     await orderRef.set({ order: beforeOrderList });
   } else {
-    await orderRef.set({ order: addRef.id });
+    await orderRef.set({ order: [addRef.id] });
   }
   res.json({
     status: "ok!",
@@ -233,10 +233,13 @@ app.delete("/cosmes", async (req, res) => {
     .doc(req.body.type);
   const OrderList = await orderRef.get();
 
-  const beforeOrderList = OrderList.data().order.filter(
-    doc => doc !== req.body.id
-  );
-  await orderRef.set({ order: beforeOrderList });
+  if (OrderList.data() !== undefined) {
+    const beforeOrderList = OrderList.data().order.filter(
+      doc => doc !== req.body.id
+    );
+    await orderRef.set({ order: beforeOrderList });
+  }
+
   res.json({
     status: "ok!"
   });
