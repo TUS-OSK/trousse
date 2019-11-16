@@ -61,10 +61,10 @@ export default {
         return this.cosmeAry.map(cosme => cosme.id)
       },
       set(newCosmeIds) {
-        this.$store.dispatch(
-          'userData/reorderCosmeInfo',
-          {type: this.type, cosmeIds: newCosmeIds}
-        )
+        this.$store.dispatch('userData/reorderCosmeInfo', {
+          type: this.type,
+          cosmeIds: newCosmeIds
+        })
       }
     }
   },
@@ -87,24 +87,24 @@ export default {
       this.modal.status = false
     },
     onSubmit(request, info) {
-      switch(request) {
+      switch (request) {
         case 'register':
-          this.$store.dispatch(
-            'userData/registerCosmeInfo',
-            {type: this.type, info}
-          )
+          this.$store.dispatch('userData/registerCosmeInfo', {
+            type: this.type,
+            info
+          })
           break
         case 'change':
-          this.$store.dispatch(
-            'userData/changeCosmeInfo',
-            {type: this.type, info}
-          )
+          this.$store.dispatch('userData/changeCosmeInfo', {
+            type: this.type,
+            info
+          })
           break
         case 'delete':
-          this.$store.dispatch(
-            'userData/deleteCosmeInfo',
-            {type: this.type, id: info.id}
-          )
+          this.$store.dispatch('userData/deleteCosmeInfo', {
+            type: this.type,
+            id: info.id
+          })
       }
       this.modal.status = false
     }
@@ -129,7 +129,7 @@ export default {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f8f3ed;
-  min-height: calc(100vh - 69px);
+  min-height: calc(100vh - 68px);
 }
 
 .modal-btn {

@@ -52,13 +52,13 @@ app.get("/cosmes", async (req, res) => {
         .doc(uid)
         .collection("cosmes")
         .doc(currentCosmeType);
-      const databaseOederList = await databaseRef.get();
+      const databaseOrderList = await databaseRef.get();
       const databasedatalist = await databaseRef.collection("data").get();
-      if (databaseOederList.data() !== undefined) {
-        const cosmes = databaseOederList
+      if (databaseOrderList.data() !== undefined) {
+        const cosmes = databaseOrderList
           .data()
           .order.map(id => databasedatalist.docs.find(doc => doc.id === id))
-          .filter(doc => doc.id !== undefined)
+          .filter(doc => doc !== undefined)
           .map(doc => doc.data());
         return [currentCosmeType, cosmes];
       } else {
@@ -70,7 +70,18 @@ app.get("/cosmes", async (req, res) => {
       }
     })
   );
-  const cosmes = {};
+  const cosmes = {
+    makeupbase: [],
+    foundation: [],
+    facepowder: [],
+    eyeshadow: [],
+    eyeliner: [],
+    mascara: [],
+    eyebrow: [],
+    cheek: [],
+    lipstick: [],
+    lipgloss: []
+  };
   for (const [key, value] of ret) {
     cosmes[key] = value;
   }
@@ -110,6 +121,20 @@ app.post("/cosmes", async (req, res) => {
     .doc(req.body.type)
     .collection("data");
   const addRef = await usersRef.add(req.body.info);
+
+  const orderRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc(req.body.type);
+  const OrderList = await orderRef.get();
+  if (OrderList.data() !== undefined) {
+    const beforeOrderList = OrderList.data().order;
+    await beforeOrderList.push(addRef.id);
+    await orderRef.set({ order: beforeOrderList });
+  } else {
+    await orderRef.set({ order: [addRef.id] });
+  }
   res.json({
     status: "ok!",
     id: addRef.id
@@ -202,6 +227,21 @@ app.delete("/cosmes", async (req, res) => {
     .collection("data")
     .doc(req.body.id);
   const deleteRef = await usersRef.delete();
+
+  const orderRef = db
+    .collection("users")
+    .doc(uid)
+    .collection("cosmes")
+    .doc(req.body.type);
+  const OrderList = await orderRef.get();
+
+  if (OrderList.data() !== undefined) {
+    const beforeOrderList = OrderList.data().order.filter(
+      doc => doc !== req.body.id
+    );
+    await orderRef.set({ order: beforeOrderList });
+  }
+
   res.json({
     status: "ok!"
   });
