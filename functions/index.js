@@ -47,7 +47,7 @@ app.get("/cosmes", async (req, res) => {
     lipstick: [],
     lipgloss: []
   };
-  var cosmeType = [];
+  const cosmeType = [];
 
   const cosmeTypeRef = db
     .collection("users")
@@ -57,7 +57,6 @@ app.get("/cosmes", async (req, res) => {
   cosmeTypeList.forEach(doc => {
     cosmeType.push(doc.id);
   });
-  console.log(cosmeType);
 
   await Promise.all(
     cosmeType.map(async currentCosmeType => {
