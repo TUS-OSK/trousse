@@ -20,49 +20,55 @@ const MOCK_FETCH_MAIN = {
     eyeliner: [],
     mascara: [],
     eyebrow: [],
-    makeupbase: [{
-      id: '1',
-      brand: 'CANMAKE',
-      name: 'colorbase-pink',
-      color: 'pink',
-      theme: ['spring', 'summer', 'autumn', 'winter', 'cute']
-    },
-    {
-      id: '2',
-      brand: 'CHIFURE',
-      name: '保湿ベース',
-      color: 'beige',
-      theme: []
-    },
-    {
-      id: '6',
-      brand: 'CHIFURE',
-      name: 'ツヤツヤベール',
-      color: 'orange',
-      theme: []
-    }],
-    cheek: [{
-      id: '3',
-      brand: 'CHIFURE',
-      name: 'ツヤツヤベール',
-      color: 'orange',
-      theme: []
-    }],
+    makeupbase: [
+      {
+        id: '1',
+        brand: 'CANMAKE',
+        name: 'colorbase-pink',
+        color: 'pink',
+        theme: ['spring', 'summer', 'autumn', 'winter', 'cute']
+      },
+      {
+        id: '2',
+        brand: 'CHIFURE',
+        name: '保湿ベース',
+        color: 'beige',
+        theme: []
+      },
+      {
+        id: '6',
+        brand: 'CHIFURE',
+        name: 'ツヤツヤベール',
+        color: 'orange',
+        theme: []
+      }
+    ],
+    cheek: [
+      {
+        id: '3',
+        brand: 'CHIFURE',
+        name: 'ツヤツヤベール',
+        color: 'orange',
+        theme: []
+      }
+    ],
 
-    lipstick: [{
-      id: '4',
-      brand: 'Dior',
-      name: 'マキシマイザー',
-      color: 'pink',
-      theme: []
-    },
-    {
-      id: '5',
-      brand: 'MAC',
-      name: 'おとなのりっぷ',
-      color: 'red',
-      theme: []
-    }]
+    lipstick: [
+      {
+        id: '4',
+        brand: 'Dior',
+        name: 'マキシマイザー',
+        color: 'pink',
+        theme: []
+      },
+      {
+        id: '5',
+        brand: 'MAC',
+        name: 'おとなのりっぷ',
+        color: 'red',
+        theme: []
+      }
+    ]
   }
 }
 
