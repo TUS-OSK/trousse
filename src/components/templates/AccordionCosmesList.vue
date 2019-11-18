@@ -1,6 +1,9 @@
 <template>
   <div id="accordion" class="accordion-cosmes-list-component">
-    <div class="accordion-wrap" :class="{ 'close-list' : !isOpened[this.cosmeType] }">
+    <div
+      class="accordion-wrap"
+      :class="{ 'close-list': !isOpened[this.cosmeType] }"
+    >
       <div class="list-title">
         <span class="check-btn d-inline-block">
           <input
@@ -129,7 +132,9 @@ export default {
 #accordion .input-checkbox {
   display: none;
 }
-
+#accordion .check-btn {
+  width: 100%;
+}
 #accordion .name {
   font-size: 24px;
   font-weight: 800;
