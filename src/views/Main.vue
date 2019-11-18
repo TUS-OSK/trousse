@@ -69,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('userData', ['cosmeTypes', 'cosmes', 'allCosmeIds', 'cosmeURL']),
+    ...mapGetters('userData', ['cosmeTypes', 'cosmes', 'allCosmeIds']),
     ...mapGetters('pages/main', [
       'uncheckedItems',
       'isOpened'
