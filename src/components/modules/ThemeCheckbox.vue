@@ -93,11 +93,11 @@ export default {
   margin-right: 4px;
 }
 #theme .check-btn .checkbox-wrap {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 }
 #theme .check-btn .checkvalue {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 #theme .check-btn .checkbox {

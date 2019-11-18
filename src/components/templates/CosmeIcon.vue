@@ -2,6 +2,7 @@
   <div id="icon" class="cosme-icon-template">
     <div class="cosme-icon d-flex align-items-center justify-content-center">
       <div class="info">
+        <img :src="cosme.imageURL" width="60%">
         <span class="name">{{ cosme.name }}</span>
         <span class="brand">{{ cosme.brand }}</span>
         <div class="theme-group">
@@ -22,6 +23,13 @@ export default {
     }
   },
   methods: {
+    // imageStyles(imageURL) {
+    //   return {
+    //     'background-image': `url(${imageURL})`,
+    //     'background-size': '60%',
+    //     'background-repeat': 'no-repeat'
+    //   }
+    // },
     toJapanese(word) {
       switch (word) {
         case 'spring':
@@ -42,7 +50,7 @@ export default {
 <style scoped>
 .cosme-icon-template#icon {
   width: 100%;
-  height: 100px;
+  height: 200px;
 }
 #icon .cosme-icon {
   width: 100%;

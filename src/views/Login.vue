@@ -3,7 +3,7 @@
     <div class="login-inner">
       <div class="logo">Trousse</div>
       <button class="login-btn" @click="login">
-        <img class="google-img" src="@/assets/btn_google_signin_light_normal_web@2x.png">
+        <img class="google-img" src="/images/btn_google_signin_light_normal_web@2x.png">
       </button>
     </div>
   </div>
