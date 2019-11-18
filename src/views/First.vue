@@ -38,6 +38,8 @@ export default {
 <style scoped>
  .first-page  {
   min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   background-color: #b97085;
 }
 
