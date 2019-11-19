@@ -34,6 +34,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Ubuntu', 'M PLUS Rounded 1c', sans-serif;
+  overflow-wrap: break-word;
 }
 
 #root h2 {
