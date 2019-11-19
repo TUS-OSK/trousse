@@ -37,13 +37,9 @@ export default {
 
 <style scoped>
  .first-page  {
-  min-height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   background-color: #b97085;
-}
-
-.first-page .contents {
-  min-height: 100vh;
 }
 
 .first-page .header-page {
