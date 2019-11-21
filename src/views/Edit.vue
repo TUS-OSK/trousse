@@ -15,7 +15,7 @@
       <button class="register-btn" @click="onOpen()">コスメを追加</button>
     </main>
     <modal :active="modal.status" :onClose="onClose">
-      <update-form :focusingCosme="cosme(this.form.focusingId)" :onSubmit="onSubmit"></update-form>
+      <update-form :focusingCosme="cosme(this.form.focusingId)" :focusingType="type" :onSubmit="onSubmit"></update-form>
     </modal>
   </div>
 </template>
@@ -86,18 +86,20 @@ export default {
       this.form.focusingId = null
       this.modal.status = false
     },
-    onSubmit(request, info) {
+    onSubmit(request, info, imageFile) {
       switch (request) {
         case 'register':
           this.$store.dispatch('userData/registerCosmeInfo', {
             type: this.type,
-            info
+            info,
+            imageFile
           })
           break
         case 'change':
           this.$store.dispatch('userData/changeCosmeInfo', {
             type: this.type,
-            info
+            info,
+            imageFile
           })
           break
         case 'delete':

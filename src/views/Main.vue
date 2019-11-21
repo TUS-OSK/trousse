@@ -5,7 +5,6 @@
         <p class="hero-text text-center" :class="{ active : isLoaded }">trousseがきっとあなたのコスメを見つけてくれます！</p>
       </div>
       <section class="select-area container-fluid">
-        <input type="file" @change="post" />
         <h2 class="sub-title">SELECT</h2>
         <div class="select">
           <accordion-cosmes-list
@@ -132,15 +131,6 @@ export default {
         })
         this.cosmeThemeCheckbox = []
       }
-    },
-    post(event) {
-      const image = event.target.files[0]
-      if(!image) {
-        /* eslint-disable no-console */
-        console.error('empty file input')
-        return
-      }
-      this.$store.dispatch('userData/uploadImage', image)
     }
   },
   created() {

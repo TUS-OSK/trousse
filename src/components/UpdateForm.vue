@@ -2,6 +2,13 @@
   <div id="ud-form" class="update-form-component container-fluid">
     <div class="form-wrap container-fluid">
       <section class="input-form">
+        <label class="title">コスメ画像</label>
+        <input class="file" type="file" @change="preview"/>
+        <div class="text-center">
+          <img :src="this.info.imageURL" width="260px">
+        </div>
+      </section>
+      <section class="input-form">
         <label class="title">名前</label>
         <input class="input-text" v-model="info.name" type="text" name="name" :placeholder="`xxx-item`"/>
       </section>
@@ -28,7 +35,7 @@
     </div>
     <div class="container-fluid">
       <div class="d-block btn-group row" v-if="focusingCosme === undefined">
-        <button class="update-btn register-btn col-12" @click="onSubmit('register', info)">コスメを登録</button>
+        <button class="update-btn register-btn col-12" @click="onSubmit('register', info, imageFile)">コスメを登録</button>
       </div>
       <div class="d-block btn-group row" v-else>
         <button class="update-btn delete-btn col-6">
@@ -40,7 +47,7 @@
             </div>
           </div>
         </button>
-        <button class="update-btn change-btn col-6" @click="onSubmit('change', info)">コスメを更新</button>
+        <button class="update-btn change-btn col-6" @click="onSubmit('change', info, imageFile)">コスメを更新</button>
       </div>
     </div>
   </div>
@@ -59,6 +66,10 @@ export default {
     focusingCosme: {
       required: true
     },
+    focusingType: {
+      type: String,
+      required: true
+    },
     onSubmit: {
       type: Function,
       required: true
@@ -71,8 +82,10 @@ export default {
           brand: '',
           name: '',
           color: '',
-          theme: []
-        }
+          theme: [],
+          imageURL: `/images/cosmeImages/${this.focusingType}.png`
+        },
+        imageFile: null
       }
     } else {
       const cosme = {...this.focusingCosme}
@@ -82,8 +95,10 @@ export default {
           brand: cosme.brand,
           name: cosme.name,
           color: cosme.color,
-          theme: cosme.theme
+          theme: cosme.theme,
+          imageURL: cosme.imageURL
         },
+        imageURL: null,
         deleteStatus: false
       }
     }
@@ -92,6 +107,18 @@ export default {
     ...mapGetters('userData', ['themes'])
   },
   methods: {
+    preview(e) {
+      const image = e.target.files[0]
+      if(!image) {
+        /* eslint-disable no-console */
+        console.error('empty file input')
+      } else {
+        this.imageFile = image
+        const reader = new FileReader()
+        reader.onload = (e) => { this.info.imageURL = e.target.result }
+        reader.readAsDataURL(image)
+      }
+    },
     toJapanese(word) {
       switch (word) {
         case 'spring':
@@ -147,16 +174,16 @@ export default {
 
 #ud-form .input-form .title {
   color: rgb(55, 26, 26);
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 8px;
   font-weight: 800;
 }
 #ud-form .input-form .input-text {
   color: black;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   width: 100%;
-  padding: 8px 12px;
+  padding: 6px 8px;
   border: 2px solid rgb(235, 197, 164);
   border-radius: 4px;
   background-color: rgb(255, 234, 210);

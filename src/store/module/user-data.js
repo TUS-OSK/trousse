@@ -34,7 +34,8 @@ export default {
     themes: ['spring', 'summer', 'autumn', 'winter', 'cute'],
     cosmesStatus: {
       allLoaded: false,
-      changeLoaded: true
+      changeLoaded: true,
+      imageLoaded: true
     }
   },
   getters: {
@@ -114,7 +115,7 @@ export default {
             })
             const cosmeData =
               process.env.NODE_ENV === 'production' ||
-              process.env.VUE_APP_AUTHENTICATION === 'production'
+                process.env.VUE_APP_AUTHENTICATION === 'production'
                 ? await fetchCosme(token)
                 : await fetchMain()
             commit('updateCosmeData', cosmeData)
@@ -150,6 +151,9 @@ export default {
     },
     async registerCosmeInfo({ commit, state }, item) {
       const { token } = state.user
+      if (item.imageFile) {
+        item.info.imageURL = await postImage(item.imageFile)
+      }
       commit('updateCosmeStatus', false)
       const res = await creatCosme.cosme('api/cosmes', { item, token })
       item.info.id = res.id
@@ -158,6 +162,9 @@ export default {
     },
     async changeCosmeInfo({ commit, state }, item) {
       const { token } = state.user
+      if (item.imageFile) {
+        item.info.imageURL = await postImage(item.imageFile)
+      }
       commit('changeCosmeInformation', item)
       await changeCosme.cosme('api/cosmes', { item, token })
     },
@@ -176,11 +183,6 @@ export default {
         .map(id => state.cosmes[type].find(cosme => cosme.id === id))
         .filter(cosme => cosme !== undefined)
       commit('updateCosmes', { type, cosmes })
-    },
-    async uploadImage({ commit }, image) {
-      const res = await postImage(image)
-      res
-      commit
     }
   }
 }
