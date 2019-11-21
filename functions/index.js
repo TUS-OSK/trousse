@@ -127,7 +127,8 @@ app.post("/cosmes", async (req, res) => {
     name: req.body.info.name,
     brand: req.body.info.brand,
     color: req.body.info.color,
-    theme: req.body.info.theme
+    theme: req.body.info.theme,
+    imageURL: req.body.info.imageURL
   });
 
   const orderRef = db
@@ -185,7 +186,8 @@ app.patch("/cosmes", async (req, res) => {
     name: req.body.info.name,
     brand: req.body.info.brand,
     color: req.body.info.color,
-    theme: req.body.info.theme
+    theme: req.body.info.theme,
+    imageURL: req.body.info.imageURL
   });
   res.json({
     status: "ok!",

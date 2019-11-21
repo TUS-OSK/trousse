@@ -154,7 +154,7 @@ export const deleteCosme = {
   }
 }
 
-export const postImage = async(data) => {
+export const postImage = async data => {
   if (!(data instanceof File)) {
     /* eslint-disable no-console */
     console.error('data must be an instance of File.', data)
