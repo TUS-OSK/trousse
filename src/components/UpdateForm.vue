@@ -3,26 +3,26 @@
     <div class="form-wrap container-fluid">
       <section class="input-form">
         <label class="title">コスメ画像</label>
-        <input class="file" type="file" @change="preview"/>
-        <div class="text-center">
+        <div class="text-center input-area">
+          <input class="file" type="file" @change="preview"/>
           <img :src="this.info.imageURL" width="260px">
         </div>
       </section>
       <section class="input-form">
         <label class="title">名前</label>
-        <input class="input-text" v-model="info.name" type="text" name="name" :placeholder="`xxx-item`"/>
+        <input class="input-text input-area" v-model="info.name" type="text" name="name" :placeholder="`xxx-item`"/>
       </section>
       <section class="input-form">
         <label class="title">ブランド</label>
-        <input class="input-text" v-model="info.brand" type="text" name="name" placeholder="xxx-brand"/>
+        <input class="input-text input-area" v-model="info.brand" type="text" name="name" placeholder="xxx-brand"/>
       </section>
       <section class="input-form">
         <label class="title">色味</label>
-        <input class="input-text" v-model="info.color" type="text" name="name" placeholder="beige"/>
+        <input class="input-text input-area" v-model="info.color" type="text" name="name" placeholder="beige"/>
       </section>
       <section class="input-form">
         <label class="title">テーマ</label>
-        <div class="checkbox-group">
+        <div class="checkbox-group input-area">
           <div
             class="check-btn-wrap d-inline-block"
             v-for="theme in themes"
@@ -76,32 +76,24 @@ export default {
     }
   },
   data() {
-    if (this.focusingCosme === undefined) {
-      return {
-        info: {
-          brand: '',
-          name: '',
-          color: '',
-          theme: [],
-          imageURL: `/images/cosmeImages/${this.focusingType}.png`
-        },
-        imageFile: null
-      }
-    } else {
-      const cosme = {...this.focusingCosme}
-      return {
-        info: {
-          id: cosme.id,
-          brand: cosme.brand,
-          name: cosme.name,
-          color: cosme.color,
-          theme: cosme.theme,
-          imageURL: cosme.imageURL
-        },
-        imageURL: null,
-        deleteStatus: false
+    const data = {
+      info: {
+        brand: '',
+        name: '',
+        color: '',
+        theme: [],
+        imageURL: `/images/cosmeImages/${this.focusingType}.png`
       }
     }
+    if(this.focusingCosme !== undefined) {
+      const cosme = { ...this.focusingCosme }
+      data.info = cosme
+      data.info.imageURL = cosme.imageURL || `/images/cosmeImages/${this.focusingType}.png`
+    }
+    data.imageFile = null,
+    data.deleteStatus = false
+
+    return data
   },
   computed: {
     ...mapGetters('userData', ['themes'])
@@ -184,11 +176,18 @@ export default {
   font-weight: 500;
   width: 100%;
   padding: 6px 8px;
+}
+
+#ud-form .input-form .input-area {
   border: 2px solid rgb(235, 197, 164);
   border-radius: 4px;
   background-color: rgb(255, 234, 210);
   transition: border 0.1s linear;
 }
+#ud-form .input-form .input-area:focus {
+  border: 2px solid rgb(182, 55, 86);
+}
+
 #ud-form .input-form .input-text::placeholder {
   color: rgba(210, 138, 138, 0.762);
 }
@@ -253,9 +252,4 @@ export default {
   opacity: 1;
 }
 
-/* check-btn */
-
-#ud-form .input-text:focus {
-  border: 2px solid rgb(182, 55, 86);
-}
 </style>

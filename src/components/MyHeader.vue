@@ -23,7 +23,7 @@
       <span class="line"></span>
       <span class="line"></span>
     </button>
-    <div class="navbar d-flex align-items-start" :class="{ active : sidebarIsActive }">
+    <div class="navbar d-flex align-items-start justify-content-center" :class="{ active : sidebarIsActive }">
       <nav class="link-wrap d-flex flex-column">
         <button class="link" @click="navigate('user')">ユーザー情報</button>
         <button class="link" @click="navigate('edit/makeupbase')">化粧下地のコスメを追加</button>
@@ -128,7 +128,7 @@ export default {
   right: 0;
   background-color: rgb(249, 222, 222);
   border-radius: 4px;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
 }
 
 #heaedr .nav-btn span:nth-of-type(1) {
@@ -165,15 +165,19 @@ export default {
   right: -100vw;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.95);
-  transition: all 0.3s ease;
+  transition: all 0.6s cubic-bezier(0.33, 0.69, 0.01, 1.01);
   overflow-y: auto;
 }
 #header .navbar.active {
   right: 0;
 }
-
-#header .link-wrap {
-  width: 100%;
+#header .navbar .link-wrap {
+  opacity: 0;
+  transition: all .3s ease .6s;
+}
+#header .navbar.active .link-wrap {
+  opacity: 1;
+  animation: .4s ease .6s forwards fade-in
 }
 #header .navbar .link {
   padding: 12px 24px;
@@ -184,5 +188,16 @@ export default {
   font-size: 20px;
   margin: 20px;
   background-color: transparent;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px)
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0)
+  }
 }
 </style>

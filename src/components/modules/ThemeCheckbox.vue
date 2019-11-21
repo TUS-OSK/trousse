@@ -109,6 +109,7 @@ export default {
   border: 2px solid gray;
   /* #f56868; */
   transition: all 0.2s;
+  background-color: rgb(255, 245, 245);
 }
 
 #theme .input-checkbox:checked + .check-btn .checkbox {
