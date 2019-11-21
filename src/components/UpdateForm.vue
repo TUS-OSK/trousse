@@ -43,7 +43,7 @@
       </section>
       <section class="input-form">
         <label class="title">テーマ</label>
-        <div class="checkbox-group">
+        <div class="checkbox-group input-area">
           <div
             class="check-btn-wrap d-inline-block"
             v-for="theme in themes"
@@ -161,6 +161,15 @@ export default {
         deleteStatus: false
       }
     }
+    if(this.focusingCosme !== undefined) {
+      const cosme = { ...this.focusingCosme }
+      data.info = cosme
+      data.info.imageURL = cosme.imageURL || `/images/cosmeImages/${this.focusingType}.png`
+    }
+    data.imageFile = null,
+    data.deleteStatus = false
+
+    return data
   },
   computed: {
     ...mapGetters('userData', ['themes'])
@@ -245,11 +254,18 @@ export default {
   font-weight: 500;
   width: 100%;
   padding: 6px 8px;
+}
+
+#ud-form .input-form .input-area {
   border: 2px solid rgb(235, 197, 164);
   border-radius: 4px;
   background-color: rgb(255, 234, 210);
   transition: border 0.1s linear;
 }
+#ud-form .input-form .input-area:focus {
+  border: 2px solid rgb(182, 55, 86);
+}
+
 #ud-form .input-form .input-text::placeholder {
   color: rgba(210, 138, 138, 0.762);
 }
@@ -320,9 +336,4 @@ export default {
   opacity: 1;
 }
 
-/* check-btn */
-
-#ud-form .input-text:focus {
-  border: 2px solid rgb(182, 55, 86);
-}
 </style>
