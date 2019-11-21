@@ -42,6 +42,8 @@ module.exports = {
     'no-multi-spaces': 'error',
     'no-trailing-spaces': 'error',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-console': process.env.NODE_ENV === 'production' ?
+      ['error', { allow: ["warn", "error"] }] :
+      'off'
   }
 }

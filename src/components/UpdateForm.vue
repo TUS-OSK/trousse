@@ -110,7 +110,6 @@ export default {
     preview(e) {
       const image = e.target.files[0]
       if(!image) {
-        /* eslint-disable no-console */
         console.error('empty file input')
       } else {
         this.imageFile = image
