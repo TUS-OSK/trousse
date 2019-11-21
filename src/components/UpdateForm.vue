@@ -2,10 +2,16 @@
   <div id="ud-form" class="update-form-component container-fluid">
     <div class="form-wrap container-fluid">
       <section class="input-form">
-        <label class="title">コスメ画像</label>
-        <input class="file" type="file" @change="preview" />
-        <div class="text-center">
-          <img :src="this.info.imageURL" width="260px" />
+        <label class="title">画像</label>
+        <div class="text-center input-area">
+          <div class="file-uploader">
+            <input id="cosme-file" class="input-file" type="file" @change="preview"/>
+            <label for="cosme-file" class="upload-btn d-flex flex-column">
+              <span class="title">画像を選択</span>
+              <span v-if="fileValue">{{fileValue}}</span>
+            </label>
+          </div>
+          <img class="m-3 cosm-img" :src="this.info.imageURL" width="260p">
         </div>
       </section>
       <section class="input-form">
@@ -135,39 +141,23 @@ export default {
     }
   },
   data() {
-    if (this.focusingCosme === undefined) {
-      return {
-        info: {
-          brand: '',
-          name: '',
-          color: '',
-          theme: [],
-          imageURL: `/images/cosmeImages/${this.focusingType}.png`
-        },
-        imageFile: null
-      }
-    } else {
-      const cosme = { ...this.focusingCosme }
-      return {
-        info: {
-          id: cosme.id,
-          brand: cosme.brand,
-          name: cosme.name,
-          color: cosme.color,
-          theme: cosme.theme,
-          imageURL: cosme.imageURL
-        },
-        imageURL: null,
-        deleteStatus: false
-      }
+    const data = {
+      info: {
+        brand: '',
+        name: '',
+        color: '',
+        theme: [],
+        imageURL: `/images/cosmeImages/${this.focusingType}.png`
+      },
+      fileValue: null,
+      imageFile: null,
+      deleteStatus: false
     }
     if(this.focusingCosme !== undefined) {
       const cosme = { ...this.focusingCosme }
       data.info = cosme
       data.info.imageURL = cosme.imageURL || `/images/cosmeImages/${this.focusingType}.png`
     }
-    data.imageFile = null,
-    data.deleteStatus = false
 
     return data
   },
@@ -177,9 +167,10 @@ export default {
   methods: {
     preview(e) {
       const image = e.target.files[0]
-      if (!image) {
-        /* eslint-disable no-console */
-        console.error('empty file input')
+      this.fileValue = e.target.value.replace('C:\\fakepath\\', '')
+      if(!image) {
+        this.imageFile = null
+        this.info.imageURL = `/images/cosmeImages/${this.focusingType}.png`
       } else {
         this.imageFile = image
         const reader = new FileReader()
@@ -261,6 +252,24 @@ export default {
   border-radius: 4px;
   background-color: rgb(255, 234, 210);
   transition: border 0.1s linear;
+}
+#ud-form .input-form .input-area .input-file {
+  display: none;
+}
+#ud-form .input-form .input-area .file-uploader {
+  cursor: pointer;
+  background-color: rgb(235, 197, 164);
+  color: #fff6ee;
+}
+#ud-form .input-form .input-area .file-uploader .upload-btn{
+  padding: 4px;
+}
+#ud-form .input-form .input-area .file-uploader .title{
+  padding: 8px 12px;
+  margin-bottom: 2px;
+  border-radius: 4px;
+  background-color: rgb(255, 247, 247);
+  text-overflow: ellipsis;
 }
 #ud-form .input-form .input-area:focus {
   border: 2px solid rgb(182, 55, 86);
