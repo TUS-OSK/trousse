@@ -60,7 +60,7 @@ Firebase コンソール(Trousse)で、[設定] > [サービス アカウント]
 
 ### 環境変数を設定するには:(毎度ターミナルを開くたびに打つ必要なし)
 
-direnv をインストールします
+direnv をインストールします。
 
 ```
 brew install direnv
