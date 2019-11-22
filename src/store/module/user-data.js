@@ -108,6 +108,10 @@ export default {
             // console.log('オブザーバーは君のことをみてるよ')
             commit('updateLogin', true)
 
+            if (router.currentRoute.name === 'login') {
+              router.replace({ name: 'main' })
+            }
+
             const token = await user.getIdToken()
             commit('updateUserData', {
               name: user.displayName,
@@ -115,16 +119,12 @@ export default {
             })
             const cosmeData =
               process.env.NODE_ENV === 'production' ||
-              process.env.VUE_APP_AUTHENTICATION === 'production'
+                process.env.VUE_APP_AUTHENTICATION === 'production'
                 ? await fetchCosme(token)
                 : await fetchMain()
             commit('updateCosmeData', cosmeData)
             // コスメがロードし終わったかのstatus
             commit('updateCosmesLoadStatus')
-
-            if (router.currentRoute.name === 'login') {
-              router.replace({ name: 'main' })
-            }
           } else {
             commit('updateLogin', false)
 
