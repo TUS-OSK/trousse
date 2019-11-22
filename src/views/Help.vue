@@ -3,6 +3,8 @@
     <main class="help-inner">
       <section class="sub-title-area container-fluid">
         <h2 class="title">HELP</h2>
+        <h3>trousseとは</h3>
+        <div>登録したコスメから各分野ごとに一つずつ選びます。使うコスメを選べなくて困ったときに使ってください。</div>
         <h3 class="title">EDIT</h3>
 
         <details>
@@ -29,7 +31,7 @@
           <summary class="sub-title">コスメの情報の変更の仕方</summary>
           <div>
             右上のハンバーガーメニュー
-            <img src="/images/helpImages/headerIcon.png" width="25" height="25" />から変更したいコスメの分野を選択し、変更したいコスメをタップしてください。
+            <img src="/images/helpImages/headerIcon.png" width="25" height="25" />から変更したいコスメの分野を選択し、変更したいコスメを選択してください。
           </div>
           <div>
             コスメ情報を変更し、右下のコスメを更新ボタン
@@ -44,7 +46,7 @@
           <summary class="sub-title">コスメの削除の仕方</summary>
           <div>
             右上のハンバーガーメニュー
-            <img src="/images/helpImages/headerIcon.png" width="25" height="25" />から削除したいコスメの分野を選択し、削除したいコスメをタップしてください。
+            <img src="/images/helpImages/headerIcon.png" width="25" height="25" />から削除したいコスメの分野を選択し、削除したいコスメを選択してください。
           </div>
           <div>
             右下のコスメを削除ボタン
@@ -54,8 +56,39 @@
         <h3 class="title">MAIN</h3>
 
         <details>
-          <summary class="sub-title">使い方</summary>
-          <div></div>
+          <summary class="sub-title">SELECT</summary>
+          <div>
+            使いたいコスメの分野を選んで、分野の名前を選択してください。左の丸が
+            <img
+              src="/images/helpImages/selected.png"
+              width="240"
+              height="40"
+            />となっていれば選択済みで、
+            <img src="/images/helpImages/unselected.png" width="240" height="40" />となっていれば、選択されていません。
+          </div>
+          <div>
+            また、コスメのアイコンを選択するとそのコスメを候補に入れたり外したりできます。
+            候補に入っていれば、
+            <img
+              src="/images/helpImages/mainSelected.png"
+              width="80"
+              height="60"
+            />、
+            入っていなければ、
+            <img
+              src="/images/helpImages/mainUnselected.png"
+              width="80"
+              height="60"
+            />となります。
+          </div>
+        </details>
+
+        <details>
+          <summary class="sub-title">FILTER</summary>コスメを登録する時の『テーマ』でコスメを絞ることができます。
+          絞りたいコスメのテーマを選択してください。複数選択可
+        </details>
+        <details>
+          <summary class="sub-title">RESULT</summary>コスメを一つずつ選んで表示してくれます。
         </details>
 
         <h3 class="title">LOGOUT</h3>
