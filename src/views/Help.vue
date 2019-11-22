@@ -8,7 +8,7 @@
             <h4 class="sub-title">コスメの追加の仕方</h4>
             <div>
               右上の
-              <img src="/images/helpImages/header.png" width="25" height="25" />から追加したいコスメの分野を選択します。
+              <img src="/images/helpImages/headerIcon.png" width="25" height="25" />から追加したいコスメの分野を選択します。
             </div>
             <div>コスメを追加ボタンでコスメを追加します。</div>
             <span>---コスメを追加ボタンを画像で---</span>
@@ -20,7 +20,7 @@
             <h4 class="sub-title">コスメの情報の変更の仕方</h4>
             <div>
               右上の
-              <img src="/images/helpImages/header.png" width="25" height="25" />から変更したいコスメの分野を選択し、変更したいコスメをタップしてください。
+              <img src="/images/helpImages/headerIcon.png" width="25" height="25" />から変更したいコスメの分野を選択し、変更したいコスメをタップしてください。
             </div>
             <span>---変更モジュール---</span>
             <div>コスメ情報を変更し、コスメを更新ボタンでコスメ情報を更新してください。</div>
@@ -30,7 +30,7 @@
             <h4 class="sub-title">コスメの削除の仕方</h4>
             <div>
               右上の
-              <img src="/images/helpImages/header.png" width="25" height="25" />から削除したいコスメの分野を選択し、削除したいコスメをタップしてください。
+              <img src="/images/helpImages/headerIcon.png" width="25" height="25" />から削除したいコスメの分野を選択し、削除したいコスメをタップしてください。
             </div>
           </li>
           <li>
