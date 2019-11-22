@@ -40,6 +40,7 @@ export default {
   },
   getters: {
     user: state => state.user,
+    userName: state => state.user.name,
     cosmeTypes: state => Object.keys(state.cosmes),
     allCosmeIds: (state, getters) => {
       const allCosmeIds = {}
