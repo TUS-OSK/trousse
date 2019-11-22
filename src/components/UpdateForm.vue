@@ -15,9 +15,10 @@
         </div>
       </section>
       <section class="input-form">
-        <label class="title">
+        <label class="title d-flex align-items-center">
           <span>名前</span>
-          <span class="badge">[必須]</span>
+          <span class="badge badge-danger mx-1">必須</span>
+          <span v-if="info.name.length > 15" class="warning">文字数は15文字以内です</span>
         </label>
         <input
           class="input-text"
@@ -28,7 +29,10 @@
         />
       </section>
       <section class="input-form">
-        <label class="title">ブランド</label>
+        <label class="title">
+          <span>ブランド</span>
+          <span v-if="info.brand.length > 15" class="warning">文字数は15文字以内です</span>
+        </label>
         <input
           class="input-text"
           v-model="info.brand"
@@ -38,7 +42,10 @@
         />
       </section>
       <section class="input-form">
-        <label class="title">色味</label>
+        <label class="title">
+          <span>色味</span>
+          <span v-if="info.color.length > 10" class="warning">文字数は10文字以内です</span>
+        </label>
         <input
           class="input-text"
           v-model="info.color"
@@ -59,9 +66,11 @@
           </div>
         </div>
       </section>
-      <div v-if="info.name == ''" class="text-center">
-        ※必須項目を正しく入力して下さい
-      </div>
+      <transition name="fade">
+        <div v-if="warningStatus" class="warning text-center">
+          !正しく入力して下さい!
+        </div>
+      </transition>
     </div>
     <div class="container-fluid">
       <div class="d-block btn-group row" v-if="focusingCosme === undefined">
@@ -101,15 +110,15 @@
           </div>
         </button>
         <button
-          v-if="info.name"
-          class="update-btn change-btn col-6"
-          @click="onSubmit('change', info, imageFile)"
+          v-if="warningStatus"
+          class="update-btn change-btn col-6 d-inline-block text-center -error"
         >
           コスメを更新
         </button>
         <button
           v-else
-          class="update-btn change-btn col-6 d-inline-block text-center -error"
+          class="update-btn change-btn col-6"
+          @click="onSubmit('change', info, imageFile)"
         >
           コスメを更新
         </button>
@@ -162,7 +171,12 @@ export default {
     return data
   },
   computed: {
-    ...mapGetters('userData', ['themes'])
+    ...mapGetters('userData', ['themes']),
+    warningStatus() {
+      const info = this.info
+      const status = !info.name || info.name.length > 15 || info.color.length > 10 || info.brand.length > 15
+      return status
+    }
   },
   methods: {
     preview(e) {
@@ -198,6 +212,12 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .1s linear;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 @keyframes shrink {
   0% {
     transform: scale(1);
@@ -226,24 +246,37 @@ export default {
   background-color: white;
   padding: 36px 16px 16px;
 }
+#ud-form .form-wrap .warning {
+  font-size: 14px;
+  margin: 8px 0;
+  color: rgb(194, 46, 46);
+}
 
 #ud-form .input-form {
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
 }
-
+#ud-form .input-form .warning {
+  font-size: 12px;
+  color: rgb(227, 129, 155);
+  margin: 0 4px;
+}
 #ud-form .input-form .title {
   color: rgb(55, 26, 26);
   font-size: 16px;
   margin-bottom: 8px;
-  font-weight: 800;
+  font-weight: 900;
 }
 #ud-form .input-form .input-text {
   color: black;
-  font-size: 14px;
-  font-weight: 500;
+  text-shadow: none;
+  font-size: 16px;
+  font-weight: 100;
   width: 100%;
+  border: 2px solid rgb(235, 197, 164);
+  border-radius: 4px;
+  background-color: rgb(255, 234, 210);
   padding: 6px 8px;
 }
 

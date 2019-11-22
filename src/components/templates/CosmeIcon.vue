@@ -65,7 +65,7 @@ export default {
   text-align: center;
   background-color: rgb(248, 241, 242);
   word-break: break-all;
-  overflow: scroll;
+  overflow: hidden;
   cursor: pointer;
 }
 

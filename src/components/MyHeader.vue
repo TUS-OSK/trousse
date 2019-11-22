@@ -58,7 +58,7 @@
       <span class="line"></span>
     </button>
     <div
-      class="navbar d-flex align-items-start"
+      class="navbar d-flex align-items-start justify-content-center"
       :class="{ active: sidebarIsActive }"
     >
       <nav class="link-wrap d-flex flex-column">
