@@ -184,7 +184,7 @@ export default {
       this.fileValue = e.target.value.replace('C:\\fakepath\\', '')
       if(!image) {
         this.imageFile = null
-        this.info.imageURL = `/images/cosmeImages/${this.focusingType}.png`
+        this.info.imageURL = this.focusingCosme.imageURL || `/images/cosmeImages/${this.focusingType}.png`
       } else {
         this.imageFile = image
         const reader = new FileReader()
