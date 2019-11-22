@@ -24,7 +24,7 @@
             </div>
             <span>---変更モジュール---</span>
             <div>コスメ情報を変更し、コスメを更新ボタンでコスメ情報を更新してください。</div>
-            <span>---コスメを更新ボタンを画像で---</span>
+            <img src="/images/helpImages/changeCosmeButton.png" width="120" height="40" />
           </li>
           <li>
             <h4 class="sub-title">コスメの削除の仕方</h4>
