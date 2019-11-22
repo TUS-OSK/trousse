@@ -7,8 +7,10 @@
             <h3>{{ type }}</h3>
             <div class="container-fluid">
               <div class="row">
-                <div class="img-wrap col-xl-2 col-md-3 col-4 d-flex justify-content-center align-items-center">
-                  <img class="cosme-img" :src="item.imageURL">
+                <div
+                  class="img-wrap col-xl-2 col-md-3 col-4 d-flex justify-content-center align-items-center"
+                >
+                  <img class="cosme-img" :src="item.imageURL" />
                 </div>
                 <div class="d-flex flex-column col-xl-10 col-md-9 col-8 py-2">
                   <span v-if="item.name">名前: {{ item.name }}</span>
@@ -94,7 +96,7 @@ export default {
   background-color: #f3aecb;
   width: 100%;
   border-radius: 20px;
-  color: gray;
+  color: black;
   height: 40px;
   margin: 8px 0;
 }
