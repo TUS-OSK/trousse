@@ -48,9 +48,9 @@
 </template>
 
 <script>
-import LoadPage from "@/components/LoadPage.vue";
+import LoadPage from '@/components/LoadPage.vue'
 export default {
-  name: "my-header",
+  name: 'my-header',
   components: {
     LoadPage
   },
@@ -61,40 +61,40 @@ export default {
         main: false,
         help: false,
         user: false,
-        "edit/makeupbase": false,
-        "edit/foundation": false,
-        "edit/facepowder": false,
-        "edit/eyeshadow": false,
-        "edit/eyeliner": false,
-        "edit/mascara": false,
-        "edit/eyebrow": false,
-        "edit/cheek": false,
-        "edit/lipstick": false,
-        "edit/lipgloss": false
+        'edit/makeupbase': false,
+        'edit/foundation': false,
+        'edit/facepowder': false,
+        'edit/eyeshadow': false,
+        'edit/eyeliner': false,
+        'edit/mascara': false,
+        'edit/eyebrow': false,
+        'edit/cheek': false,
+        'edit/lipstick': false,
+        'edit/lipgloss': false
       }
-    };
+    }
   },
   methods: {
     changeSidebarState() {
-      this.sidebarIsActive = !this.sidebarIsActive;
+      this.sidebarIsActive = !this.sidebarIsActive
     },
     navigate(page) {
-      const path = `/first/${page}`;
+      const path = `/first/${page}`
       Object.keys(this.transIsActive).forEach(where => {
-        this.transIsActive[where] = false;
-      });
-      this.transIsActive[page] = true;
-      this.sidebarIsActive = false;
+        this.transIsActive[where] = false
+      })
+      this.transIsActive[page] = true
+      this.sidebarIsActive = false
       setTimeout(() => {
-        this.$router.push({ path }).catch();
-      }, 300);
+        this.$router.push({ path }).catch()
+      }, 300)
     },
     logout() {
-      this.$store.dispatch("userData/logout");
-      this.sideBarisActive = false;
+      this.$store.dispatch('userData/logout')
+      this.sideBarisActive = false
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -159,9 +159,8 @@ export const postImage = async data => {
     console.error('data must be an instance of File.', data)
     return
   }
-  const res = await (await fetch(endpoint('api/geturl'))).json()
-  // console.log(res.signedURL)
-  // console.log(res.downloadURL)
+  const optional = initOpti(data)
+  const res = await fetch(endpoint('api/geturl'), optional)
   await putImage(res.signedURL, data)
   return res.downloadURL || null
 }
