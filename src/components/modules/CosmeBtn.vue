@@ -32,6 +32,7 @@ export default {
 
 <style scoped>
   .cosme-btn {
+    padding: 0;
     width: 100%;
     background-color: transparent;
   }
