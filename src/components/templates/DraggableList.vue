@@ -1,7 +1,11 @@
 <template>
   <div id="dg-list" class="draggable-list-template">
     <div class="draggable-list-wrap container-fluid text-center">
-      <div v-if="!cosmesStatus.allLoaded" class="spinner-border text-light my-3" role="status">
+      <div
+        v-if="!cosmesStatus.allLoaded"
+        class="spinner-border text-light my-3"
+        role="status"
+      >
         <span class="sr-only">Loading...</span>
       </div>
       <div v-else>
@@ -9,7 +13,11 @@
           <span>コスメを登録しましょう!</span>
         </div>
       </div>
-      <draggable class="draggable-list row" v-model="cosmeIds" v-bind="dragOptions">
+      <draggable
+        class="draggable-list row"
+        v-model="cosmeIds"
+        v-bind="dragOptions"
+      >
         <div
           class="cosme-icon-wrap col-xl-2 col-md-3 col-sm-4 col-6 px-1 mb-2"
           v-for="cosmeId in cosmeIds"
@@ -20,7 +28,7 @@
       </draggable>
       <div
         v-if="!cosmesStatus.changeLoaded"
-        class="spinner-wrap col-xl-2 col-md-3 col-sm-4 col-6 d-flex justify-content-center align-items-center"
+        class="spinner-wrap d-flex justify-content-center align-items-center"
       >
         <div class="spinner-border text-light" role="status">
           <span class="sr-only">Loading...</span>
@@ -64,7 +72,7 @@ export default {
 <style scoped>
 .draggable-list-template#dg-list {
   overflow: hidden;
-  padding: 8px;
+  padding: 12px 8px 8px;
   background-color: #f3e3e6;
   border-radius: 8px;
   transition: all 0.4s;

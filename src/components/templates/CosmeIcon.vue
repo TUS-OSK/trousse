@@ -1,10 +1,14 @@
 <template>
   <div id="icon" class="cosme-icon-template">
-    <div class="cosme-icon d-flex align-items-center justify-content-center">
+    <div class="cosme-icon">
       <div class="info">
-        <img :src="cosme.imageURL" width="60%">
-        <span class="name">{{ cosme.name }}</span>
-        <span class="brand">{{ cosme.brand }}</span>
+        <div class="cosme-img-info">
+          <img class="cosme-img" :src="cosme.imageURL">
+        </div>
+        <div class="cosme-text-info">
+          <span class="name">{{ cosme.name }}</span>
+          <span class="brand">{{ cosme.brand }}</span>
+        </div>
         <div class="theme-group">
           <span class="theme d-inline-block" v-for="(theme, index) in cosme.theme" :key="`$theme-${cosme.id}-${index}`">{{ toJapanese(theme) }}</span>
         </div>
@@ -50,7 +54,7 @@ export default {
 <style scoped>
 .cosme-icon-template#icon {
   width: 100%;
-  height: 200px;
+  height: 140px;
 }
 #icon .cosme-icon {
   width: 100%;
@@ -61,22 +65,50 @@ export default {
   text-align: center;
   background-color: rgb(248, 241, 242);
   word-break: break-all;
-  overflow: scroll;
+  overflow: hidden;
   cursor: pointer;
 }
 
 #icon .cosme-icon .info {
+  padding: 12px;
+  width: 100%;
+  height: 100%;
+  position: relative;
   align-items: center;
   display: flex;
-  flex-direction: column;
   font-size: 12px;
+  flex-direction: column;
   justify-content: center;
 }
-
+#icon .cosme-icon .info .cosme-img-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 68px;
+}
+#icon .cosme-icon .info .cosme-text-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 40px;
+}
+#icon .cosme-icon .info .cosme-img {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 4px;
+}
+#icon .cosme-icon .info .theme-group {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
 #icon .cosme-icon .info .theme {
   background-color: rgba(221, 105, 149, 0.762);
   border-radius: 4px;
   margin: 2px;
+  font-size: 10px;
   padding: 1px 3px;
   color: #fff3f3dd
 }
