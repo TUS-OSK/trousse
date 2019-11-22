@@ -1,7 +1,11 @@
 <template>
   <div id="display" class="cosme-display-template">
     <div class="cosme-display-wrap container-fluid text-center">
-      <div v-if="!cosmesStatus.allLoaded" class="spinner-border text-light my-3" role="status">
+      <div
+        v-if="!cosmesStatus.allLoaded"
+        class="spinner-border text-light my-3"
+        role="status"
+      >
         <span class="sr-only">Loading...</span>
       </div>
       <div v-else>
@@ -9,9 +13,7 @@
           <span>コスメを登録しましょう!</span>
         </div>
       </div>
-      <div
-      class="cosme-display row"
-      >
+      <div class="cosme-display row">
         <div
           class="cosme-icon-wrap col-xl-2 col-md-3 col-sm-4 col-6 px-1 mb-2"
           v-for="cosmeId in cosmeIds"
@@ -28,9 +30,7 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'cosme-display',
-  props: [
-    'cosmeIds'
-  ],
+  props: ['cosmeIds', 'cosmeType'],
   computed: {
     ...mapGetters('userData', ['cosmesStatus'])
   }

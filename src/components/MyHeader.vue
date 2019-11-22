@@ -2,40 +2,97 @@
   <header id="header" class="header-page">
     <load-page pageName="main" :isLoading="transIsActive.main"></load-page>
     <load-page pageName="user" :isLoading="transIsActive.user"></load-page>
-    <load-page pageName="edit/makeupbase" :isLoading="transIsActive['edit/makeupbase']"></load-page>
-    <load-page pageName="edit/facepowder" :isLoading="transIsActive['edit/facepowder']"></load-page>
-    <load-page pageName="edit/foundation" :isLoading="transIsActive['edit/foundation']"></load-page>
-    <load-page pageName="edit/eyeshadow" :isLoading="transIsActive['edit/eyeshadow']"></load-page>
-    <load-page pageName="edit/eyeliner" :isLoading="transIsActive['edit/eyeliner']"></load-page>
-    <load-page pageName="edit/mascara" :isLoading="transIsActive['edit/mascara']"></load-page>
-    <load-page pageName="edit/eyebrow" :isLoading="transIsActive['edit/eyebrow']"></load-page>
-    <load-page pageName="edit/cheek" :isLoading="transIsActive['edit/cheek']"></load-page>
-    <load-page pageName="edit/lipstick" :isLoading="transIsActive['edit/lipstick']"></load-page>
-    <load-page pageName="edit/lipgloss" :isLoading="transIsActive['edit/lipgloss']"></load-page>
+    <load-page
+      pageName="edit/makeupbase"
+      :isLoading="transIsActive['edit/makeupbase']"
+    ></load-page>
+    <load-page
+      pageName="edit/facepowder"
+      :isLoading="transIsActive['edit/facepowder']"
+    ></load-page>
+    <load-page
+      pageName="edit/foundation"
+      :isLoading="transIsActive['edit/foundation']"
+    ></load-page>
+    <load-page
+      pageName="edit/eyeshadow"
+      :isLoading="transIsActive['edit/eyeshadow']"
+    ></load-page>
+    <load-page
+      pageName="edit/eyeliner"
+      :isLoading="transIsActive['edit/eyeliner']"
+    ></load-page>
+    <load-page
+      pageName="edit/mascara"
+      :isLoading="transIsActive['edit/mascara']"
+    ></load-page>
+    <load-page
+      pageName="edit/eyebrow"
+      :isLoading="transIsActive['edit/eyebrow']"
+    ></load-page>
+    <load-page
+      pageName="edit/cheek"
+      :isLoading="transIsActive['edit/cheek']"
+    ></load-page>
+    <load-page
+      pageName="edit/lipstick"
+      :isLoading="transIsActive['edit/lipstick']"
+    ></load-page>
+    <load-page
+      pageName="edit/lipgloss"
+      :isLoading="transIsActive['edit/lipgloss']"
+    ></load-page>
 
     <div class="logo-wrap d-flex align-items-center justify-content-center">
       <button class="link" @click="navigate('main')">
         <span class="logo d-inline-block">Trousse</span>
       </button>
     </div>
-    <button class="nav-btn" :class="{ active : sidebarIsActive }" @click="changeSidebarState">
+    <button
+      class="nav-btn"
+      :class="{ active: sidebarIsActive }"
+      @click="changeSidebarState"
+    >
       <span class="line"></span>
       <span class="line"></span>
       <span class="line"></span>
     </button>
-    <div class="navbar d-flex align-items-start" :class="{ active : sidebarIsActive }">
+    <div
+      class="navbar d-flex align-items-start"
+      :class="{ active: sidebarIsActive }"
+    >
       <nav class="link-wrap d-flex flex-column">
         <button class="link" @click="navigate('user')">ユーザー情報</button>
-        <button class="link" @click="navigate('edit/makeupbase')">化粧下地のコスメを追加</button>
-        <button class="link" @click="navigate('edit/facepowder')">フェイスパウダーのコスメを追加</button>
-        <button class="link" @click="navigate('edit/foundation')">ファンデーションのコスメを追加</button>
-        <button class="link" @click="navigate('edit/eyeshadow')">アイシャドウのコスメを追加</button>
-        <button class="link" @click="navigate('edit/eyeliner')">アイライナーのコスメを追加</button>
-        <button class="link" @click="navigate('edit/mascara')">マスカラのコスメを追加</button>
-        <button class="link" @click="navigate('edit/eyebrow')">アイブロウのコスメを追加</button>
-        <button class="link" @click="navigate('edit/cheek')">チークのコスメを追加</button>
-        <button class="link" @click="navigate('edit/lipstick')">口紅のコスメを追加</button>
-        <button class="link" @click="navigate('edit/lipgloss')">リップグロスのコスメを追加</button>
+        <button class="link" @click="navigate('edit/makeupbase')">
+          化粧下地のコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/facepowder')">
+          フェイスパウダーのコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/foundation')">
+          ファンデーションのコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/eyeshadow')">
+          アイシャドウのコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/eyeliner')">
+          アイライナーのコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/mascara')">
+          マスカラのコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/eyebrow')">
+          アイブロウのコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/cheek')">
+          チークのコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/lipstick')">
+          口紅のコスメを追加
+        </button>
+        <button class="link" @click="navigate('edit/lipgloss')">
+          リップグロスのコスメを追加
+        </button>
         <button @click="logout()" class="logout-btn">ログアウト</button>
       </nav>
     </div>
