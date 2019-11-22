@@ -1,58 +1,25 @@
 <template>
   <header id="header" class="header-page">
     <load-page pageName="main" :isLoading="transIsActive.main"></load-page>
+    <load-page pageName="help" :isLoading="transIsActive.help"></load-page>
     <load-page pageName="user" :isLoading="transIsActive.user"></load-page>
-    <load-page
-      pageName="edit/makeupbase"
-      :isLoading="transIsActive['edit/makeupbase']"
-    ></load-page>
-    <load-page
-      pageName="edit/facepowder"
-      :isLoading="transIsActive['edit/facepowder']"
-    ></load-page>
-    <load-page
-      pageName="edit/foundation"
-      :isLoading="transIsActive['edit/foundation']"
-    ></load-page>
-    <load-page
-      pageName="edit/eyeshadow"
-      :isLoading="transIsActive['edit/eyeshadow']"
-    ></load-page>
-    <load-page
-      pageName="edit/eyeliner"
-      :isLoading="transIsActive['edit/eyeliner']"
-    ></load-page>
-    <load-page
-      pageName="edit/mascara"
-      :isLoading="transIsActive['edit/mascara']"
-    ></load-page>
-    <load-page
-      pageName="edit/eyebrow"
-      :isLoading="transIsActive['edit/eyebrow']"
-    ></load-page>
-    <load-page
-      pageName="edit/cheek"
-      :isLoading="transIsActive['edit/cheek']"
-    ></load-page>
-    <load-page
-      pageName="edit/lipstick"
-      :isLoading="transIsActive['edit/lipstick']"
-    ></load-page>
-    <load-page
-      pageName="edit/lipgloss"
-      :isLoading="transIsActive['edit/lipgloss']"
-    ></load-page>
+    <load-page pageName="edit/makeupbase" :isLoading="transIsActive['edit/makeupbase']"></load-page>
+    <load-page pageName="edit/facepowder" :isLoading="transIsActive['edit/facepowder']"></load-page>
+    <load-page pageName="edit/foundation" :isLoading="transIsActive['edit/foundation']"></load-page>
+    <load-page pageName="edit/eyeshadow" :isLoading="transIsActive['edit/eyeshadow']"></load-page>
+    <load-page pageName="edit/eyeliner" :isLoading="transIsActive['edit/eyeliner']"></load-page>
+    <load-page pageName="edit/mascara" :isLoading="transIsActive['edit/mascara']"></load-page>
+    <load-page pageName="edit/eyebrow" :isLoading="transIsActive['edit/eyebrow']"></load-page>
+    <load-page pageName="edit/cheek" :isLoading="transIsActive['edit/cheek']"></load-page>
+    <load-page pageName="edit/lipstick" :isLoading="transIsActive['edit/lipstick']"></load-page>
+    <load-page pageName="edit/lipgloss" :isLoading="transIsActive['edit/lipgloss']"></load-page>
 
     <div class="logo-wrap d-flex align-items-center justify-content-center">
       <button class="link" @click="navigate('main')">
         <span class="logo d-inline-block">Trousse</span>
       </button>
     </div>
-    <button
-      class="nav-btn"
-      :class="{ active: sidebarIsActive }"
-      @click="changeSidebarState"
-    >
+    <button class="nav-btn" :class="{ active: sidebarIsActive }" @click="changeSidebarState">
       <span class="line"></span>
       <span class="line"></span>
       <span class="line"></span>
@@ -62,37 +29,18 @@
       :class="{ active: sidebarIsActive }"
     >
       <nav class="link-wrap d-flex flex-column">
+        <button class="link" @click="navigate('help')">ヘルプ</button>
         <button class="link" @click="navigate('user')">ユーザー情報</button>
-        <button class="link" @click="navigate('edit/makeupbase')">
-          化粧下地のコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/facepowder')">
-          フェイスパウダーのコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/foundation')">
-          ファンデーションのコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/eyeshadow')">
-          アイシャドウのコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/eyeliner')">
-          アイライナーのコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/mascara')">
-          マスカラのコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/eyebrow')">
-          アイブロウのコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/cheek')">
-          チークのコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/lipstick')">
-          口紅のコスメを追加
-        </button>
-        <button class="link" @click="navigate('edit/lipgloss')">
-          リップグロスのコスメを追加
-        </button>
+        <button class="link" @click="navigate('edit/makeupbase')">化粧下地のコスメを追加</button>
+        <button class="link" @click="navigate('edit/facepowder')">フェイスパウダーのコスメを追加</button>
+        <button class="link" @click="navigate('edit/foundation')">ファンデーションのコスメを追加</button>
+        <button class="link" @click="navigate('edit/eyeshadow')">アイシャドウのコスメを追加</button>
+        <button class="link" @click="navigate('edit/eyeliner')">アイライナーのコスメを追加</button>
+        <button class="link" @click="navigate('edit/mascara')">マスカラのコスメを追加</button>
+        <button class="link" @click="navigate('edit/eyebrow')">アイブロウのコスメを追加</button>
+        <button class="link" @click="navigate('edit/cheek')">チークのコスメを追加</button>
+        <button class="link" @click="navigate('edit/lipstick')">口紅のコスメを追加</button>
+        <button class="link" @click="navigate('edit/lipgloss')">リップグロスのコスメを追加</button>
         <button @click="logout()" class="logout-btn">ログアウト</button>
       </nav>
     </div>
@@ -100,9 +48,9 @@
 </template>
 
 <script>
-import LoadPage from '@/components/LoadPage.vue'
+import LoadPage from "@/components/LoadPage.vue";
 export default {
-  name: 'my-header',
+  name: "my-header",
   components: {
     LoadPage
   },
@@ -111,41 +59,42 @@ export default {
       sidebarIsActive: false,
       transIsActive: {
         main: false,
+        help: false,
         user: false,
-        'edit/makeupbase': false,
-        'edit/foundation': false,
-        'edit/facepowder': false,
-        'edit/eyeshadow': false,
-        'edit/eyeliner': false,
-        'edit/mascara': false,
-        'edit/eyebrow': false,
-        'edit/cheek': false,
-        'edit/lipstick': false,
-        'edit/lipgloss': false
+        "edit/makeupbase": false,
+        "edit/foundation": false,
+        "edit/facepowder": false,
+        "edit/eyeshadow": false,
+        "edit/eyeliner": false,
+        "edit/mascara": false,
+        "edit/eyebrow": false,
+        "edit/cheek": false,
+        "edit/lipstick": false,
+        "edit/lipgloss": false
       }
-    }
+    };
   },
   methods: {
     changeSidebarState() {
-      this.sidebarIsActive = !this.sidebarIsActive
+      this.sidebarIsActive = !this.sidebarIsActive;
     },
     navigate(page) {
-      const path = `/first/${page}`
+      const path = `/first/${page}`;
       Object.keys(this.transIsActive).forEach(where => {
-        this.transIsActive[where] = false
-      })
-      this.transIsActive[page] = true
-      this.sidebarIsActive = false
+        this.transIsActive[where] = false;
+      });
+      this.transIsActive[page] = true;
+      this.sidebarIsActive = false;
       setTimeout(() => {
-        this.$router.push({ path }).catch()
-      }, 300)
+        this.$router.push({ path }).catch();
+      }, 300);
     },
     logout() {
-      this.$store.dispatch('userData/logout')
-      this.sideBarisActive = false
+      this.$store.dispatch("userData/logout");
+      this.sideBarisActive = false;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -185,7 +134,7 @@ export default {
   right: 0;
   background-color: rgb(249, 222, 222);
   border-radius: 4px;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 
 #heaedr .nav-btn span:nth-of-type(1) {
@@ -230,11 +179,11 @@ export default {
 }
 #header .navbar .link-wrap {
   opacity: 0;
-  transition: all .3s ease .4s;
+  transition: all 0.3s ease 0.4s;
 }
 #header .navbar.active .link-wrap {
   opacity: 1;
-  animation: .3s ease .4s forwards fade-in
+  animation: 0.3s ease 0.4s forwards fade-in;
 }
 #header .navbar .link {
   padding: 12px 24px;
@@ -250,11 +199,11 @@ export default {
 @keyframes fade-in {
   0% {
     opacity: 0;
-    transform: translateY(8px)
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0)
+    transform: translateY(0);
   }
 }
 </style>
