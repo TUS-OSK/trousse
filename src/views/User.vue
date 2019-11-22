@@ -31,7 +31,12 @@ export default {
     CosmeIcon
   },
   computed: {
-    ...mapGetters('userData', ['cosmeTypes', 'cosmes', 'allCosmeIds', 'userName']),
+    ...mapGetters('userData', [
+      'cosmeTypes',
+      'cosmes',
+      'allCosmeIds',
+      'userName'
+    ]),
     ...mapGetters('pages/main', ['uncheckedItems', 'isOpened']),
     themes() {
       return this.$store.getters['userData/themes']
@@ -97,7 +102,6 @@ export default {
 </script>
 
 <style scoped>
-
 .user-page#user {
   padding-top: 40px;
   padding-bottom: 40px;
