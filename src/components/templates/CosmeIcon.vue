@@ -95,9 +95,8 @@ export default {
   height: 40px;
 }
 #icon .cosme-icon .info .cosme-img {
-  max-width: 100%;
-  max-height: 100%;
-  padding: 4px;
+  max-width: 98%;
+  max-height: 98%;
 }
 #icon .cosme-icon .info .theme-group {
   position: absolute;
