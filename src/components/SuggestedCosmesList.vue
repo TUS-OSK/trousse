@@ -1,14 +1,21 @@
 <template>
   <div id="suggest" class="suggested-cosmes-list">
-    <div class="container-fluid">
+    <div class="suggest-inner">
       <div v-if="isSuggested">
         <div class="cosme" v-for="(item, type) in currentHistory" :key="type">
           <div v-if="item">
             <h3>{{ type }}</h3>
-            <ul v-for="(info, infoName) in item" :key="infoName">
-              <li v-if="infoName==='name'">{{ infoName }}: {{ info }}</li>
-              <li v-if="infoName==='brand'">{{ infoName }}: {{ info }}</li>
-            </ul>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="img-wrap col-xl-2 col-md-3 col-4 d-flex justify-content-center align-items-center">
+                  <img class="cosme-img" :src="item.imageURL">
+                </div>
+                <div class="d-flex flex-column col-xl-10 col-md-9 col-8 py-2">
+                  <span v-if="item.name">名前: {{ item.name }}</span>
+                  <span v-if="item.brand">ブランド: {{ item.brand }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <button class="suggest-btn" @click="suggestCosmes()">もう一回やる！</button>
@@ -72,6 +79,16 @@ export default {
 <style scoped>
 #suggest h3 {
   font-size: 20px;
+}
+#suggest .cosme .img-wrap {
+  height: 100px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 4px;
+  padding: 8px;
+}
+#suggest .cosme .cosme-img {
+  max-width: 100%;
+  max-height: 100%;
 }
 #suggest .suggest-btn {
   background-color: #f3aecb;

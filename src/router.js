@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import LoginPage from './views/Login.vue'
 import MainPage from './views/Main.vue'
+import HelpPage from './views/Help.vue'
 import UserPage from './views/User.vue'
 import ResultPage from './views/Result.vue'
 import EditPage from './views/Edit.vue'
@@ -25,20 +26,29 @@ const router = new Router({
       path: '/first',
       name: 'first',
       component: FirstPage,
-      children: [{
-        path: 'main',
-        name: 'main',
-        component: MainPage
-      }, {
-        path: 'user',
-        name: 'user',
-        component: UserPage
-      }, {
-        path: 'edit/:type',
-        name: 'edit',
-        component: EditPage,
-        props: true
-      }]
+      children: [
+        {
+          path: 'main',
+          name: 'main',
+          component: MainPage
+        },
+        {
+          path: 'help',
+          name: 'help',
+          component: HelpPage
+        },
+        {
+          path: 'user',
+          name: 'user',
+          component: UserPage
+        },
+        {
+          path: 'edit/:type',
+          name: 'edit',
+          component: EditPage,
+          props: true
+        }
+      ]
     },
     {
       path: '/main/result',
