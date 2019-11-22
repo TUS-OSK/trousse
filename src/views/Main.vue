@@ -2,7 +2,9 @@
   <div id="main" class="main-page">
     <main class="main-inner">
       <div class="hero d-flex justify-content-center">
-        <p class="hero-text text-center" :class="{ active : isLoaded }">trousseがきっとあなたのコスメを見つけてくれます！</p>
+        <p class="hero-text text-center" :class="{ active: isLoaded }">
+          trousseがきっとあなたのコスメを見つけてくれます！
+        </p>
       </div>
       <section class="select-area container-fluid">
         <h2 class="sub-title">SELECT</h2>
@@ -14,7 +16,12 @@
           >
             <cosme-display :cosmeIds="cosmeIds(cosmeType)">
               <template #default="cosmeDisplayProps">
-                <cosme-checkbox v-bind="cosmeCheckboxProps(cosmeDisplayProps.cosmeId, cosmeType)" v-model="uncheckedCosmeIds"/>
+                <cosme-checkbox
+                  v-bind="
+                    cosmeCheckboxProps(cosmeDisplayProps.cosmeId, cosmeType)
+                  "
+                  v-model="uncheckedCosmeIds"
+                />
               </template>
             </cosme-display>
           </accordion-cosmes-list>
@@ -28,7 +35,7 @@
               v-for="theme in themes"
               :key="`btn-wrap${theme}`"
             >
-              <theme-checkbox v-model="cosmeThemeCheckbox" :theme="theme"/>
+              <theme-checkbox v-model="cosmeThemeCheckbox" :theme="theme" />
             </div>
           </div>
         </div>
@@ -70,10 +77,7 @@ export default {
   },
   computed: {
     ...mapGetters('userData', ['cosmeTypes', 'cosmes', 'allCosmeIds']),
-    ...mapGetters('pages/main', [
-      'uncheckedItems',
-      'isOpened'
-    ]),
+    ...mapGetters('pages/main', ['uncheckedItems', 'isOpened']),
     themes() {
       return this.$store.getters['userData/themes']
     },
@@ -121,9 +125,11 @@ export default {
             .filter(cosme => {
               //チェックされてるtheme配列をcosmeが持つtheme配列でfilterして長さが小さくなったものはチェックしたい
               //つまりアンチェックリストに入れたくないのでfalseを返すようにする
-              const dif = cosme.theme ? this.cosmeThemeCheckbox.filter(
-                checkedTheme => !cosme.theme.includes(checkedTheme)
-              ) : null
+              const dif = cosme.theme
+                ? this.cosmeThemeCheckbox.filter(
+                    checkedTheme => !cosme.theme.includes(checkedTheme)
+                  )
+                : null
               return dif.length >= this.cosmeThemeCheckbox.length
             })
             .map(cosme => cosme.id)
