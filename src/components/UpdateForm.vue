@@ -158,11 +158,21 @@ export default {
     },
     unChangeStatus() {
       const info = this.info
+      function compareArrays(arr1, arr2) {
+        arr1 = arr1.sort()
+        arr2 = arr2.sort()
+        for (const i in arr1) {
+          if (arr1[i] !== arr2[i]) {
+            return false
+          }
+        }
+        return true
+      }
       const status =
         (this.focusingCosme.name == info.name) &
         (this.focusingCosme.brand == info.brand) &
         (this.focusingCosme.color == info.color) &
-        (this.focusingCosme.theme == info.theme) &
+        compareArrays(this.focusingCosme.theme, info.theme) &
         (this.focusingCosme.imageURL == info.imageURL)
       return status
     }
