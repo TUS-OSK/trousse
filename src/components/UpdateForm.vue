@@ -5,13 +5,13 @@
         <label class="title">画像</label>
         <div class="text-center input-area">
           <div class="file-uploader">
-            <input id="cosme-file" class="input-file" type="file" @change="preview"/>
+            <input id="cosme-file" class="input-file" type="file" @change="preview" />
             <label for="cosme-file" class="upload-btn d-flex flex-column">
               <span class="title">画像を選択</span>
               <span v-if="fileValue">{{fileValue}}</span>
             </label>
           </div>
-          <img class="m-3 cosm-img" :src="this.info.imageURL" width="260p">
+          <img class="m-3 cosm-img" :src="this.info.imageURL" width="260p" />
         </div>
       </section>
       <section class="input-form">
@@ -46,30 +46,18 @@
           <span>色味</span>
           <span v-if="info.color.length > 10" class="warning">文字数は10文字以内です</span>
         </label>
-        <input
-          class="input-text"
-          v-model="info.color"
-          type="text"
-          name="name"
-          placeholder="beige"
-        />
+        <input class="input-text" v-model="info.color" type="text" name="name" placeholder="beige" />
       </section>
       <section class="input-form">
         <label class="title">テーマ</label>
         <div class="checkbox-group input-area">
-          <div
-            class="check-btn-wrap d-inline-block"
-            v-for="theme in themes"
-            :key="theme"
-          >
+          <div class="check-btn-wrap d-inline-block" v-for="theme in themes" :key="theme">
             <theme-checkbox v-model="info.theme" :theme="theme" />
           </div>
         </div>
       </section>
       <transition name="fade">
-        <div v-if="warningStatus" class="warning text-center">
-          !正しく入力して下さい!
-        </div>
+        <div v-if="warningStatus" class="warning text-center">!正しく入力して下さい!</div>
       </transition>
     </div>
     <div class="container-fluid">
@@ -78,50 +66,36 @@
           v-if="info.name"
           class="update-btn register-btn col-12"
           @click="onSubmit('register', info, imageFile)"
-        >
-          コスメを登録
-        </button>
-        <span
-          v-else
-          class="update-btn register-btn col-12 d-inline-block text-center -error"
-          >コスメを登録
-        </span>
+        >コスメを登録</button>
+        <span v-else class="update-btn register-btn col-12 d-inline-block text-center -error">コスメを登録</span>
       </div>
       <div class="d-block btn-group row" v-else>
         <button class="update-btn delete-btn col-6">
-          <div class="delete-text" @click="deleteStatus = true">
-            コスメを削除
-          </div>
+          <div class="delete-text" @click="deleteStatus = true">コスメを削除</div>
           <div class="delete-text warning" :class="{ _show: deleteStatus }">
             <div class="btn-wrap">
               <span
                 class="btn-text return"
                 :class="{ _show: deleteStatus }"
                 @click="deleteStatus = false"
-                >戻る</span
-              >
+              >戻る</span>
               <span
                 class="btn-text"
                 :class="{ _show: deleteStatus }"
                 @click="onSubmit('delete', info)"
-                >削除</span
-              >
+              >削除</span>
             </div>
           </div>
         </button>
         <button
-          v-if="warningStatus"
+          v-if="warningStatus||unChangeStatus"
           class="update-btn change-btn col-6 d-inline-block text-center -error"
-        >
-          コスメを更新
-        </button>
+        >コスメを更新</button>
         <button
           v-else
           class="update-btn change-btn col-6"
           @click="onSubmit('change', info, imageFile)"
-        >
-          コスメを更新
-        </button>
+        >コスメを更新</button>
       </div>
     </div>
   </div>
@@ -162,10 +136,11 @@ export default {
       imageFile: null,
       deleteStatus: false
     }
-    if(this.focusingCosme !== undefined) {
+    if (this.focusingCosme !== undefined) {
       const cosme = { ...this.focusingCosme }
       data.info = cosme
-      data.info.imageURL = cosme.imageURL || `/images/cosmeImages/${this.focusingType}.png`
+      data.info.imageURL =
+        cosme.imageURL || `/images/cosmeImages/${this.focusingType}.png`
     }
 
     return data
@@ -174,7 +149,21 @@ export default {
     ...mapGetters('userData', ['themes']),
     warningStatus() {
       const info = this.info
-      const status = !info.name || info.name.length > 15 || info.color.length > 10 || info.brand.length > 15
+      const status =
+        !info.name ||
+        info.name.length > 15 ||
+        info.color.length > 10 ||
+        info.brand.length > 15
+      return status
+    },
+    unChangeStatus() {
+      const info = this.info
+      const status =
+        (this.focusingCosme.name == info.name) &
+        (this.focusingCosme.brand == info.brand) &
+        (this.focusingCosme.color == info.color) &
+        (this.focusingCosme.theme == info.theme) &
+        (this.focusingCosme.imageURL == info.imageURL)
       return status
     }
   },
@@ -182,9 +171,11 @@ export default {
     preview(e) {
       const image = e.target.files[0]
       this.fileValue = e.target.value.replace('C:\\fakepath\\', '')
-      if(!image) {
+      if (!image) {
         this.imageFile = null
-        this.info.imageURL = this.focusingCosme.imageURL || `/images/cosmeImages/${this.focusingType}.png`
+        this.info.imageURL =
+          this.focusingCosme.imageURL ||
+          `/images/cosmeImages/${this.focusingType}.png`
       } else {
         this.imageFile = image
         const reader = new FileReader()
@@ -212,10 +203,12 @@ export default {
 </script>
 
 <style scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .1s linear;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.1s linear;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 @keyframes shrink {
@@ -294,10 +287,10 @@ export default {
   background-color: rgb(235, 197, 164);
   color: #fff6ee;
 }
-#ud-form .input-form .input-area .file-uploader .upload-btn{
+#ud-form .input-form .input-area .file-uploader .upload-btn {
   padding: 4px;
 }
-#ud-form .input-form .input-area .file-uploader .title{
+#ud-form .input-form .input-area .file-uploader .title {
   padding: 8px 12px;
   margin-bottom: 2px;
   border-radius: 4px;
@@ -377,5 +370,4 @@ export default {
 #ud-form .btn-group .delete-btn .warning .btn-text._show {
   opacity: 1;
 }
-
 </style>
