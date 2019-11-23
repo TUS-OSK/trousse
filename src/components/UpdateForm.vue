@@ -169,11 +169,11 @@ export default {
         return true
       }
       const status =
-        (this.focusingCosme.name == info.name) &
-        (this.focusingCosme.brand == info.brand) &
-        (this.focusingCosme.color == info.color) &
-        compareArrays(this.focusingCosme.theme, info.theme) &
-        (this.focusingCosme.imageURL == info.imageURL)
+        this.focusingCosme.name === info.name &&
+        this.focusingCosme.brand === info.brand &&
+        this.focusingCosme.color === info.color &&
+        this.focusingCosme.imageURL === info.imageURL &&
+        compareArrays(this.focusingCosme.theme, info.theme)
       return status
     }
   },
