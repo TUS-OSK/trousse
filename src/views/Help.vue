@@ -41,7 +41,7 @@
               height="40"
             />でコスメ情報を更新してください。
           </div>
-          <div>※コスメ情報が変更されていないと追加できません。</div>
+          <div>※コスメ情報が変更されていないと更新できません。</div>
         </details>
         <details>
           <summary class="sub-title">コスメの削除の仕方</summary>
